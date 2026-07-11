@@ -1,0 +1,41 @@
+#__sgt_footer {
+    @apply pb-4 lg:pb-0;
+
+    .email_form {
+        @apply w-full flex flex-row relative mb-10 mt-10;
+    }
+
+    .email_form_wrap {
+        @apply relative w-full grid grid-cols-12 gap-5 bg-sgt-primary-4 rounded-sgt-10 pt-5 pb-5 px-8;
+    }
+
+    .email_icon {
+        @apply max-xs:w-16 max-xs:-left-2;
+    }
+
+    @media not all and (min-width: 640px) {
+        .email_form {
+            @apply absolute left-0 -top-16 m-0;
+            z-index: 20;
+
+            .email_form_wrap {
+                width: calc(100% - 2rem);
+                margin: 0 auto;
+                @apply px-3 pt-3.5 pb-4 gap-4;
+
+                .email_icon {
+                    width: 4.6875rem;
+                    @apply -top-3;
+                }
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    }
+
+    .email_input {
+        @apply flex-1 h-10 pl-4 rounded-md text-sgt-neutral-3 placeholder:text-sgt-neutral-4 focus-visible:outline-none;
+    }
+}

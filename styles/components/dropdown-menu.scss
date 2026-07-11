@@ -1,0 +1,9 @@
+.sgt_dropdown_menu {
+    z-index: 9999 !important;
+
+    .ant-dropdown-menu {
+        margin-top: 0.75rem !important;
+        max-height: 550px;
+        overflow-y: auto;
+    }
+}

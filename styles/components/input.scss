@@ -1,0 +1,80 @@
+:root {
+  --input_slider-w: 0.5rem;
+  --input_slider-w-before: 1.0625rem;
+
+  @media not all and (min-width: 640px) {
+    --input_slider-w-before: 1.125rem;
+  }
+}
+
+.form_control {
+  @apply border transition ease-linear;
+
+  &:hover,
+  &:focus-within {
+    @apply border-sgt-primary-dark ring-1 ring-sgt-primary-dark ring-opacity-35 #{!important};
+  }
+
+  &:focus {
+    @apply ring-1 ring-sgt-primary-dark ring-opacity-35 #{!important};
+  }
+}
+
+.sgt_input_slider {
+  $sgt_input_slider-w: var(--input_slider-w) !important;
+  $sgt_input_slider-h: var(--input_slider-w) !important;
+
+  .ant-slider-rail {
+    @apply bg-sgt-neutral-5 rounded-md h-1 #{!important};
+  }
+
+  .ant-slider-track {
+    @apply bg-gradient-to-r from-sgt-primary-1 to-sgt-primary-2;
+  }
+
+  .ant-slider-handle {
+    z-index: 1;
+    width: $sgt_input_slider-w;
+    height: $sgt_input_slider-h;
+    @apply -translate-y-1/2 -translate-x-1/2 top-1/2 #{!important};
+
+    &:before {
+      width: var(--input_slider-w-before) !important;
+      height: var(--input_slider-w-before) !important;
+      border-radius: 100%;
+      z-index: 10;
+      inset: 0;
+      top: 50% !important;
+      left: 50% !important;
+      @apply bg-sgt-neutral-7 shadow-sgt-black-9 -translate-y-1/2 -translate-x-1/2 #{!important};
+    }
+
+    &:after,
+    &:hover:after {
+      box-shadow: none !important;
+      outline: none !important;
+      width: $sgt_input_slider-w;
+      height: $sgt_input_slider-h;
+      z-index: 12;
+      @apply inset-0 transition-all duration-300 bg-gradient-to-t from-sgt-primary-1 to-sgt-primary-2 #{!important};
+    }
+  }
+}
+
+.placeholder-custom::placeholder {
+  @apply text-base font-normal text-sgt-gray-1;
+}
+
+.error-margin-bottom .ant-form-item-explain-error {
+  @apply mb-1 mt-[2px];
+}
+
+.input-focus .ant-input:focus,
+.input-focus .ant-select-selector:hover,
+.input-focus .ant-input:hover,
+.input-focus .ant-select-focused .ant-select-selector {
+  border-color: var(--color-primary-2) !important;
+  outline: 1 !important;
+  -webkit-box-shadow: 0 0 0 2px rgba(var(--color-primary-2), 0.2) !important;
+  box-shadow: 0 0 0 2px rgba(var(--color-primary-2), 0.2) !important;
+}

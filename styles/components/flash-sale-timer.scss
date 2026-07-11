@@ -1,0 +1,515 @@
+:root {
+    --flash-sale-timer-height: 1.875rem;
+
+
+    @media not all and (min-width: 640px) {
+        --flash-sale-timer-height: 1.5625rem;
+    }
+}
+
+@function animation_translateY($number) {
+    @return calc(var(--flash-sale-timer-height) * -#{$number});
+}
+
+.sgt_timer_in_card {
+    --flash-sale-timer-height: 1.25rem;
+
+    &.sgt_timer .sgt_timer_item {
+        height: var(--flash-sale-timer-height);
+        @apply flex flex-row bg-sgt-third-2 text-sgt-neutral-7 text-xs font-bold rounded-md px-1 overflow-hidden;
+    }
+}
+
+.sgt_timer {
+
+    .sgt_timer_item {
+        height: var(--flash-sale-timer-height);
+        @apply flex flex-row bg-sgt-third-2 text-sgt-neutral-7 text-lg font-bold rounded-md px-1 overflow-hidden;
+        @apply max-sm:text-base;
+
+        .sgt_timer_item_number {
+            height: var(--flash-sale-timer-height);
+            @apply flex flex-row justify-center items-center;
+        }
+    }
+
+    // -9s
+    .sgt_timer_item_second_second {
+        animation: sgt_timer_second_second_up 10s infinite;
+    }
+
+    .sgt_timer_item_second_first {
+        animation: sgt_timer_second_first_up 60s infinite;
+    }
+
+    .sgt_timer_item_minute_second {
+        animation: sgt_timer_minute_second_up 600s infinite;
+    }
+
+    .sgt_timer_item_minute_first {
+        animation: sgt_timer_minute_first_up 3600s infinite;
+    }
+
+    .sgt_timer_item_hour_second {
+        animation: sgt_timer_hour_second_up 36000s infinite;
+    }
+
+    .sgt_timer_item_hour_first {
+        animation: sgt_timer_hour_first_up 360000s infinite;
+    }
+}
+
+@keyframes sgt_timer_second_second_up {
+    0% {
+        transform: translateY(0);
+    }
+
+    10% {
+        transform: translateY(animation_translateY(1));
+    }
+
+    20% {
+        transform: translateY(animation_translateY(2));
+    }
+
+    30% {
+        transform: translateY(animation_translateY(3));
+    }
+
+    40% {
+        transform: translateY(animation_translateY(4));
+    }
+
+    50% {
+        transform: translateY(animation_translateY(5));
+    }
+
+    60% {
+        transform: translateY(animation_translateY(6));
+    }
+
+    70% {
+        transform: translateY(animation_translateY(7));
+    }
+
+    80% {
+        transform: translateY(animation_translateY(8));
+    }
+
+    90% {
+        transform: translateY(animation_translateY(9));
+    }
+
+    100% {
+        transform: translateY(animation_translateY(10));
+    }
+}
+
+/** 
+    SGT_TIMER_SECOND_FIRST
+    100 / 6 = 16.667% is the time of movement of one movement
+    16.667 / 10(s) = 1.6667% is Time will move simultaneously with sgt_timer_second_second_up
+    =>  16.667% - 1.6667% = 15%  is the time to wait for sgt_timer_second_second_up to finish running
+*/
+
+@keyframes sgt_timer_second_first_up {
+    0% {
+        transform: translateY(0);
+    }
+
+    15% {
+        transform: translateY(0);
+    }
+
+    16.667% {
+        transform: translateY(animation_translateY(1));
+    }
+
+    31.667% {
+        transform: translateY(animation_translateY(1));
+    }
+
+    33.334% {
+        transform: translateY(animation_translateY(2));
+    }
+
+    48.334% {
+        transform: translateY(animation_translateY(2));
+    }
+
+    50% {
+        transform: translateY(animation_translateY(3));
+    }
+
+    65% {
+        transform: translateY(animation_translateY(3));
+    }
+
+    66.668% {
+        transform: translateY(animation_translateY(4));
+    }
+
+    81.668% {
+        transform: translateY(animation_translateY(4));
+    }
+
+    83.335% {
+        transform: translateY(animation_translateY(5));
+    }
+
+    98.335% {
+        transform: translateY(animation_translateY(5));
+    }
+
+    100% {
+        transform: translateY(animation_translateY(6));
+    }
+}
+
+/** End */
+
+/** 
+    SGT_TIMER_MINUTE_SECOND
+    100 / 10 = 10% is the time of movement of one movement
+    10 / 60(s) = 0.167% is Time will move simultaneously with sgt_timer_second_first_up
+    => 10% - 0.167% = 9.833%  is the time to wait for sgt_timer_second_first_up to finish running
+*/
+
+@keyframes sgt_timer_minute_second_up {
+    0% {
+        transform: translateY(0);
+    }
+
+    9.833% {
+        transform: translateY(0);
+    }
+
+    10% {
+        transform: translateY(animation_translateY(1));
+    }
+
+    19.833% {
+        transform: translateY(animation_translateY(1));
+    }
+
+    20% {
+        transform: translateY(animation_translateY(2));
+    }
+
+    29.833% {
+        transform: translateY(animation_translateY(2));
+    }
+
+    30% {
+        transform: translateY(animation_translateY(3));
+    }
+
+    39.833% {
+        transform: translateY(animation_translateY(3));
+    }
+
+    40% {
+        transform: translateY(animation_translateY(4));
+    }
+
+    49.833% {
+        transform: translateY(animation_translateY(4));
+    }
+
+    50% {
+        transform: translateY(animation_translateY(5));
+    }
+
+    59.833% {
+        transform: translateY(animation_translateY(5));
+    }
+
+    60% {
+        transform: translateY(animation_translateY(6));
+    }
+
+    69.833% {
+        transform: translateY(animation_translateY(6));
+    }
+
+    70% {
+        transform: translateY(animation_translateY(7));
+    }
+
+    79.833% {
+        transform: translateY(animation_translateY(7));
+    }
+
+    80% {
+        transform: translateY(animation_translateY(8));
+    }
+
+    89.833% {
+        transform: translateY(animation_translateY(8));
+    }
+
+    90% {
+        transform: translateY(animation_translateY(9));
+    }
+
+    99.833% {
+        transform: translateY(animation_translateY(9));
+    }
+
+    100% {
+        transform: translateY(animation_translateY(10));
+    }
+}
+
+/** END */
+
+/** 
+    SGT_TIMER_MINUTE_FIRST
+    100 / 6 = 16.667% is the time of movement of one movement
+    16.667 / 600(s) = 0.028% is Time will move simultaneously with sgt_timer_minute_second_up
+    => 16.667% - 0.028% = 16.639%  is the time to wait for sgt_timer_minute_second_up to finish running
+*/
+@keyframes sgt_timer_minute_first_up {
+    0% {
+        transform: translateY(0);
+    }
+
+    16.639% {
+        transform: translateY(0);
+    }
+
+    16.667% {
+        transform: translateY(animation_translateY(1));
+    }
+
+    33.306% {
+        transform: translateY(animation_translateY(1));
+    }
+
+    33.334% {
+        transform: translateY(animation_translateY(2));
+    }
+
+    49.973% {
+        transform: translateY(animation_translateY(2));
+    }
+
+    50% {
+        transform: translateY(animation_translateY(3));
+    }
+
+    66.667% {
+        transform: translateY(animation_translateY(3));
+    }
+
+    66.668% {
+        transform: translateY(animation_translateY(4));
+    }
+
+    83.307% {
+        transform: translateY(animation_translateY(4));
+    }
+
+    83.335% {
+        transform: translateY(animation_translateY(5));
+    }
+
+    99.972% {
+        transform: translateY(animation_translateY(5));
+    }
+
+    100% {
+        transform: translateY(animation_translateY(6));
+    }
+}
+
+/** End */
+
+/** 
+    SGT_TIMER_MINUTE_FIRST
+    100 / 10 = 10% is the time of movement of one movement
+    10 / 3600(s) = 0.0028% is Time will move simultaneously with sgt_timer_minute_second_up
+    => 10% - 0.0028% = 9.9972%  is the time to wait for sgt_timer_minute_second_up to finish running
+*/
+@keyframes sgt_timer_hour_second_up {
+    0% {
+        transform: translateY(0);
+    }
+
+    9.9972% {
+        transform: translateY(0);
+    }
+
+    10% {
+        transform: translateY(animation_translateY(1));
+    }
+
+    19.9972% {
+        transform: translateY(animation_translateY(1));
+    }
+
+    20% {
+        transform: translateY(animation_translateY(2));
+    }
+
+    29.9972% {
+        transform: translateY(animation_translateY(2));
+    }
+
+    30% {
+        transform: translateY(animation_translateY(3));
+    }
+
+    39.9972% {
+        transform: translateY(animation_translateY(3));
+    }
+
+    40% {
+        transform: translateY(animation_translateY(4));
+    }
+
+    49.9972% {
+        transform: translateY(animation_translateY(4));
+    }
+
+    50% {
+        transform: translateY(animation_translateY(5));
+    }
+
+    59.9972% {
+        transform: translateY(animation_translateY(5));
+    }
+
+    60% {
+        transform: translateY(animation_translateY(6));
+    }
+
+    69.9972% {
+        transform: translateY(animation_translateY(6));
+    }
+
+    70% {
+        transform: translateY(animation_translateY(7));
+    }
+
+    79.9972% {
+        transform: translateY(animation_translateY(7));
+    }
+
+    80% {
+        transform: translateY(animation_translateY(8));
+    }
+
+    89.9972% {
+        transform: translateY(animation_translateY(8));
+    }
+
+    90% {
+        transform: translateY(animation_translateY(9));
+    }
+
+    99.9972% {
+        transform: translateY(animation_translateY(9));
+    }
+
+    100% {
+        transform: translateY(animation_translateY(10));
+    }
+}
+
+/** End */
+
+
+/** 
+    SGT_TIMER_MINUTE_FIRST
+    100 / 10 = 10% is the time of movement of one movement
+    10 / 36000(s) = 0.00028% is Time will move simultaneously with sgt_timer_minute_second_up
+    => 10% - 0.00028% = 9.99972%  is the time to wait for sgt_timer_minute_second_up to finish running
+*/
+@keyframes sgt_timer_hour_first_up {
+    0% {
+        transform: translateY(0);
+    }
+
+    9.99972% {
+        transform: translateY(0);
+    }
+
+    10% {
+        transform: translateY(animation_translateY(1));
+    }
+
+    19.99972% {
+        transform: translateY(animation_translateY(1));
+    }
+
+    20% {
+        transform: translateY(animation_translateY(2));
+    }
+
+    29.99972% {
+        transform: translateY(animation_translateY(2));
+    }
+
+    30% {
+        transform: translateY(animation_translateY(3));
+    }
+
+    39.99972% {
+        transform: translateY(animation_translateY(3));
+    }
+
+    40% {
+        transform: translateY(animation_translateY(4));
+    }
+
+    49.99972% {
+        transform: translateY(animation_translateY(4));
+    }
+
+    50% {
+        transform: translateY(animation_translateY(5));
+    }
+
+    59.99972% {
+        transform: translateY(animation_translateY(5));
+    }
+
+    60% {
+        transform: translateY(animation_translateY(6));
+    }
+
+    69.99972% {
+        transform: translateY(animation_translateY(6));
+    }
+
+    70% {
+        transform: translateY(animation_translateY(7));
+    }
+
+    79.99972% {
+        transform: translateY(animation_translateY(7));
+    }
+
+    80% {
+        transform: translateY(animation_translateY(8));
+    }
+
+    89.99972% {
+        transform: translateY(animation_translateY(8));
+    }
+
+    90% {
+        transform: translateY(animation_translateY(9));
+    }
+
+    99.99972% {
+        transform: translateY(animation_translateY(9));
+    }
+
+    100% {
+        transform: translateY(animation_translateY(10));
+    }
+}
+
+/** End */

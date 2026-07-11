@@ -1,0 +1,188 @@
+$animation_duration: 6s;
+
+.tour_item_animation {
+    opacity: 0;
+    animation: sgtTourItemFade 700ms;
+    -moz-animation: sgtTourItemFade 700ms;
+    -webkit-animation: sgtTourItemFade 700ms;
+    -o-animation: sgtTourItemFade 700ms;
+    animation-delay: 0s;
+    -webkit-animation-delay: 0s;
+    -moz-animation-delay: 0s;
+    -o-animation-delay: 0s;
+    animation-fill-mode: forwards;
+}
+
+.tour_item_vertical {
+    .tour_item_vertical_image {
+        transform: scale(1, 1);
+        transition: transform 700ms;
+    }
+
+    &:hover {
+        .tour_item_vertical_image {
+            transform: scale(1.25, 1.25);
+            transform-origin: center center;
+        }
+    }
+
+    // @extend .tour_item_animation;
+}
+
+
+.tour_item_horizontal {
+
+    .tour_item_horizontal_image {
+        transform: scale(1, 1);
+        transition: transform 700ms;
+    }
+
+    &:hover {
+        .tour_item_horizontal_image {
+            transform: scale(1.25, 1.25);
+            transform-origin: center center;
+        }
+    }
+
+    // @extend .tour_item_animation;
+
+}
+
+@keyframes sgtTourSpecialItem_0 {
+
+    0% {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+
+    60% {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+
+    70% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+
+// .tour_item_horizontal_discount {
+//     .tour_item_horizontal_discount_item {
+//         @apply flex flex-row justify-center items-center;
+//         @apply text-sgt-neutral-7 bg-sgt-third-2 rounded-md px-1 gap-1 shadow-sgt-black-3;
+//     }
+// }
+
+.tour_item_vertical_discount,
+.tour_item_horizontal_discount_item {
+    @apply flex flex-row justify-center items-center;
+    @apply text-sgt-neutral-7 bg-sgt-third-2 rounded-md px-1 gap-1 shadow-sgt-black-3;
+}
+
+.tour_item_vertical_highlight_item,
+.tour_item_horizontal_highlight_item {
+    @apply absolute top-2;
+    @apply flex flex-row justify-center items-center;
+    @apply text-sgt-neutral-7 bg-sgt-third-2 px-2.5 py-0.5 gap-1 shadow-sgt-black-3 mb-2;
+
+    &:after {
+        display: block;
+        content: "";
+        position: absolute;
+        z-index: 1;
+        border-style: solid;
+        border-color: transparent;
+        top: 100%;
+    }
+}
+
+.tour_item_vertical_highlight_item {
+    right: -8px;
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+
+    &:after {
+        border-width: 0px 0px 12px 8px;
+        right: 0;
+        @apply border-l-red-800;
+    }
+}
+
+.tour_item_horizontal_highlight_item {
+    left: -8px;
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+
+    &:after {
+        border-width: 0px 8px 12px 0px;
+        left: 0;
+        @apply border-r-red-800;
+    }
+}
+
+.tour_item_vertical_discount_0,
+.tour_item_horizontal_discount_0 {
+    transform: translateY(0%);
+    animation: sgtTourSpecialItem_0 $animation_duration;
+    animation-delay: $animation_duration;
+    -webkit-animation-delay: $animation_duration;
+    -moz-animation: sgtTourSpecialItem_0 $animation_duration;
+    -webkit-animation: sgtTourSpecialItem_0 $animation_duration;
+    -o-animation: sgtTourSpecialItem_0 $animation_duration;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes sgtTourSpecialItem_1 {
+
+    0% {
+        transform: translateY(-200%);
+        opacity: 0;
+    }
+
+    60% {
+        transform: translateY(-200%);
+        opacity: 0;
+    }
+
+    70% {
+        transform: translateY(-100%);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-100%);
+        opacity: 1;
+    }
+}
+
+.tour_item_vertical_discount_1,
+.tour_item_horizontal_discount_1 {
+    transform: translateY(-200%);
+    animation: sgtTourSpecialItem_1 $animation_duration;
+    animation-delay: $animation_duration;
+    -webkit-animation-delay: $animation_duration;
+    -moz-animation: sgtTourSpecialItem_1 $animation_duration;
+    -webkit-animation: sgtTourSpecialItem_1 $animation_duration;
+    -o-animation: sgtTourSpecialItem_1 $animation_duration;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+
+@keyframes sgtTourItemFade {
+    from {
+        transform: translateY(20%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

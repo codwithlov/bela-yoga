@@ -1,0 +1,13 @@
+export const STATUS_200: number = 200;
+export const STATUS_400: number = 400;
+export const STATUS_422: number = 422;
+export const STATUS_500: number = 500;
+export const STATUS_401: number = 401;
+export const STATUS_403: number = 403;
+export const STATUS_404: number = 404;
+export const STATUS_408: number = 408;
+export const STATUS_504: number = 504;
+export const MESSAGE_SUCCESS: string = 'success';
+export const MESSAGE_ERROR: string = 'error';
+export const MESSAGE_WARNING: string = 'warning';
+export const MESSAGE_INFO: string = 'info';

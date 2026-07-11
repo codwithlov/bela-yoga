@@ -1,0 +1,31 @@
+.custom-date-picker {
+  .react-datepicker__header {
+    background-color: white;
+    border-bottom: 0px;
+    padding: 0px;
+  }
+  .react-datepicker__day-names {
+    display: none;
+  }
+  .react-datepicker__month {
+    margin: 0px;
+  }
+  .react-datepicker__month-container {
+    width: 100%;
+    min-width: 18rem;
+    max-width: 700px;
+    height: 100%;
+  }
+  .react-datepicker__week {
+    display: flex;
+  }
+  .react-datepicker__day--keyboard-selected {
+    background-color: transparent;
+  }
+}
+
+.custom-input {
+  .react-datepicker-wrapper {
+    @apply w-full;
+  }
+}

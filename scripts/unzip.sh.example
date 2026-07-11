@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Kiểm tra đầu vào
+if [ "$#" -ne 2 ]; then
+    echo "Sử dụng: ./unzip.sh <đường_dẫn_file_mã_hóa> <mật_khẩu>"
+    exit 1
+fi
+
+ENCRYPTED_FILE="$1"
+PASSWORD="$2"
+# Loại bỏ đuôi .enc từ tên file
+DECRYPTED_FILE="${ENCRYPTED_FILE%.*}"
+# Lấy tên file không có đuôi .tar.gz
+EXTRACT_DIR="${DECRYPTED_FILE%.tar.gz}"
+
+# Kiểm tra file tồn tại
+if [ ! -f "$ENCRYPTED_FILE" ]; then
+    echo "Lỗi: File '$ENCRYPTED_FILE' không tồn tại!"
+    exit 1
+fi
+
+echo "Đang giải mã file..."
+# Giải mã file
+openssl enc -d -aes-256-cbc -pbkdf2 -k "$PASSWORD" \
+    -in "$ENCRYPTED_FILE" \
+    -out "$DECRYPTED_FILE"
+
+if [ $? -eq 0 ]; then
+    echo "Giải mã thành công. Đang giải nén..."
+    # Tạo thư mục giải nén
+    mkdir -p "$EXTRACT_DIR"
+    # Giải nén file tar.gz vào thư mục con
+    tar -xzf "$DECRYPTED_FILE" -C "$EXTRACT_DIR"
+
+    if [ $? -eq 0 ]; then
+        echo "Giải nén thành công vào thư mục: $EXTRACT_DIR"
+        # Xóa file tar.gz tạm
+        rm "$DECRYPTED_FILE"
+    else
+        echo "Lỗi: Không thể giải nén file!"
+        rm -rf "$EXTRACT_DIR"  # Xóa thư mục nếu giải nén thất bại
+        exit 1
+    fi
+else
+    echo "Lỗi: Không thể giải mã file! Kiểm tra lại mật khẩu."
+    exit 1
+fi

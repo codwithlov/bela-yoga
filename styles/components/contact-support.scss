@@ -1,0 +1,129 @@
+#contact_support {
+    $mobile_contact_support_item_w: 3.375rem;
+    z-index: 9999;
+    bottom: calc(80px + 56px + 3px);
+    @apply fixed right-1 p-3;
+    // top-1/2 -translate-y-1/2
+    @apply max-sm:bottom-48 max-sm:top-auto max-sm:-translate-y-0;
+
+    @function contact_support_translateY($number) {
+        @return calc($mobile_contact_support_item_w * $number + ($number * 16px));
+    }
+
+    @function animationCustom($value) {
+        // animation: name duration timing-function delay iteration-count direction fill-mode;
+    }
+
+    .mobile_contact_support {
+        position: relative;
+        z-index: 10;
+    }
+
+    .mobile_contact_support_item {
+        width: $mobile_contact_support_item_w;
+        height: $mobile_contact_support_item_w;
+        @apply rounded-full flex flex-row justify-center items-center bg-sgt-primary-1 overflow-hidden shadow-sgt-black-10;
+        @apply transition-all duration-500;
+
+        &:nth-child(1) {
+            transform: translateY(contact_support_translateY(3));
+        }
+
+        &:nth-child(2) {
+            transform: translateY(contact_support_translateY(2));
+        }
+
+        &:nth-child(3) {
+            transform: translateY(contact_support_translateY(1));
+        }
+
+
+    }
+
+    #support_message_btn {
+
+        @apply relative z-50;
+
+        .support_message_btn_contain {
+            width: 4.25rem;
+            height: 4.25rem;
+            border-radius: 100%;
+            position: relative;
+            @apply transition-all duration-500;
+            @apply flex flex-row justify-center items-center mt-4 border-2 border-sgt-primary-1;
+            @apply bg-sgt-primary-1;
+
+
+            &:after,
+            &:before {
+                content: "";
+                position: absolute;
+                width: 5rem;
+                height: 5rem;
+                border-radius: 100%;
+                z-index: -1;
+                @apply bg-sgt-primary-1 bg-opacity-30;
+                animation: contact_support_ripple 1500ms linear infinite;
+            }
+
+            &:before {
+                animation-delay: 0ms;
+            }
+
+            &:after {
+                animation-delay: 450ms;
+            }
+
+            .customer_service_icon {
+                display: block;
+            }
+
+            .close_icon {
+                display: none;
+            }
+        }
+    }
+
+    .mobile_contact_support_item_show {
+        .mobile_contact_support_item {
+            transform: translateY(0) !important;
+        }
+
+        #support_message_btn {
+            .support_message_btn_contain {
+                @apply bg-sgt-neutral-7;
+
+                .customer_service_icon {
+                    display: none;
+                }
+
+                .close_icon {
+                    display: block;
+                }
+
+                &:after,
+                &:before {
+                    animation: none;
+                }
+            }
+        }
+
+    }
+
+    @keyframes contact_support_ripple {
+        0% {
+            transform: scale(0.85);
+            opacity: 1;
+        }
+
+        50% {
+            transform: scale(1.15);
+            opacity: 1;
+        }
+
+        100% {
+            transform: scale(1.125);
+            opacity: 0;
+        }
+    }
+}

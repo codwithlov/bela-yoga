@@ -1,0 +1,238 @@
+:root {
+    --wheel-of-fortune-with: 95%;
+    --wheel-of-fortune-circle-width: 92%;
+
+    @media (min-width: 640px) {
+        --wheel-of-fortune-with: 50%;
+      }
+    
+      @media (min-width: 1024px) {
+        --wheel-of-fortune-with: 34%;
+      }
+
+    @media (min-width: 1920px) {}
+
+    @media (min-width: 2250px) {}
+
+    @media (min-width: 2560px) {}
+}
+
+#wheel_of_fortune_page {
+
+    $wheelOfFortuneWith : 40%;
+
+    .wheel_of_fortune {
+        @apply w-full flex flex-1 justify-center items-center relative p-2 overflow-hidden;
+    }
+
+    .wheel_of_fortune_wrap_light {
+        // --_items: 16;
+        @apply aspect-square flex justify-center items-center rounded-full relative;
+        @apply z-50;
+        @apply bg-sgt-third-2;
+        width: var(--wheel-of-fortune-with);
+
+        &::before {
+            display: block;
+            position: absolute;
+            content: '';
+            width: 101%;
+            height: 101%;
+            @apply rounded-full bg-red-700 bg-opacity-40;
+        }
+
+        ul {
+            all: unset;
+            width: var(--wheel-of-fortune-circle-width);
+            aspect-ratio: 1/1;
+            display: grid;
+            container-type: inline-size;
+
+            li {
+                transform: translateX(-4cqi);
+
+                @media (min-width: 640px) {
+                  transform: translateX(-3.5cqi);
+                }
+              
+                align-content: center;
+                display: grid;
+                font-size: 1rem;
+                grid-area: 1 / -1;
+                width: 50cqi;
+                // aspect-ratio: 1 / calc(2 * tan(180deg / var(--_items)));
+                rotate: calc(360deg / var(--_items) * calc(var(--_idlx) - 1));
+                transform-origin: center right;
+                background-color: transparent;
+
+                .light {
+                    border-radius: 100%;
+                    @apply bg-sgt-primary-2 relative w-1 h-1 lg:w-2.5 lg:h-2.5;
+
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        width: 16px;
+                        height: 16px;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        @apply border rounded-full border-sgt-primary-2 w-2 h-2 lg:w-4 lg:h-4;
+                        box-shadow: 0px 0px 8px 2px rgba(var(--color-primary-default-rgb), 0.8)
+                    }
+
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        width: 6px;
+                        height: 6px;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        @apply rounded-full bg-sgt-primary-4;
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    .wheel_of_fortune_wrap {
+        // --_items: 16;
+        @apply bg-sgt-third-2 aspect-square flex justify-center items-center rounded-full;
+        @apply z-50 absolute;
+        background-color: transparent;
+        width: var(--wheel-of-fortune-with);
+
+        ul {
+            all: unset;
+            width: var(--wheel-of-fortune-circle-width);
+            aspect-ratio: 1/1;
+            display: grid;
+            container-type: inline-size;
+            place-content: center start;
+            @apply rounded-full bg-white;
+            clip-path: inset(0 0 0 0 round 50%);
+
+            li {
+                align-content: center;
+                list-style: none;
+                display: grid;
+                font-size: 2.8cqi;
+                grid-area: 1 / -1;
+                width: 50cqi;
+                clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+                aspect-ratio: 1 / calc(2 * tan(180deg / var(--_items)));
+                rotate: calc(360deg / var(--_items) * calc(var(--_idx) - 1));
+                transform-origin: center right;
+                user-select: none;
+                @apply bg-sgt-primary-1 bg-opacity-85;
+
+                &:nth-of-type(2n+0) {
+                    @apply bg-sgt-neutral-7;
+                }
+            }
+
+        }
+
+        .wheel_of_fortune_text {
+            @apply flex flex-col justify-center items-center -rotate-90 -translate-x-1/3;
+
+            p {
+                text-shadow: 1px 1px #ffffff;
+            }
+
+            .wheel_of_fortune_text_title {
+                font-size: 1.125em;
+            }
+
+            .wheel_of_fortune_text_voucher {
+                font-size: 1.2em;
+            }
+        }
+
+        .wheel_of_fortune_choose {
+            @apply shadow-sgt-black-10 w-[20%] absolute rounded-full z-50;
+
+            .wheel_of_fortune_choose_arrow {
+                position: absolute;
+                z-index: -1;
+                top: 50%;
+                right: -25%;
+                transform: translate(0, -50%);
+                clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+                @apply bg-sgt-third-2 w-10 h-8 lg:w-14 lg:h-10 xl:w-20 xl:h-16;
+
+                .wheel_of_fortune_choose_arrow_top_left {
+                    position: absolute;
+                    height: 5px;
+                    width: 5px;
+                    background-color: transparent;
+                    right: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
+            }
+        }
+
+    }
+}
+
+.wheel_of_fortune_result {
+    .ant-modal-content {
+        padding: 0 !important;
+        @apply rounded-lg;
+
+        .ant-modal-body {
+            @apply rounded-lg;
+        }
+    }
+
+    .wheel_of_fortune_result_wrap {
+        @apply w-[60%] relative z-50 -rotate-6;
+        // ;
+
+        .result_box {
+            @apply w-full bg-white flex flex-row justify-start items-center shadow-lg relative pl-2;
+
+            .result_voucher {
+                @apply flex-1 aspect-2/1 bg-sgt-third-2 flex justify-center items-center text-sgt-neutral-7 font-bold lg:text-3xl px-3;
+                @apply absolute -right-4;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    z-index: -1;
+                    right: 1px;
+                    bottom: -2px;
+                    height: 0.5rem;
+                    width: 1rem;
+                    background-color: black;
+                    transform: rotate(-15deg);
+                }
+            }
+
+            &::after {
+                content: '';
+                position: absolute;
+                z-index: -1;
+                left: 50%;
+                top: 50%;
+                transform: translateX(-50%) translateY(-50%);
+                height: 120%;
+                width: 86%;
+                @apply border-2 border-sgt-third-2;
+            }
+        }
+    }
+}
+
+.wheel_of_fortune_notify {
+    @apply bg-gradient-to-t from-sgt-primary-3 to-sgt-primary-4 rounded-lg bg-opacity-50 !p-2 lg:!p-3;
+    margin-bottom: 0 !important;
+
+    .ant-notification-notice-message {
+        margin: 0 !important;
+    }
+}

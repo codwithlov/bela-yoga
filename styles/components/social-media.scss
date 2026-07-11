@@ -1,0 +1,68 @@
+.sgt_social_media {
+    position: relative;
+    @apply flex flex-row gap-0 justify-center items-center;
+
+    a {
+        @apply flex flex-row gap-1.5 justify-center items-center;
+    }
+
+    .sgt_social_media_bg,
+    .sgt_lager_social_media_bg {
+        @apply transition-transform duration-300 relative;
+        @apply flex flex-row text-center;
+
+        span {
+            @apply border rounded-lg border-opacity-0;
+            @apply absolute inset-0 h-full w-full;
+            @apply flex flex-row justify-center items-center;
+            @apply transition-all duration-300;
+        }
+    }
+
+    .sgt_lager_social_media_bg {
+        span:nth-child(3) {
+            @apply border-opacity-100;
+        }
+    }
+
+    &:hover {
+        .sgt_social_media_bg {
+            transform: rotate(-35deg) skew(25deg);
+
+            span {
+                @apply border rounded-xl border-opacity-100;
+            }
+
+            span:nth-child(1) {
+                @apply border-opacity-20;
+            }
+
+            span:nth-child(2) {
+                @apply border-opacity-80;
+                transform: translate(3.5px, -3.5px);
+            }
+        }
+
+        .sgt_lager_social_media_bg {
+            transform: translateY(15%) rotate(-35deg) skew(25deg);
+
+            span {
+                @apply border rounded-xl border-opacity-100;
+            }
+
+            span:nth-child(1) {
+                @apply border-opacity-20;
+            }
+
+            span:nth-child(2) {
+                @apply border-opacity-50;
+                transform: translate(4px, -4px);
+            }
+
+            span:nth-child(3) {
+                @apply border-opacity-100;
+                transform: translate(8px, -8px);
+            }
+        }
+    }
+}

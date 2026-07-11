@@ -1,0 +1,59 @@
+.sgt_calendar {
+
+    .ant-select-focused .ant-select-selector,
+    .ant-select-selector:focus,
+    .ant-select-selector:active,
+    .ant-select-selector:hover,
+    .ant-select-open .ant-select-selector {
+        border-color: #d9d9d9 !important;
+        box-shadow: none !important
+    }
+
+    .ant-picker-content {
+        >thead>tr>th {
+            font-weight: 500;
+        }
+    }
+
+    .ant-picker-cell {
+        .ant-picker-cell-inner {
+            min-width: 38px !important;
+            height: 38px !important;
+            line-height: 37px !important;
+        }
+
+        &.ant-picker-cell-today {
+            .ant-picker-cell-inner:before {
+                @apply border-sgt-primary-default #{!important};
+            }
+        }
+
+        &.ant-picker-cell-selected {
+            .ant-picker-cell-inner {
+                @apply text-black bg-sgt-primary-default #{!important};
+            }
+        }
+    }
+
+    &.sgt_calendar_lg {
+        .ant-picker-cell {
+            .ant-picker-cell-inner {
+                min-width: 42px !important;
+                height: 42px !important;
+                line-height: 40px !important;
+            }
+
+        }
+    }
+}
+
+.sgt_select_popup {
+    .ant-select-item-option {
+
+        &.ant-select-item-option-selected,
+        &.ant-select-item-option-active.ant-select-item-option-selected {
+            @apply bg-sgt-primary-light #{!important};
+        }
+
+    }
+}

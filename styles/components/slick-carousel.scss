@@ -1,0 +1,33 @@
+.slick_carousel {
+    .slick-track {
+        display: flex !important;
+        @apply mx-0 px-0 max-lg:px-2.5;
+
+    }
+
+    .slick-slide {
+        @apply transition-all duration-1000;
+        @apply mx-2.5;
+
+        >div {
+            margin-bottom: 3px;
+        }
+    }
+
+    /* the parent */
+    .slick-list {
+        @apply -mx-2.5 max-lg:m-0;
+    }
+
+    .slick-initialized .slick-slide {
+        display: grid !important;
+        height: inherit !important;
+    }
+}
+
+.slick-tour-carousel {
+    .slick-track {
+        @apply mb-5;
+
+    }
+}

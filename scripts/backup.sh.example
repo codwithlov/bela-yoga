@@ -1,0 +1,146 @@
+#!/bin/bash
+
+####################################### ENVIRONMENT VARIABLES #######################################
+# API Source Directory
+API_SOURCE_DIR="/Users/trantruong/Projects/PHP/tic-master"
+# Client Source Directory
+CLIENT_SOURCE_DIR="/Users/trantruong/Projects/NODEJS/retail"
+# DATABASE Information
+DATABASE_HOST="127.0.0.1"
+DATABASE_PORT="3306"
+DATABASE_USER="root"
+DATABASE_PASSWORD=""
+DATABASE_NAME="tic"
+# Backup Directory
+BACKUP_DIR="/Users/trantruong/Downloads/backup"
+# Archive Password
+ARCHIVE_PASSWORD=""
+# Timestamp
+TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+# RClone Config
+RCLONE_DEST="G1-truongota5TP"
+RCLONE_DEST_PATH="saigontimestravel_com_backup"
+# Temp Directory
+TEMP_BACKUP_DIR="$BACKUP_DIR/temp_$TIMESTAMP"
+
+TELEGRAM_BOT_TOKEN=""
+TELEGRAM_CHAT_ID=""
+
+# Check for pigz for parallel compression
+COMPRESS_CMD="tar -czf"
+if command -v pigz >/dev/null; then
+    COMPRESS_CMD="tar -cf - | pigz -c"
+fi
+
+####################################### FUNCTIONS #######################################
+# Function to send telegram message with retry
+send_telegram_message() {
+    local message="$1"
+    local is_error="${2:-false}"
+    local disable_notification="true"
+    local max_retries=5
+    local retry_count=0
+    local success=false
+    
+    if [ "$is_error" = "true" ]; then
+        disable_notification="false"
+    fi
+    
+    while [ $retry_count -lt $max_retries ] && [ "$success" = "false" ]; do
+        if curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
+            -d chat_id="$TELEGRAM_CHAT_ID" \
+            -d text="$message" \
+            -d parse_mode="HTML" \
+            -d disable_notification="$disable_notification" | grep -q "\"ok\":true"; then
+            success=true
+        else
+            retry_count=$((retry_count + 1))
+            sleep_time=$((5 * retry_count * 10))
+            if [ $retry_count -lt $max_retries ]; then
+                echo "Lỗi gửi tin nhắn Telegram. Thử lại lần $retry_count..."
+                sleep $sleep_time
+            fi
+        fi
+    done
+    
+    if [ "$success" = "false" ]; then
+        echo "Không thể gửi tin nhắn Telegram sau $max_retries lần thử"
+    fi
+}
+
+# Function to backup directory
+backup_directory() {
+    if [ -d "$1" ]; then
+        echo "📦 Đang tạo backup thư mục $(basename $1)..."
+        directory_name=$(basename $1)
+        directory_name=$(echo $directory_name | sed 's/[^a-zA-Z0-9]/_/g')
+        
+        tar -czf "$TEMP_BACKUP_DIR/$directory_name.tar.gz" -C $(dirname $1) \
+            --exclude="$(basename $1)/.env" \
+            --exclude="$(basename $1)/.env.*" \
+            $(basename $1)
+    fi
+}
+
+# Function backup database
+backup_database() {
+    echo "📦 Đang backup database..."
+    mysqldump -h $DATABASE_HOST -P $DATABASE_PORT -u $DATABASE_USER -p$DATABASE_PASSWORD $DATABASE_NAME > "$TEMP_BACKUP_DIR/$DATABASE_NAME.sql"
+}
+
+####################################### MAIN SCRIPT #######################################
+# Create backup directories
+mkdir -p "$BACKUP_DIR" "$TEMP_BACKUP_DIR"
+
+echo "🚀 Bắt đầu quá trình backup..."
+send_telegram_message "🚀 Bắt đầu quá trình backup..."
+
+# Perform backups to temp directory
+backup_directory $API_SOURCE_DIR
+backup_directory $CLIENT_SOURCE_DIR
+backup_database
+
+# Create final encrypted archive
+echo "🔒 Đang tạo file backup tổng hợp có mật khẩu..."
+cd "$TEMP_BACKUP_DIR" && \
+$COMPRESS_CMD - * | openssl enc -aes-256-cbc -pbkdf2 -k "$ARCHIVE_PASSWORD" \
+-out "$BACKUP_DIR/backup-$TIMESTAMP.tar.gz.enc"
+
+if [ $? -ne 0 ]; then
+    send_telegram_message "❌ Lỗi: Không thể tạo file backup!" "true"
+    exit 1
+fi
+
+# Cleanup temp directory
+rm -rf "$TEMP_BACKUP_DIR"
+
+# Display backup size
+BACKUP_SIZE=$(du -h "$BACKUP_DIR/backup-$TIMESTAMP.tar.gz.enc" | cut -f1)
+echo "📊 Backup size: $BACKUP_SIZE"
+
+# Upload to S3 with rclone
+echo "🚀 Bắt đầu quá trình upload backup lên S3..."
+rclone copy "$BACKUP_DIR/backup-$TIMESTAMP.tar.gz.enc" $RCLONE_DEST:$RCLONE_DEST_PATH/$TIMESTAMP --progress
+
+if [ $? -eq 0 ]; then
+    # Delete local backup file
+    rm -f "$BACKUP_DIR/backup-$TIMESTAMP.tar.gz.enc"
+
+    if [ $? -ne 0 ]; then
+        send_telegram_message "❌ Lỗi: Không thể xóa file backup ở máy chủ! File upload lên S3 đã được tạo tại $BACKUP_DIR/backup-$TIMESTAMP.tar.gz.enc" "true"
+        exit 1
+    fi
+
+    SUCCESS_MSG="✨ Backup hoàn tất thành công!
+📊 Kích thước: $BACKUP_SIZE
+📂 Vị trí: $BACKUP_DIR/backup-$TIMESTAMP.tar.gz.enc
+☁️ Đã upload lên S3: $RCLONE_DEST:$RCLONE_DEST_PATH/$TIMESTAMP/backup-$TIMESTAMP.tar.gz.enc"
+    send_telegram_message "$SUCCESS_MSG"
+else
+    send_telegram_message "❌ Lỗi: Upload lên S3 thất bại!" "true"
+    exit 1
+fi
+
+echo "✨ Hoàn tất! Backup đã được tạo tại $BACKUP_DIR/backup-$TIMESTAMP.tar.gz.enc"
+
+exit 0

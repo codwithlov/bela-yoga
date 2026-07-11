@@ -1,0 +1,9 @@
+export const LOGIN: string = "Đăng nhập"
+export const PASSWORD: string = 'Mật khẩu';
+export const FORGOT_PASSWORD: string = "Quên mật khẩu ?";
+export const ACCESS_TOKEN_SESSION: string = 'access_token_session';
+export const REFRESH_TOKEN_SESSION: string = 'refresh_token_session';
+export const TOKEN_EXPIRES_TIME: string = 'token_expires_time';
+export const USER_INFO: string = 'user_info';
+export const ADMIN_ROLE_NAME: string = 'admin';
+export const GUEST_ROLE_NAME: string = 'guest';

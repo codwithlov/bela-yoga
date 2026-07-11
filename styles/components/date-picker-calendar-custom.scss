@@ -1,0 +1,48 @@
+.ant-picker-dropdown.date_picker_calendar_custom {
+    .ant-picker-header {
+        @apply text-sgt-secondary-dark;
+
+        .ant-picker-month-btn,
+        .ant-picker-year-btn {
+            &:hover {
+                @apply text-sgt-secondary-default;
+            }
+        }
+    }
+
+    .ant-picker-cell {
+        .ant-picker-cell-inner {
+            min-width: 40px;
+            height: 40px;
+            line-height: 39px;
+        }
+
+        &.ant-picker-cell-today {
+            .ant-picker-cell-inner:before {
+                @apply border-sgt-primary-default;
+            }
+        }
+
+        &.ant-picker-cell-selected,
+        &:hover {
+            .ant-picker-cell-inner {
+                @apply text-black bg-sgt-primary-default #{!important};
+            }
+        }
+
+        /** Disable date */
+        // &.ant-picker-cell-disabled {
+        //     &:before {
+        //         background: rgba(0, 0, 0, 0);
+        //     }
+
+        //     &.ant-picker-cell-in-view {
+        //         color: rgba(0, 0, 0, 0.88);
+        //     }
+
+        //     .ant-picker-cell-inner {
+        //         background: #fff;
+        //     }
+        // }
+    }
+}

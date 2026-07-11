@@ -1,0 +1,10 @@
+.transition-show {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.7s ease-in-out;
+}
+
+.transition-show-active {
+  opacity: 1;
+  transform: translateY(0);
+}

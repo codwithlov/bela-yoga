@@ -1,0 +1,88 @@
+#feedback_slider {
+  .feedback_item {
+    @apply bg-gradient-to-b from-sgt-primary-2 to-white m-0.5 p-0.5 rounded-sgt-10 overflow-hidden;
+
+    >div {
+      @apply rounded-sgt-10 overflow-hidden;
+    }
+  }
+
+  .slick-slide {
+    padding: 40px 0;
+    transform: scale(0.92);
+    @apply transition-all duration-300;
+  }
+
+  .slick-center {
+    transform: scale(1.1);
+    @apply transition-all duration-300;
+
+    .feedback_item {
+      @apply shadow-sgt-black-5 mb-5;
+    }
+  }
+
+  @media not all and (min-width: 640px) {
+    .slick-slide {
+      @apply mx-0;
+      @apply py-8;
+      transform: scale(0.92);
+      @apply transition-all duration-700;
+    }
+
+    .slick-current {
+      transform: scale(1);
+      @apply transition-all duration-700;
+
+      .feedback_item {
+        @apply shadow-sgt-black-5 mb-5;
+      }
+    }
+
+    .slick_carousel .slick-list {
+      @apply -mx-2.5;
+    }
+
+    .slick-dots {
+      display: flex !important;
+      flex-direction: row;
+      justify-content: center;
+      bottom: -1.25rem;
+
+      li {
+        @apply w-4 h-4 mx-1;
+
+        button {
+          @apply w-4 h-4;
+
+          &:before {
+            content: '';
+            @apply w-2.5 h-2.5 rounded-full p-0 text-2xs;
+            @apply left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
+            @apply transition-all duration-300;
+            @apply border border-sgt-secondary-1 opacity-100;
+          }
+        }
+
+        &.slick-active {
+          button {
+            &:before {
+              @apply bg-sgt-secondary-1;
+            }
+          }
+
+        }
+      }
+
+    }
+
+    .slick_slide_visible {
+      visibility: visible !important;
+    }
+  }
+
+  .feedback_item_wrap {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}

@@ -1,0 +1,10 @@
+export const FLIGHT_DATE_KEY = 'flight_date';
+export const SLUG_PERMALINK_KEY = 'slug_permalink';
+export const AUTHOR_SLUG = 'author_slug';
+export const SORT_BY_TYPE_KEY = 'sort_by';
+export const DAY_TYPE_KEY = 'day_number';
+export const MARKET_TYPE_KEY = 'market_id';
+export const DESTINATION_TYPE_KEY = 'destination_slug';
+export const PRICE_RANGE_TYPE_KEY = 'price_range';
+export const BEST_TOUR_TYPE_KEY = 'best_tour';
+export const FROM_TYPE_KEY = 'from';

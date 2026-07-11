@@ -1,0 +1,172 @@
+#visa_page {
+    #visa_banner {
+        #visa_banner_search {
+            @apply mx-auto absolute left-1/2 -translate-x-1/2 -translate-y-1/2;
+        }
+
+        .visa_banner_from {
+            padding: 1.125rem;
+
+            .form_item {
+                @apply rounded-sgt-10 h-[3.125rem] w-full bg-sgt-neutral-5 bg-opacity-50 relative flex flex-row justify-start items-center;
+                @apply max-sm:h-10;
+            }
+
+            .form_icon {
+                @apply bg-sgt-primary-1 ml-2.5 w-6 h-6;
+            }
+
+            .form_control {
+                @apply text-sub-1 text-sgt-neutral-1 placeholder:text-sgt-neutral-4;
+                @apply max-sm:text-button;
+                background: transparent;
+                border: none !important;
+                box-shadow: none;
+
+                &:hover,
+                &:focus-within {
+                    border: none !important;
+                    box-shadow: none;
+                }
+
+                &:focus {
+                    border: none !important;
+                    box-shadow: none;
+                }
+            }
+        }
+
+    }
+
+    #visa_implementation_process {
+        .implementation_process {
+            @apply flex flex-row gap-5 pt-16 mt-1;
+        }
+
+        .implementation_process_item {
+            @apply relative z-50;
+            @apply rounded-sgt-10 flex-1 pt-14 pb-7 px-6 flex flex-col gap-2.5 items-center bg-sgt-neutral-7 text-center;
+            @apply text-sub-1 text-sgt-neutral-1;
+            @apply transition-all duration-300;
+            @apply border border-white;
+
+            &:hover {
+                @apply border-sgt-primary-2 shadow-sgt-black-5 cursor-pointer;
+            }
+        }
+
+        .implementation_process_item_ordinal_number {
+            width: 4.375rem;
+            height: 4.375rem;
+            @apply rounded-full bg-sgt-primary-2 bg-opacity-30;
+            @apply flex justify-center items-center;
+            @apply absolute top-0 -translate-y-1/2;
+
+            >div {
+                @apply w-14 h-14 rounded-full bg-sgt-primary-2 flex flex-row justify-center items-center text-h3 text-sgt-secondary-1;
+            }
+        }
+
+        .implementation_process_item_title {
+            @apply text-sub-1;
+        }
+
+        .implementation_process_item_text {
+            @apply text-body-2;
+        }
+
+
+        @media not all and (min-width: 640px) {
+            .implementation_process {
+                @apply border-none pt-11 pb-0;
+                @apply grid grid-cols-12 gap-y-11;
+            }
+
+            .implementation_process_item {
+                @apply col-span-6 text-cap-1 font-semibold px-4 pt-9 pb-6 gap-3;
+
+                &:before {
+                    @apply content-none;
+                }
+
+                &:after {
+                    @apply content-none;
+
+                }
+            }
+
+            .implementation_process_item_ordinal_number {
+                @apply w-12 h-12;
+
+                >div {
+                    @apply w-9 h-9 text-sub-1 font-bold text-sgt-secondary-1;
+                }
+            }
+
+            .implementation_process_item_title {
+                @apply text-button;
+            }
+
+            .implementation_process_item_text {
+                @apply text-cap-1;
+            }
+
+        }
+    }
+
+    #visa_partner {
+        .slick_carousel .slick-list {
+            @apply -mx-2.5;
+        }
+
+        .slick-slide .slick_slide_multiple_row {
+            &:nth-child(1) {
+                @apply mb-4;
+            }
+        }
+    }
+
+    #visa_services {
+
+        .visa_service_item {
+            @apply cursor-pointer;
+
+            .title_item {
+                opacity: 0;
+                @apply bg-sgt-secondary-1 bg-opacity-70 absolute inset-0 transition-all duration-300;
+            }
+
+            &:hover {
+
+                .title_item {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    #visa_check {
+        .visa_check {
+            @apply flex flex-row justify-center items-center gap-5;
+
+            .visa_check_button {
+                @apply py-5 px-24 text-sgt-secondary-1 text-h3 bg-sgt-neutral-7 border border-sgt-primary-2 rounded-sgt-10 transition-all duration-300;
+
+                &:hover {
+                    @apply bg-sgt-primary-2;
+                }
+            }
+        }
+
+        @media not all and (min-width: 640px) {
+            .visa_check {
+                @apply flex-wrap gap-2.5;
+
+                .visa_check_button {
+                    @apply px-0 py-2.5 flex-auto w-full text-lg font-bold;
+                }
+            }
+
+        }
+    }
+}

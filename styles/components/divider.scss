@@ -1,0 +1,28 @@
+.sgt_divider_with_text {
+    @apply h-auto flex flex-row justify-center items-center;
+    width: 100%;
+
+    >p {
+        padding: 0rem 0.5rem;
+    }
+
+    &:before,
+    &:after {
+        content: '';
+        position: relative;
+        display: block;
+        width: 50%;
+        height: 2px;
+        border-bottom: 1px solid #bdbdbd;
+        transform: translateY(-50%);
+        top: 50%;
+    }
+
+    &:before {
+        left: 0;
+    }
+
+    &:after {
+        right: 0;
+    }
+}

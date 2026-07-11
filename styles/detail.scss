@@ -1,0 +1,80 @@
+#detail_page,
+.sgt_drawer_tour_detail {
+
+    .detail_content_card {
+        @apply bg-white rounded-sgt-10 lg:px-[18px] px-3 py-5 mb-5;
+    }
+
+    .slick-slide {
+        .detail_content_small_thumbnail {
+            div {
+                position: relative;
+
+                &:after {
+                    content: "";
+                    width: 100%;
+                    height: 100%;
+                    opacity: 0.38;
+                    background: #000;
+                    top: 0px;
+                    right: 0px;
+                    position: absolute;
+                    display: inline-block;
+                    @apply transition ease-linear duration-300;
+                }
+            }
+        }
+
+        &.slick-active {
+            .detail_content_small_thumbnail {
+                div {
+                    &:after {
+                        opacity: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.ant-modal.sgt-booking-modal .ant-modal-content {
+    padding: 0px;
+    @apply rounded-lg;
+}
+
+.detail-tour-schedule-calendar {
+    .ant-picker-cell {
+        .sgt-picker-cell-special-date {
+            @apply border border-sgt-primary-default;
+
+            &:hover {
+                @apply bg-sgt-primary-default #{!important};
+            }
+        }
+
+        &.ant-picker-cell-selected,
+        &:hover {
+            .sgt-picker-cell-special-date {
+                @apply text-black bg-sgt-primary-default #{!important};
+            }
+        }
+    }
+
+    .sgt-picker-cell-special-date-seats {
+        position: absolute;
+        width: 100%;
+        z-index: 10;
+        line-height: 1;
+        bottom: 8px;
+        left: 50%;
+        font-size: 10px;
+        font-weight: 600;
+        transform: translateX(-50%);
+        background: transparent;
+        // @apply text-sgt-secondary-default;
+    }
+}
+
+.sgt_drawer .ant-drawer-body {
+    padding: 0 !important;
+}

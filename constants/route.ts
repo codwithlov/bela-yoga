@@ -1,0 +1,66 @@
+export const ADMIN_ROUTE: string = "admin";
+export const HOME_ROUTE: string = "topic";
+export const LOGIN_ROUTE: string = "login";
+
+export const BOOKING: string = "admin-booking";
+export const SUPPORT_REQUEST: string = "admin-support-request";
+export const GROUP_TOUR_REQUEST: string = "admin-group-tour-request";
+export const MARKET: string = "admin-market";
+export const DESTINATION: string = "admin-destination";
+export const NATION: string = "admin-nation";
+export const GALLERY_IMAGE: string = "admin-gallery/image";
+export const COMMENT: string = "admin-comment";
+export const TOPIC: string = "admin-topic";
+export const HISTORY: string = "admin-history";
+export const TOUR: string = "admin-tour";
+export const ROLE: string = "admin-role";
+export const POST: string = "admin-post";
+export const SLIDER_BANNER: string = "admin-slider-banner";
+export const USER: string = "admin-user";
+export const AUTHOR: string = "admin-author";
+export const REDIRECT: string = "admin-redirect";
+export const SLUG: string = "admin-slug";
+export const VOUCHER: string = "admin-voucher";
+export const TAG: string = "admin-tag";
+export const FEEDBACK: string = "admin-feedback";
+
+export const ADMIN = '/admin';
+export const ADMIN_BOOKING = `${ADMIN}/booking`;
+export const ADMIN_ORGANIZATIONS = `${ADMIN}/organizations`;
+export const ADMIN_VENUES = `${ADMIN}/venues`;
+export const ADMIN_SUPPORT_REQUEST = `${ADMIN}/support-request`;
+export const ADMIN_OVERVIEW = `${ADMIN}/overview`;
+export const ADMIN_GROUP_TOUR_REQUEST = `${ADMIN}/group-tour-request`;
+export const ADMIN_MARKET = `${ADMIN}/market`;
+export const ADMIN_TOUR = `${ADMIN}/tour`;
+export const ADMIN_TOPIC = `${ADMIN}/topic`;
+export const ADMIN_DESTINATION = `${ADMIN}/destination`;
+export const ADMIN_NATION = `${ADMIN}/nation`;
+export const ADMIN_SLUG = `${ADMIN}/slug`;
+export const ADMIN_VOUCHER = `${ADMIN}/voucher`;
+export const ADMIN_REDIRECT = `${ADMIN}/redirect`;
+export const ADMIN_MENU = `${ADMIN}/menu`;
+export const ADMIN_PAGE = `${ADMIN}/page`;
+export const ADMIN_SECTION = `${ADMIN}/section`;
+export const ADMIN_ROLE = `${ADMIN}/role`;
+export const ADMIN_USER = `${ADMIN}/user`;
+export const ADMIN_POST = `${ADMIN}/post`;
+export const ADMIN_TAG = `${ADMIN}/tag`;
+export const ADMIN_AUTHOR = `${ADMIN}/author`;
+export const ADMIN_SLIDER_BANNER = `${ADMIN}/slider-banner`;
+export const ADMIN_FEEDBACK = `${ADMIN}/feedback`;
+export const ADMIN_LOGIN = `${ADMIN}/${LOGIN_ROUTE}`;
+
+export const GUEST_MARKET: string = "market";
+
+export const GUEST_HOME: string = '/';
+export const GUEST_BOOKING: string = '/';
+export const GUEST_PRODUCTS: string = '/san-pham';
+export const GUEST_STORE: string = GUEST_PRODUCTS;
+export const GUEST_POSTS: string = '/bai-viet';
+export const GUEST_ABOUT_US: string = '/gioi-thieu';
+export const GUEST_SEARCH: string = '/search';
+export const GUEST_404: string = '/not-found';
+export const GUEST_500: string = '/server-error';
+export const GUEST_TAGS: string = '/tags';
+

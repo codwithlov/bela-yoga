@@ -1,0 +1,12 @@
+export const ACTION_LIST = 'LIST';
+export const ACTION_CREATE = 'CREATE';
+export const ACTION_UPDATE = `UPDATE`;
+export const ACTION_DELETE = 'DELETE';
+export const ACTION_DELETE_DRAFT = 'DELETE_DRAFT';
+export const ACTION_RESTORE = 'RESTORE';
+export const ACTION_MARKET = 'MARKET';
+export const ACTION_REVIEW = 'REVIEW';
+export const ACTION_IMAGE = 'IMAGE';
+export const ACTION_HISTORY = 'HISTORY';
+export const ACTION_POST = 'POST';
+export const ACTION_SLUG = 'SLUG';

@@ -1,0 +1,10 @@
+export const MARKET_TYPE_SLUG = 'MARKET_TYPES';
+export const MARKET_SLUG = 'MARKETS';
+export const NATION_SLUG = 'NATIONS';
+export const DESTINATION_SLUG = 'DESTINATIONS';
+export const TOPIC_SLUG = 'TOPICS';
+export const POST_SLUG = 'POSTS';
+export const POST_TYPE_SLUG = 'POST_TYPES';
+export const DEFAULT_TITLE = "SPORTVERSE | Đặt sân, theo dõi trận đấu và khám phá cộng đồng bóng đá";
+export const DEFAULT_DESCRIPTION = "SPORTVERSE là nền tảng booking sân, nội dung trận đấu và kết nối cộng đồng thể thao hiện đại.";
+export const DEFAULT_MARKET_TYPE_SLUG = 'tour-nuoc-ngoai';

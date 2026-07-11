@@ -1,0 +1,97 @@
+#home_page {
+    @apply bg-white mb-4;
+
+    .rt_location_tour_custom {
+
+        @apply aspect-16/9 rounded-sgt-10 relative shadow-sgt-black-1;
+        position: relative;
+
+        &:after {
+            content: '';
+            position: absolute;
+            position: absolute;
+            height: 40%;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(to top, rgba(15, 39, 66, 0.85), rgba(255, 255, 255, 0));
+            // background: linear-gradient(to top, rgba(39, 20, 4, 0.8) 0%, rgba(255, 255, 255, 0) 35%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0) 0%)
+        }
+
+        .rt_tour_left_background {
+            @apply bg-center bg-no-repeat bg-cover;
+            transform: scale(1, 1);
+            transition: transform 700ms;
+        }
+
+        .rt_tour_background_hover {
+            @apply flex flex-col w-full h-full justify-center items-center absolute left-0 top-0 z-30;
+            opacity: 0;
+            transition: opacity 700ms;
+
+            &:before {
+                content: '';
+                position: absolute;
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                bottom: 0;
+                left: 0;
+                background: linear-gradient(to top, rgba(15, 39, 66, 0.58), rgba(15, 39, 66, 0.58));
+            }
+        }
+
+        .rt_tour_content {
+            @apply translate-x-[0] transition-all duration-700;
+        }
+
+        &:hover {
+            .rt_tour_left_background {
+                transform: scale(1.1, 1.1);
+                transform-origin: center center;
+            }
+
+            .rt_tour_content {
+                @apply -translate-x-[120%];
+            }
+
+            .rt_tour_background_hover {
+                opacity: 1;
+            }
+        }
+
+        &.rt_location_tour_customr2c4 {
+            @apply row-span-2 col-span-4
+        }
+
+        &.rt_location_tour_customr4c4 {
+            @apply row-span-4 col-span-4 w-full h-full;
+        }
+    }
+}
+
+/** Search bar vertical */
+
+@keyframes sgtFadeUp {
+    from {
+        transform: translateY(10%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+#search_bar_vertical_component {
+    animation: sgtFadeUp 700ms;
+    animation-delay: 3s;
+    -webkit-animation-delay: 3s;
+    -moz-animation: sgtFadeUp 700ms;
+    /* Firefox */
+    -webkit-animation: sgtFadeUp 700ms;
+    /* Safari and Chrome */
+    -o-animation: sgtFadeUp 700ms;
+    /* Opera */
+}

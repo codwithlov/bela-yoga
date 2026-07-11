@@ -1,0 +1,302 @@
+#author_posts {
+
+    $bannerHeight: 72lvh;
+    $bannerSmallHeight: 75lvw;
+    $animationSlogan1: fadeUp_1 700ms 300ms ease forwards;
+    $animationSlogan2: fadeUp_2 700ms 300ms ease forwards;
+
+
+    // #post_list_container {
+    //     .journey_diary_bg_primary_1th {
+    //         height: $bannerHeight;
+    //         @apply w-full overflow-hidden relative;
+    //         background-position: right 72% top 65%;
+    //         @apply transition-all duration-1000;
+
+    //         .journey_diary_bg_primary_2th {
+    //             @apply absolute z-10;
+    //             @apply w-full h-full;
+    //             background-position: top;
+    //             background-size: cover;
+    //             height: 80%;
+    //             bottom: 0;
+    //             @apply translate-y-0;
+    //             @apply transition-all duration-1000;
+    //         }
+
+    //         .journey_diary_text {
+    //             @apply translate-y-0;
+    //             @apply pt-12 pb-5 flex flex-col gap-3;
+    //             @apply transition-all duration-1000;
+    //         }
+
+    //         .journey_diary_bg_secondary {
+    //             @apply absolute z-20;
+    //             @apply w-full h-4/5 absolute bottom-0 opacity-100;
+    //             transform: scale(1.2) translateY(55px);
+    //             @apply transition-opacity duration-100 delay-300;
+
+    //             img {
+    //                 object-position: 'top';
+    //                 object-fit: none
+    //             }
+    //         }
+
+    //         .journey_diary_bg_model {
+    //             @apply absolute left-1/2 -translate-x-1/2 bottom-1/2 translate-y-1/2 mb-6;
+
+    //             img {
+    //                 width: 90% !important;
+    //             }
+    //         }
+
+    //         &.journey_diary_scroll {
+    //             height: 165px;
+    //             background-position: right 72% top 5%;
+
+    //             .journey_diary_bg_primary_2th {
+    //                 --tw-translate-y: 30lvh;
+    //             }
+
+    //             .journey_diary_text {
+    //                 --tw-translate-y: 30lvh;
+    //             }
+
+    //             .journey_diary_bg_secondary {
+    //                 @apply opacity-0;
+    //                 // @apply transition-opacity duration-1000 delay-300;
+    //             }
+
+    //         }
+    //     }
+
+    //     .journey_diary_list_wrap {
+    //         @apply w-full h-auto relative mx-auto z-20 -top-36 -mb-36 bg-cover overflow-hidden;
+    //         @apply transition-all duration-700;
+    //     }
+
+    //     .journey_diary_bg_cloud {
+    //         @apply w-full absolute z-20 -translate-y-1/2;
+    //         top: $bannerHeight;
+    //     }
+
+    //     .journey_diary_bg_wing {
+    //         @apply absolute z-10 bg-contain bg-no-repeat
+    //     }
+
+    //     .journey_diary_bg_wing_1 {
+    //         @apply top-0 right-28 translate-y-1/2 translate-x-full;
+    //         --tw-rotate: 28deg;
+    //     }
+
+    //     .journey_diary_bg_wing_2 {
+    //         @apply left-0 -bottom-2.5 -translate-x-1/2 max-sm:hidden;
+    //         --tw-rotate: 180deg;
+    //     }
+
+
+    //     .journey_diary_text {
+
+    //         div {
+    //             opacity: 0;
+    //         }
+
+    //         div:nth-child(1) {
+    //             animation: $animationSlogan1;
+    //             -moz-animation: $animationSlogan1;
+    //             -webkit-animation: $animationSlogan1;
+    //             -o-animation: $animationSlogan1;
+    //         }
+
+    //         div:nth-child(2) {
+    //             animation: $animationSlogan2;
+    //             -moz-animation: $animationSlogan2;
+    //             -webkit-animation: $animationSlogan2;
+    //             -o-animation: $animationSlogan2;
+    //         }
+
+    //     }
+
+    //     @media (min-width: 1536px) {
+    //         .journey_diary_bg_primary_1th {
+    //             .journey_diary_bg_secondary {
+    //                 transform: scale(1) translateY(0);
+    //             }
+
+    //             .journey_diary_bg_model {
+    //                 margin-bottom: -2.5rem;
+    //             }
+
+    //         }
+
+    //     }
+
+    //     @media (min-width: 1921px) {
+    //         .journey_diary_bg_primary_1th {
+    //             .journey_diary_bg_model {
+    //                 margin-bottom: 0;
+
+    //                 img {
+    //                     width: 100% !important;
+    //                     transform: scale(1.2);
+    //                 }
+    //             }
+
+    //             .journey_diary_bg_secondary {
+    //                 object-fit: cover;
+    //             }
+    //         }
+
+    //         .journey_diary_list_wrap {
+    //             top: -14rem;
+    //             margin-bottom: -14rem;
+    //         }
+
+    //     }
+
+    //     @media not all and (min-width: 640px) {
+    //         .journey_diary_bg_primary_1th {
+    //             height: $bannerSmallHeight;
+    //             background-position: right 72% top 100%;
+    //             background-size: cover;
+
+    //             .journey_diary_bg_primary_2th {
+    //                 height: 75%;
+    //             }
+
+    //             .journey_diary_text {
+    //                 @apply pt-10;
+    //             }
+
+    //             .journey_diary_bg_model {
+    //                 @apply mb-12;
+
+    //                 .image {
+    //                     width: 80% !important;
+    //                 }
+    //             }
+    //         }
+
+
+    //         .journey_diary_bg_wing_1 {
+    //             --tw-rotate: 28deg;
+    //             @apply right-16;
+    //         }
+
+    //         .journey_diary_list_wrap {
+    //             background-size: contain !important;
+    //             top: -4rem;
+    //             @apply pb-20;
+    //         }
+    //     }
+
+    //     @keyframes fadeUp_1 {
+    //         from {
+    //             transform: translateY(-50%);
+    //             opacity: 0;
+    //         }
+
+    //         to {
+    //             transform: translateY(0);
+    //             opacity: 1;
+    //         }
+    //     }
+
+    //     @keyframes fadeUp_2 {
+    //         from {
+    //             transform: translateY(50%);
+    //             opacity: 0;
+    //         }
+
+    //         to {
+    //             transform: translateY(0);
+    //             opacity: 1;
+    //         }
+    //     }
+    // }
+
+    $durationFalling: 10s;
+
+    .falling {
+        position: absolute;
+        width: 100lvw;
+        height: 100lvh;
+        left: 0;
+        top: 0;
+        z-index: 20;
+
+        div {
+            position: absolute;
+            top: -10%;
+        }
+
+        @media not all and (min-width: 640px) {
+            height: $bannerSmallHeight;
+        }
+
+        div:nth-child(1) {
+            left: 20%;
+            animation: falling $durationFalling linear 1s infinite;
+        }
+
+        div:nth-child(2) {
+            left: 40%;
+            animation: falling $durationFalling linear 2s infinite;
+        }
+
+        div:nth-child(3) {
+            left: 55%;
+            animation: falling $durationFalling linear 6s infinite;
+        }
+
+        div:nth-child(4) {
+            left: 70%;
+            animation: falling $durationFalling linear 4s infinite;
+        }
+
+        div:nth-child(5) {
+            left: 30%;
+            transform: rotate(180deg);
+            animation: falling $durationFalling linear 0s infinite;
+        }
+
+        div:nth-child(6) {
+            left: 50%;
+            top: -50%;
+            transform: rotate(180deg);
+            animation: falling $durationFalling linear 1.5s infinite;
+        }
+
+        div:nth-child(7) {
+            left: 50%;
+            transform: rotate(180deg);
+            animation: falling $durationFalling linear 10s infinite;
+        }
+    }
+
+    @keyframes falling {
+
+        0% {
+            opacity: 1;
+        }
+
+        30% {
+            transform: translateX(20px) rotate(45deg);
+        }
+
+        60% {
+            transform: translateX(20px) rotate(90deg);
+        }
+
+        90% {
+            transform: translateX(-20px) rotateY(180deg);
+            opacity: 1;
+        }
+
+        100% {
+            transform: translateX(-20px) rotate(180deg);
+            opacity: 0;
+            top: 100%;
+        }
+    }
+}

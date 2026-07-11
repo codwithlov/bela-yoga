@@ -1,0 +1,16 @@
+#banner_slider {
+    .mobile_slider {
+        .slick-dots {
+            bottom: 10px !important;
+
+            li {
+                margin: 0;
+
+                button::before {
+                    @apply text-2xs;
+                }
+            }
+        }
+    }
+
+}

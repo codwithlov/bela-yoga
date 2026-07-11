@@ -1,0 +1,194 @@
+#about_us_page {
+    #about_us_development_process {
+        .process_slider_tabs {
+            @apply w-full flex-row justify-center items-center;
+
+            .process_button {
+                @apply text-h3 text-sgt-neutral-4 relative py-4 border-b-2 max-sm:text-sm;
+
+                &.process_button_active {
+                    color: var(--color-primary-1) !important;
+                }
+            }
+        }
+
+        #process_indicator {
+            position: absolute;
+            bottom: 1px;
+            min-width: 0;
+            width: 0;
+            height: 4px;
+            @apply bg-sgt-primary-1 text-sgt-primary-1;
+            @apply transition-all duration-300;
+        }
+
+        .process_content {
+            animation: sgtFadeUp 500ms;
+            -moz-animation: sgtFadeUp 500ms;
+            -webkit-animation: sgtFadeUp 500ms;
+            -o-animation: sgtFadeUp 500ms;
+        }
+    }
+
+    #about_us_vision_mission {
+        .slick_carousel .slick-list {
+            @apply -mx-2.5;
+        }
+
+        .slick-dots {
+            display: flex !important;
+            flex-direction: row;
+            justify-content: center;
+            bottom: -1.25rem;
+
+            li {
+                @apply w-4 h-4 mx-1;
+
+                button {
+                    @apply w-4 h-4;
+
+                    &:before {
+                        content: '';
+                        @apply w-2.5 h-2.5 rounded-full p-0 text-2xs;
+                        @apply left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
+                        @apply transition-all duration-300;
+                        @apply border border-sgt-secondary-1 opacity-100;
+                    }
+                }
+
+                &.slick-active {
+                    button {
+                        &:before {
+                            @apply bg-sgt-secondary-1;
+                        }
+                    }
+
+                }
+            }
+
+        }
+
+        .slick_slide_visible {
+            visibility: visible !important;
+        }
+    }
+
+    #about_us_customers {
+        .slick_carousel .slick-list {
+            @apply -mx-2;
+        }
+    }
+
+    #event-activities {
+        .event-activitie-item {
+            position: relative;
+
+            &:after {
+                content: '';
+                position: absolute;
+                position: absolute;
+                height: 40%;
+                width: 100%;
+                bottom: 0;
+                left: 0;
+                background: linear-gradient(to top, rgba(39, 20, 4, 0.8), rgba(255, 255, 255, 0));
+            }
+        }
+
+        .slick-dots {
+            display: flex !important;
+            flex-direction: row;
+            justify-content: center;
+            bottom: -1.25rem;
+
+            li {
+                @apply w-4 h-4 mx-1;
+
+                button {
+                    @apply w-4 h-4;
+
+                    &:before {
+                        content: '';
+                        @apply w-2.5 h-2.5 rounded-full p-0 text-2xs;
+                        @apply left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
+                        @apply transition-all duration-300;
+                        @apply border border-sgt-neutral-4 opacity-100;
+                    }
+                }
+
+                &.slick-active {
+                    button {
+                        &:before {
+                            @apply bg-sgt-neutral-4;
+                        }
+                    }
+
+                }
+            }
+
+        }
+
+        .slick_slide_visible {
+            visibility: visible !important;
+        }
+    }
+
+    .counter.counter_show {
+        transition: --count-from 1s;
+        counter-reset: int var(--count-from, 0);
+        animation: counter var(--count-time, 3s) forwards ease-in-out;
+        -moz-animation: counter var(--count-time, 3s) forwards ease-in-out;
+        -webkit-animation: counter var(--count-time, 3s) forwards ease-in-out;
+        -o-animation: counter var(--count-time, 3s) forwards ease-in-out;
+    }
+
+    .counter.counter_show::before {
+        content: counter(int);
+    }
+
+    @keyframes counter {
+        to {
+            --count-from: var(--count-to, 0);
+        }
+    }
+}
+
+@keyframes sgtFadeUp {
+    0% {
+
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+@property --count-to {
+    syntax: '<integer>';
+    initial-value: 0;
+    inherits: false;
+}
+
+@property --count-from {
+    syntax: '<integer>';
+    initial-value: 0;
+    inherits: false;
+}
+
+@property --count-time {
+    syntax: '<string>';
+    initial-value: 0;
+    inherits: false;
+}
+
+@property --num {
+    syntax: "<integer>";
+    initial-value: 0;
+    inherits: false;
+}
