@@ -289,7 +289,16 @@ const serializeSection = (doc: any): AdminTemplateSection => ({
 async function withFallback<T>(loader: () => Promise<T>, fallback: T): Promise<T> {
   try {
     return await loader();
-  } catch {
+  } catch (error) {
+    console.error('[template-cms-repository] withFallback error:', error);
+
+    const strictMode = process.env.NODE_ENV === 'production'
+      || process.env.TEMPLATE_CMS_DISABLE_FALLBACK === 'true';
+
+    if (strictMode) {
+      throw error;
+    }
+
     return fallback;
   }
 }
