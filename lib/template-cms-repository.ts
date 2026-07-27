@@ -150,6 +150,8 @@ const mapStoreItem = (item: AdminTemplateStoreItem) => ({
   featured: item.featured,
 });
 
+const normalizeStoreSku = (value: string) => String(value || '').trim().toUpperCase();
+
 const mapMenuItem = (item: AdminTemplateMenuItem) => ({
   templateId: item.id,
   title: item.title,
@@ -307,13 +309,19 @@ export async function ensureTemplateCmsSeed() {
     const nextCategoryId = Math.max(9200, Number(maxCategory?.templateId || 9200)) + 1;
     const categoryCount = await TemplatePostCategory.countDocuments();
 
-    await TemplatePostCategory.create({
-      templateId: nextCategoryId,
-      name: fallbackCategoryName,
-      slug: fallbackSlug,
-      sortOrder: categoryCount + 1,
-      status: 'active',
-    });
+    try {
+      await TemplatePostCategory.create({
+        templateId: nextCategoryId,
+        name: fallbackCategoryName,
+        slug: fallbackSlug,
+        sortOrder: categoryCount + 1,
+        status: 'active',
+      });
+    } catch (error: any) {
+      if (Number(error?.code) !== 11000) {
+        throw error;
+      }
+    }
   }
 
   const currentPostCategories = await TemplatePost.find({}, { category: 1, _id: 0 }).lean();
@@ -327,16 +335,22 @@ export async function ensureTemplateCmsSeed() {
     if (nextCategories.length) {
       const maxDoc: any = await TemplatePostCategory.findOne().sort({ templateId: -1 }).lean();
       let nextTemplateId = Math.max(9200, Number(maxDoc?.templateId || 9200));
-      await TemplatePostCategory.insertMany(nextCategories.map((name, index) => {
-        nextTemplateId += 1;
-        return {
-          templateId: nextTemplateId,
-          name,
-          slug: slugifyCategory(name),
-          sortOrder: (existing.length + index + 1),
-          status: 'active',
-        };
-      }));
+      try {
+        await TemplatePostCategory.insertMany(nextCategories.map((name, index) => {
+          nextTemplateId += 1;
+          return {
+            templateId: nextTemplateId,
+            name,
+            slug: slugifyCategory(name),
+            sortOrder: (existing.length + index + 1),
+            status: 'active',
+          };
+        }), { ordered: false });
+      } catch (error: any) {
+        if (Number(error?.code) !== 11000) {
+          throw error;
+        }
+      }
     }
   }
 
@@ -572,11 +586,27 @@ export async function getPublicStoreItemsFromStore(limit?: number): Promise<IPub
 
 export async function createAdminStoreItem(input: Omit<AdminTemplateStoreItem, 'id'> & { description?: string | null }) {
   await ensureTemplateCmsSeed();
-  const templateId = Date.now();
+  const normalizedSku = normalizeStoreSku(input.sku);
+  if (!normalizedSku) {
+    const error = new Error('SKU_REQUIRED') as Error & { code?: string };
+    error.code = 'SKU_REQUIRED';
+    throw error;
+  }
+
+  const duplicatedSku = await TemplateStoreItem.findOne({ sku: normalizedSku }).lean();
+  if (duplicatedSku) {
+    const error = new Error('SKU_EXISTS') as Error & { code?: string };
+    error.code = 'SKU_EXISTS';
+    throw error;
+  }
+
+  const maxDoc: any = await TemplateStoreItem.findOne().sort({ templateId: -1 }).lean();
+  const templateId = Math.max(2000, Number(maxDoc?.templateId || 2000)) + 1;
+
   const created = await TemplateStoreItem.create({
     templateId,
     name: input.name,
-    sku: input.sku,
+    sku: normalizedSku,
     category: input.category,
     type: input.type,
     organizationName: input.organization_name || null,
@@ -593,11 +623,25 @@ export async function createAdminStoreItem(input: Omit<AdminTemplateStoreItem, '
 
 export async function updateAdminStoreItem(templateId: number, input: Omit<AdminTemplateStoreItem, 'id'> & { description?: string | null }) {
   await ensureTemplateCmsSeed();
+  const normalizedSku = normalizeStoreSku(input.sku);
+  if (!normalizedSku) {
+    const error = new Error('SKU_REQUIRED') as Error & { code?: string };
+    error.code = 'SKU_REQUIRED';
+    throw error;
+  }
+
+  const duplicatedSku = await TemplateStoreItem.findOne({ sku: normalizedSku, templateId: { $ne: templateId } }).lean();
+  if (duplicatedSku) {
+    const error = new Error('SKU_EXISTS') as Error & { code?: string };
+    error.code = 'SKU_EXISTS';
+    throw error;
+  }
+
   const updated = await TemplateStoreItem.findOneAndUpdate(
     { templateId },
     {
       name: input.name,
-      sku: input.sku,
+      sku: normalizedSku,
       category: input.category,
       type: input.type,
       organizationName: input.organization_name || null,

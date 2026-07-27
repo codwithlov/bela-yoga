@@ -54,6 +54,7 @@ async function requestJson<T>(path: string): Promise<T | null> {
                 ? { cache: 'no-store' as const }
                 : {
                     next: {
+                        tags: ['all'],
                         revalidate: FETCH_API_REVALIDATE,
                     },
                 }),

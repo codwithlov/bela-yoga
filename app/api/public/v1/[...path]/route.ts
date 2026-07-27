@@ -33,6 +33,7 @@ import { User } from '@/models/User';
 import { hashSync } from 'bcryptjs';
 import { jwtVerify, SignJWT } from 'jose';
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 
 const ACCESS_TOKEN_TTL_SECONDS = 60 * 60 * 12;
 const REFRESH_TOKEN_TTL_SECONDS = 60 * 60 * 24 * 7;
@@ -86,6 +87,15 @@ const futureIso = (seconds: number) => new Date(Date.now() + seconds * 1000).toI
 const json = (body: unknown, status = 200) => NextResponse.json(body, { status });
 const ok = (data: unknown, message = 'success') => json({ success: true, message, data });
 const fail = (message: string, status = 400, data: unknown = null) => json({ success: false, message, data }, status);
+const isDuplicateKeyError = (error: any) => Number(error?.code) === 11000;
+
+const revalidatePublicCache = () => {
+    try {
+        revalidateTag('all', 'max');
+    } catch {
+        // no-op
+    }
+};
 
 function getSecret() {
     const secret = process.env.AUTH_SECRET || 'sportverse-fullstack-local-secret-change-me';
@@ -566,6 +576,7 @@ async function handlePost(request: NextRequest, path: string[]) {
                 index: body.index ?? true,
                 follow: body.follow ?? true,
             });
+            revalidatePublicCache();
             return ok(created, 'success');
         }
 
@@ -587,24 +598,42 @@ async function handlePost(request: NextRequest, path: string[]) {
                 sort_order: Number(body.sort_order || 0) || undefined,
                 status: body.status || 'active',
             });
+            revalidatePublicCache();
             return ok(created, 'success');
         }
 
         if (second === 'store-items') {
-            const created = await createAdminStoreItem({
-                name: String(body.name || ''),
-                sku: String(body.sku || ''),
-                category: String(body.category || ''),
-                type: body.type || 'product',
-                organization_name: body.organization_name || null,
-                description: body.description || null,
-                price: Number(body.price || 0),
-                unit: String(body.unit || ''),
-                stock_quantity: body.stock_quantity ?? null,
-                status: body.status || 'draft',
-                featured: Boolean(body.featured),
-            });
-            return ok(created, 'success');
+            try {
+                const created = await createAdminStoreItem({
+                    name: String(body.name || ''),
+                    sku: String(body.sku || ''),
+                    category: String(body.category || ''),
+                    type: body.type || 'product',
+                    organization_name: body.organization_name || null,
+                    description: body.description || null,
+                    price: Number(body.price || 0),
+                    unit: String(body.unit || ''),
+                    stock_quantity: body.stock_quantity ?? null,
+                    status: body.status || 'draft',
+                    featured: Boolean(body.featured),
+                });
+                revalidatePublicCache();
+                return ok(created, 'success');
+            } catch (error: any) {
+                if (error?.code === 'SKU_EXISTS') {
+                    return fail('sku_existed', 422, 'SKU_EXISTS');
+                }
+                if (error?.code === 'SKU_REQUIRED') {
+                    return fail('fill_required_infomation', 422, 'SKU_REQUIRED');
+                }
+                if (isDuplicateKeyError(error)) {
+                    return fail('sku_existed', 422, 'SKU_EXISTS');
+                }
+                if (error?.name === 'ValidationError') {
+                    return fail('fill_required_infomation', 422, error?.message || 'VALIDATION_ERROR');
+                }
+                return fail('server_error', 500, error?.message || 'SERVER_ERROR');
+            }
         }
 
         if (second === 'sections') {
@@ -616,6 +645,7 @@ async function handlePost(request: NextRequest, path: string[]) {
                 display_order: Number(body.display_order || 1),
                 summary: String(body.summary || ''),
             });
+            revalidatePublicCache();
             return ok(createdSection, 'success');
         }
 
@@ -643,6 +673,7 @@ async function handlePost(request: NextRequest, path: string[]) {
                 page_ref: body.page_ref ?? null,
                 custom_page: body.custom_page || null,
             });
+            revalidatePublicCache();
             return ok(createdMenu, 'success');
         }
     }
@@ -684,6 +715,9 @@ async function handlePatch(request: NextRequest, path: string[]) {
             index: body.index ?? true,
             follow: body.follow ?? true,
         });
+        if (updated) {
+            revalidatePublicCache();
+        }
         return updated ? ok(updated, 'success') : fail('record_not_found', 404);
     }
 
@@ -706,24 +740,46 @@ async function handlePatch(request: NextRequest, path: string[]) {
             sort_order: Number(body.sort_order || 0) || undefined,
             status: body.status || 'active',
         });
+        if (updated) {
+            revalidatePublicCache();
+        }
         return updated ? ok(updated, 'success') : fail('record_not_found', 404);
     }
 
     if (second === 'store-items' && third) {
-        const updated = await updateAdminStoreItem(Number(third), {
-            name: String(body.name || ''),
-            sku: String(body.sku || ''),
-            category: String(body.category || ''),
-            type: body.type || 'product',
-            organization_name: body.organization_name || null,
-            description: body.description || null,
-            price: Number(body.price || 0),
-            unit: String(body.unit || ''),
-            stock_quantity: body.stock_quantity ?? null,
-            status: body.status || 'draft',
-            featured: Boolean(body.featured),
-        });
-        return updated ? ok(updated, 'success') : fail('record_not_found', 404);
+        try {
+            const updated = await updateAdminStoreItem(Number(third), {
+                name: String(body.name || ''),
+                sku: String(body.sku || ''),
+                category: String(body.category || ''),
+                type: body.type || 'product',
+                organization_name: body.organization_name || null,
+                description: body.description || null,
+                price: Number(body.price || 0),
+                unit: String(body.unit || ''),
+                stock_quantity: body.stock_quantity ?? null,
+                status: body.status || 'draft',
+                featured: Boolean(body.featured),
+            });
+            if (updated) {
+                revalidatePublicCache();
+            }
+            return updated ? ok(updated, 'success') : fail('record_not_found', 404);
+        } catch (error: any) {
+            if (error?.code === 'SKU_EXISTS') {
+                return fail('sku_existed', 422, 'SKU_EXISTS');
+            }
+            if (error?.code === 'SKU_REQUIRED') {
+                return fail('fill_required_infomation', 422, 'SKU_REQUIRED');
+            }
+            if (isDuplicateKeyError(error)) {
+                return fail('sku_existed', 422, 'SKU_EXISTS');
+            }
+            if (error?.name === 'ValidationError') {
+                return fail('fill_required_infomation', 422, error?.message || 'VALIDATION_ERROR');
+            }
+            return fail('server_error', 500, error?.message || 'SERVER_ERROR');
+        }
     }
 
     if ((second === 'menus' && third === 'sections' && fourth) || (second === 'sections' && third)) {
@@ -736,6 +792,9 @@ async function handlePatch(request: NextRequest, path: string[]) {
             display_order: Number(body.display_order || 1),
             summary: String(body.summary || ''),
         });
+        if (updatedSection) {
+            revalidatePublicCache();
+        }
         return updatedSection ? ok(updatedSection, 'success') : fail('record_not_found', 404);
     }
 
@@ -751,6 +810,9 @@ async function handlePatch(request: NextRequest, path: string[]) {
             page_ref: body.page_ref ?? null,
             custom_page: body.custom_page || null,
         });
+        if (updated) {
+            revalidatePublicCache();
+        }
         return updated ? ok(updated, 'success') : fail('record_not_found', 404);
     }
 
@@ -788,6 +850,9 @@ export async function DELETE(request: NextRequest, context: { params: Promise<{ 
 
         if (second === 'posts' && third) {
             const deleted = await deleteAdminPost(Number(third));
+            if (deleted) {
+                revalidatePublicCache();
+            }
             return deleted ? ok(deleted, 'success') : fail('record_not_found', 404);
         }
 
@@ -796,6 +861,8 @@ export async function DELETE(request: NextRequest, context: { params: Promise<{ 
             if (!deleted) {
                 return fail('record_not_found', 404);
             }
+
+            revalidatePublicCache();
 
             const reassignedCount = Number((deleted as any)?.reassigned_count || 0);
             const message = reassignedCount > 0
@@ -807,16 +874,25 @@ export async function DELETE(request: NextRequest, context: { params: Promise<{ 
 
         if (second === 'store-items' && third) {
             const deleted = await deleteAdminStoreItem(Number(third));
+            if (deleted) {
+                revalidatePublicCache();
+            }
             return deleted ? ok(deleted, 'success') : fail('record_not_found', 404);
         }
 
         if ((second === 'menus' && third === 'sections' && fourth) || (second === 'sections' && third)) {
             const deleted = await deleteAdminSection(Number(second === 'sections' ? third : fourth));
+            if (deleted) {
+                revalidatePublicCache();
+            }
             return deleted ? ok(deleted, 'success') : fail('record_not_found', 404);
         }
 
         if (second === 'menus' && third) {
             const deleted = await deleteAdminMenuItem(Number(third));
+            if (deleted) {
+                revalidatePublicCache();
+            }
             return deleted ? ok(deleted, 'success') : fail('record_not_found', 404);
         }
     }
