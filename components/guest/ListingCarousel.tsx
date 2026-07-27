@@ -202,7 +202,7 @@ const ListingCarousel: React.FC<FecthDataProp> = React.memo(({
     const BtnLink = () => {
         return showAllBtn && topicSlug ?
             <>
-                <a href={`/${topicSlug}`} className="rt_load_more max-sm:!hidden hover:shadow-sgt-primary">Tất cả&nbsp;
+                <a href={`/${topicSlug}`} className="rt_load_more max-sm:!hidden hover:shadow-bela-primary">Tất cả&nbsp;
                     <Image
                         src="/assets/icons/long-arrow-right.svg"
                         alt="long-arrow-left"
@@ -319,7 +319,7 @@ const ListingCarousel: React.FC<FecthDataProp> = React.memo(({
                 <a
                     href={`/${topicSlug}`}
                     aria-label="Show all"
-                    className="rt_load_more max-w-max my-0 !px-14 mx-auto !hidden max-sm:!flex flex-row justify-center gap-1.5 hover:shadow-sgt-primary">
+                    className="rt_load_more max-w-max my-0 !px-14 mx-auto !hidden max-sm:!flex flex-row justify-center gap-1.5 hover:shadow-bela-primary">
                     <span>Tất cả</span>
                     <Image
                         src="/assets/icons/long-arrow-right.svg"

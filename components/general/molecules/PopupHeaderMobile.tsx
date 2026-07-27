@@ -11,7 +11,7 @@ const PopupHeaderMobile: React.FC<PopupHeaderMobileParams> = ({ title, close, re
         <section id='drawer_header_mobile' className='my-0.5 px-4'>
             <div className='py-4 flex flex-row justify-between items-center'>
                 <button onClick={close}>
-                    <div className='bg-sgt-neutral-1'
+                    <div className='bg-bela-neutral-1'
                         style={{
                             mask: 'url("/assets/icons/close.svg")',
                             maskSize: 'cover',
@@ -21,11 +21,11 @@ const PopupHeaderMobile: React.FC<PopupHeaderMobileParams> = ({ title, close, re
                     >
                     </div>
                 </button>
-                <h3 className='text-lg font-semibold text-sgt-secondary-1'>{title}</h3>
+                <h3 className='text-lg font-semibold text-bela-secondary-1'>{title}</h3>
                 {
                     reset ?
                         <button onClick={reset}>
-                            <div className='bg-sgt-neutral-1 '
+                            <div className='bg-bela-neutral-1 '
                                 style={{
                                     mask: 'url("/assets/icons/reset.svg")',
                                     maskSize: 'cover',
@@ -39,7 +39,7 @@ const PopupHeaderMobile: React.FC<PopupHeaderMobileParams> = ({ title, close, re
                 }
             </div>
             {showDivider &&
-                <div className='border-b border-sgt-neutral-5' />
+                <div className='border-b border-bela-neutral-5' />
             }
 
         </section>

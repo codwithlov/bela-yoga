@@ -184,9 +184,9 @@ const AdminCustomPageManager = () => {
                         title: 'Page',
                         render: (row) => (
                             <div>
-                                <div className='font-semibold text-sgt-secondary-2'>{row.title}</div>
-                                <div className='mt-1 text-xs text-sgt-neutral-3'>{row.path}</div>
-                                <div className='mt-2 text-xs text-sgt-neutral-3'>{row.custom_page?.summary || 'Chưa có summary'}</div>
+                                <div className='font-semibold text-bela-secondary-2'>{row.title}</div>
+                                <div className='mt-1 text-xs text-bela-neutral-3'>{row.path}</div>
+                                <div className='mt-2 text-xs text-bela-neutral-3'>{row.custom_page?.summary || 'Chưa có summary'}</div>
                             </div>
                         ),
                     },
@@ -206,8 +206,8 @@ const AdminCustomPageManager = () => {
                         title: 'SEO',
                         render: (row) => (
                             <div className='space-y-1 text-xs'>
-                                <div className='font-semibold text-sgt-secondary-2'>{row.custom_page?.meta_title || row.title}</div>
-                                <div className='line-clamp-3 text-sgt-neutral-3'>{row.custom_page?.meta_description || 'Chưa có meta description'}</div>
+                                <div className='font-semibold text-bela-secondary-2'>{row.custom_page?.meta_title || row.title}</div>
+                                <div className='line-clamp-3 text-bela-neutral-3'>{row.custom_page?.meta_description || 'Chưa có meta description'}</div>
                             </div>
                         ),
                     },
@@ -246,10 +246,10 @@ const AdminCustomPageManager = () => {
                     <div className='space-y-6 pb-24'>
                         <div className='grid gap-6 xl:grid-cols-[minmax(0,1.5fr)_360px]'>
                             <div className='space-y-6'>
-                                <Card className='rounded-2xl border border-sgt-gray-2'>
+                                <Card className='rounded-2xl border border-bela-gray-2'>
                                     <div className='mb-4'>
-                                        <div className='text-xs font-semibold uppercase tracking-[0.2em] text-sgt-primary-1'>Page editor</div>
-                                        <div className='mt-1 text-sm text-sgt-neutral-3'>Editor riêng cho custom page. Dùng để viết nội dung chính, các section phụ và khối bài viết liên quan.</div>
+                                        <div className='text-xs font-semibold uppercase tracking-[0.2em] text-bela-primary-1'>Page editor</div>
+                                        <div className='mt-1 text-sm text-bela-neutral-3'>Editor riêng cho custom page. Dùng để viết nội dung chính, các section phụ và khối bài viết liên quan.</div>
                                     </div>
 
                                     <div className='grid gap-4 md:grid-cols-2'>
@@ -270,16 +270,16 @@ const AdminCustomPageManager = () => {
                                     </Form.Item>
                                 </Card>
 
-                                <Card className='rounded-2xl border border-sgt-gray-2' title='Sections'>
+                                <Card className='rounded-2xl border border-bela-gray-2' title='Sections'>
                                     <Form.List name='sections'>
                                         {(fields, { add, remove }) => (
                                             <div className='space-y-4'>
                                                 {fields.map((field, index) => (
-                                                    <div key={field.key} className='rounded-2xl border border-sgt-gray-2 p-4'>
+                                                    <div key={field.key} className='rounded-2xl border border-bela-gray-2 p-4'>
                                                         <div className='mb-4 flex items-center justify-between gap-3'>
                                                             <div>
-                                                                <div className='text-sm font-semibold text-sgt-secondary-2'>Section #{index + 1}</div>
-                                                                <div className='text-xs text-sgt-neutral-3'>Khối nội dung con hiển thị bên dưới nội dung chính.</div>
+                                                                <div className='text-sm font-semibold text-bela-secondary-2'>Section #{index + 1}</div>
+                                                                <div className='text-xs text-bela-neutral-3'>Khối nội dung con hiển thị bên dưới nội dung chính.</div>
                                                             </div>
                                                             <Button danger icon={<DeleteOutlined />} onClick={() => remove(field.name)}>Xoá section</Button>
                                                         </div>
@@ -326,7 +326,7 @@ const AdminCustomPageManager = () => {
                             </div>
 
                             <div className='space-y-6'>
-                                <Card className='rounded-2xl border border-sgt-gray-2' title='Bài viết liên quan'>
+                                <Card className='rounded-2xl border border-bela-gray-2' title='Bài viết liên quan'>
                                     <Form.Item name='related_post_ids'>
                                         <Select
                                             mode='multiple'
@@ -339,10 +339,10 @@ const AdminCustomPageManager = () => {
                                             showSearch
                                         />
                                     </Form.Item>
-                                    <div className='text-xs leading-6 text-sgt-neutral-3'>Các bài này sẽ được render thành khối related posts ở cuối page.</div>
+                                    <div className='text-xs leading-6 text-bela-neutral-3'>Các bài này sẽ được render thành khối related posts ở cuối page.</div>
                                 </Card>
 
-                                <Card className='rounded-2xl border border-sgt-gray-2' title='SEO'>
+                                <Card className='rounded-2xl border border-bela-gray-2' title='SEO'>
                                     <Form.Item label='Meta title' name='meta_title'>
                                         <Input placeholder='Meta title cho custom page' />
                                     </Form.Item>
@@ -351,12 +351,12 @@ const AdminCustomPageManager = () => {
                                     </Form.Item>
                                 </Card>
 
-                                <Card className='rounded-2xl border border-sgt-gray-2' title='Điều hướng'>
-                                    <div className='space-y-2 text-sm text-sgt-neutral-3'>
-                                        <div><span className='font-semibold text-sgt-secondary-2'>Path:</span> {editingRow?.path}</div>
-                                        <div><span className='font-semibold text-sgt-secondary-2'>Location:</span> {editingRow?.location}</div>
-                                        <div><span className='font-semibold text-sgt-secondary-2'>Menu:</span> {editingRow?.title}</div>
-                                        {editingRow?.path ? <Link href={editingRow.path} target='_blank' className='inline-flex pt-2 text-sm font-semibold text-sgt-primary-1'>Mở public page ↗</Link> : null}
+                                <Card className='rounded-2xl border border-bela-gray-2' title='Điều hướng'>
+                                    <div className='space-y-2 text-sm text-bela-neutral-3'>
+                                        <div><span className='font-semibold text-bela-secondary-2'>Path:</span> {editingRow?.path}</div>
+                                        <div><span className='font-semibold text-bela-secondary-2'>Location:</span> {editingRow?.location}</div>
+                                        <div><span className='font-semibold text-bela-secondary-2'>Menu:</span> {editingRow?.title}</div>
+                                        {editingRow?.path ? <Link href={editingRow.path} target='_blank' className='inline-flex pt-2 text-sm font-semibold text-bela-primary-1'>Mở public page ↗</Link> : null}
                                     </div>
                                 </Card>
                             </div>

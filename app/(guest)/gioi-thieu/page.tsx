@@ -63,16 +63,16 @@ export default async function AboutPage() {
                         description: 'BelaYoga xây dựng môi trường thân thiện để bạn kết nối, duy trì động lực và lan tỏa lối sống lành mạnh.',
                     },
                 ].map((item) => (
-                    <div key={item.title} className="rounded-[1.5rem] border border-sgt-gray-2 bg-white p-6 shadow-sm">
-                        <div className="text-xs font-semibold uppercase tracking-[0.18em] text-sgt-primary-1">BelaYoga</div>
-                        <h2 className="mt-3 text-xl font-bold text-sgt-secondary-2">{item.title}</h2>
-                        <p className="mt-3 text-sm leading-6 text-sgt-neutral-3">{item.description}</p>
+                    <div key={item.title} className="rounded-[1.5rem] border border-bela-gray-2 bg-white p-6 shadow-sm">
+                        <div className="text-xs font-semibold uppercase tracking-[0.18em] text-bela-primary-1">BelaYoga</div>
+                        <h2 className="mt-3 text-xl font-bold text-bela-secondary-2">{item.title}</h2>
+                        <p className="mt-3 text-sm leading-6 text-bela-neutral-3">{item.description}</p>
                     </div>
                 ))}
             </div>
 
-            <div className="mt-6 rounded-[2rem] border border-sgt-gray-2 bg-white p-6 shadow-sm md:p-8">
-                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-sgt-primary-1">Giá trị cốt lõi tại BelaYoga</div>
+            <div className="mt-6 rounded-[2rem] border border-bela-gray-2 bg-white p-6 shadow-sm md:p-8">
+                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-bela-primary-1">Giá trị cốt lõi tại BelaYoga</div>
                 <div className="mt-3 grid gap-4 md:grid-cols-2">
                     {[
                         'Luyện tập đúng kỹ thuật để giảm căng thẳng và phòng tránh chấn thương.',
@@ -80,17 +80,17 @@ export default async function AboutPage() {
                         'Kết hợp yoga, hơi thở và thư giãn để phục hồi năng lượng toàn diện.',
                         'Lan tỏa lối sống khỏe mạnh, cân bằng và tích cực trong cộng đồng.',
                     ].map((item) => (
-                        <div key={item} className="rounded-2xl border border-sgt-gray-2 bg-sgt-bg-primary px-4 py-4 text-sm leading-6 text-sgt-neutral-2">
+                        <div key={item} className="rounded-2xl border border-bela-gray-2 bg-bela-bg-primary px-4 py-4 text-sm leading-6 text-bela-neutral-2">
                             {item}
                         </div>
                     ))}
                 </div>
 
                 <div className="mt-6 flex flex-wrap gap-3">
-                    <a href={GUEST_HOME} className="rounded-xl border border-sgt-gray-2 px-5 py-3 text-sm font-semibold text-sgt-secondary-2 transition hover:bg-sgt-bg-primary">
+                    <a href={GUEST_HOME} className="rounded-xl border border-bela-gray-2 px-5 py-3 text-sm font-semibold text-bela-secondary-2 transition hover:bg-bela-bg-primary">
                         Về trang chủ
                     </a>
-                    <a href={GUEST_COURSES} className="rounded-xl bg-gradient-to-r from-sgt-primary-1 to-sgt-primary-2 px-5 py-3 text-sm font-semibold text-white shadow-sgt-primary transition hover:-translate-y-0.5">
+                    <a href={GUEST_COURSES} className="rounded-xl bg-gradient-to-r from-bela-primary-1 to-bela-primary-2 px-5 py-3 text-sm font-semibold text-white shadow-bela-primary transition hover:-translate-y-0.5">
                         Khám phá gói tập
                     </a>
                 </div>

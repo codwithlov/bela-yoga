@@ -16,7 +16,7 @@ const AuthorCard: React.FC<ProfileCardProps> = ({ author }) => {
 
   return (
     <div className=''>
-      <div className="bg-gradient-to-r from-red-200 via-black-300 to-yellow-100 p-8 text-sgt-secondary-1 rounded-lg width-primary mx-auto">
+      <div className="bg-gradient-to-r from-red-200 via-black-300 to-yellow-100 p-8 text-bela-secondary-1 rounded-lg width-primary mx-auto">
         <div className="flex flex-col md:flex-row items-center">
           <ImageSection author_slug={author?.author_slug || ''} avatar={author?.image} />
           <TextSection
@@ -82,7 +82,7 @@ const TextSection: React.FC<{
     </Section>
 
     {/* <div className="text-center md:text-right font-bold">
-      <a href={`/author/${author_slug}`} className="text-sgt-secondary-1 flex justify-center items-center px-7 py-2.5 rounded-md bg-gradient-to-t from-sgt-primary-1 to-sgt-primary-2 transition-all duration-300 hover:shadow-lg">
+      <a href={`/author/${author_slug}`} className="text-bela-secondary-1 flex justify-center items-center px-7 py-2.5 rounded-md bg-gradient-to-t from-bela-primary-1 to-bela-primary-2 transition-all duration-300 hover:shadow-lg">
         Tất cả bài viết
       </a>
     </div> */}

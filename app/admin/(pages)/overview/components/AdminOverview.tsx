@@ -53,8 +53,8 @@ const AdminOverview = () => {
                             title: 'Booking',
                             render: (row) => (
                                 <div>
-                                    <div className='font-semibold text-sgt-secondary-2'>#{row.id}</div>
-                                    <div className='mt-1 text-xs text-sgt-neutral-3'>{row.organization_name || '—'} · {row.venue_name || '—'}</div>
+                                    <div className='font-semibold text-bela-secondary-2'>#{row.id}</div>
+                                    <div className='mt-1 text-xs text-bela-neutral-3'>{row.organization_name || '—'} · {row.venue_name || '—'}</div>
                                 </div>
                             ),
                         },
@@ -64,7 +64,7 @@ const AdminOverview = () => {
                             render: (row) => (
                                 <div>
                                     <div>{row.user_name || '—'}</div>
-                                    <div className='mt-1 text-xs text-sgt-neutral-3'>{row.user_email || row.team_name || '—'}</div>
+                                    <div className='mt-1 text-xs text-bela-neutral-3'>{row.user_email || row.team_name || '—'}</div>
                                 </div>
                             ),
                         },
@@ -74,7 +74,7 @@ const AdminOverview = () => {
                             render: (row) => (
                                 <div className='text-xs'>
                                     <div>{row.starts_at ? new Date(row.starts_at).toLocaleString('vi-VN') : '—'}</div>
-                                    <div className='mt-1 text-sgt-neutral-3'>{row.ends_at ? new Date(row.ends_at).toLocaleString('vi-VN') : '—'}</div>
+                                    <div className='mt-1 text-bela-neutral-3'>{row.ends_at ? new Date(row.ends_at).toLocaleString('vi-VN') : '—'}</div>
                                 </div>
                             ),
                         },
@@ -92,8 +92,8 @@ const AdminOverview = () => {
                             title: 'Tổ chức',
                             render: (row) => (
                                 <div>
-                                    <div className='font-semibold text-sgt-secondary-2'>{row.name}</div>
-                                    <div className='mt-1 text-xs text-sgt-neutral-3'>{row.slug}</div>
+                                    <div className='font-semibold text-bela-secondary-2'>{row.name}</div>
+                                    <div className='mt-1 text-xs text-bela-neutral-3'>{row.slug}</div>
                                 </div>
                             ),
                         },

@@ -30,7 +30,7 @@ export default function PublicContentPage({
             <section className="width-primary mx-auto px-4 pb-20 pt-12 text-white lg:pt-16">
                 <div className="max-w-4xl space-y-4">
                     {eyebrow ? (
-                        <div className="text-xs font-semibold uppercase tracking-[0.22em] text-sgt-primary-3">{eyebrow}</div>
+                        <div className="text-xs font-semibold uppercase tracking-[0.22em] text-bela-primary-3">{eyebrow}</div>
                     ) : null}
                     <h1 className="text-4xl font-bold leading-tight md:text-5xl">{title}</h1>
                     {summary ? <p className="max-w-3xl text-base leading-7 text-slate-200 md:text-lg">{summary}</p> : null}
@@ -53,13 +53,13 @@ export default function PublicContentPage({
             </section>
 
             <section className="width-primary mx-auto px-4 pb-12">
-                <div className="rounded-[2rem] border border-sgt-gray-2 bg-white p-6 shadow-sm md:p-8">
-                    <div className="prose max-w-none prose-p:text-sgt-neutral-3 prose-headings:text-sgt-secondary-2">
+                <div className="rounded-[2rem] border border-bela-gray-2 bg-white p-6 shadow-sm md:p-8">
+                    <div className="prose max-w-none prose-p:text-bela-neutral-3 prose-headings:text-bela-secondary-2">
                         <div dangerouslySetInnerHTML={{ __html: content }} />
                     </div>
                     {backHref && backLabel ? (
                         <div className="mt-8">
-                            <Link href={backHref} className="text-sm font-semibold text-sgt-primary-1 transition hover:text-sgt-primary-2">
+                            <Link href={backHref} className="text-sm font-semibold text-bela-primary-1 transition hover:text-bela-primary-2">
                                 ← {backLabel}
                             </Link>
                         </div>

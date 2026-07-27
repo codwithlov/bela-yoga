@@ -20,7 +20,7 @@ const ServerErrorPage = () => {
                     sizes="100vw"
                     className='object-contain px-4'
                 />
-                <div className='text-sgt-secondary-1 items-center flex flex-col text-center pt-4 px-4'>
+                <div className='text-bela-secondary-1 items-center flex flex-col text-center pt-4 px-4'>
                     <h1 className="text-3xl 2xl:text-4xl font-bold">OOPS!!!</h1>
                     <p className="text-base md:text-lg 2xl:text-[1.4rem] font-medium">Request Timeout</p>
                     <Link

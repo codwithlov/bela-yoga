@@ -29,7 +29,7 @@ async function GuestLayout({
 			<StoreProvider>
 				<AdminNavBar />
 				<NavBar menuList={headerMenus} />
-				<div className="min-h-screen bg-sgt-bg-primary">
+				<div className="min-h-screen bg-bela-bg-primary">
 					{children}
 				</div>
 				<Footer footerMenus={footerMenus} accountMenus={accountMenus} />

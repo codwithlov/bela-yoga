@@ -1,11 +1,11 @@
 .ant-picker-dropdown.date_picker_calendar_custom {
     .ant-picker-header {
-        @apply text-sgt-secondary-dark;
+        @apply text-bela-secondary-dark;
 
         .ant-picker-month-btn,
         .ant-picker-year-btn {
             &:hover {
-                @apply text-sgt-secondary-default;
+                @apply text-bela-secondary-default;
             }
         }
     }
@@ -19,14 +19,14 @@
 
         &.ant-picker-cell-today {
             .ant-picker-cell-inner:before {
-                @apply border-sgt-primary-default;
+                @apply border-bela-primary-default;
             }
         }
 
         &.ant-picker-cell-selected,
         &:hover {
             .ant-picker-cell-inner {
-                @apply text-black bg-sgt-primary-default #{!important};
+                @apply text-black bg-bela-primary-default #{!important};
             }
         }
 

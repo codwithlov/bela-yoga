@@ -33,7 +33,7 @@ const MenuMobile = (props: MenuMobileParams) => {
             key: `phone`,
             label: <a
                 href={`tel:${PHONE.trim()}`}
-                className='w-full text-base flex flex-row justify-start items-center gap-2 !text-sub-1 !text-sgt-neutral-1'>
+                className='w-full text-base flex flex-row justify-start items-center gap-2 !text-sub-1 !text-bela-neutral-1'>
                 <p className='text-base font-medium'>Hotline {PHONE.trim()}</p>
             </a>
         },
@@ -41,11 +41,11 @@ const MenuMobile = (props: MenuMobileParams) => {
             key: item.key,
             label: (
                 (item.children && item.children.length > 0) ? (
-                    <p className="text-base font-medium !text-sgt-neutral-1">{item.title}</p>
+                    <p className="text-base font-medium !text-bela-neutral-1">{item.title}</p>
                 ) : (
                     <a
                         href={normalizeUrl(item.slug || item.url_to)}
-                        className="text-base font-medium !text-sgt-neutral-1"
+                        className="text-base font-medium !text-bela-neutral-1"
                     >
                         {item.title}
                     </a>
@@ -69,7 +69,7 @@ const MenuMobile = (props: MenuMobileParams) => {
                                     style={{ width: "1.375rem", height: "auto", maxHeight: "1rem" }}
                                 />
                             }
-                            <p className="text-sm font-normal !text-sgt-neutral-1">{child.title}</p>
+                            <p className="text-sm font-normal !text-bela-neutral-1">{child.title}</p>
                         </a>
                     ),
                 })),
@@ -83,7 +83,7 @@ const MenuMobile = (props: MenuMobileParams) => {
             <div>
                 <button id='sgt_menu_mobile' aria-label='Mobile Menu' className={`${props.btnClass}`} onClick={() => setOpenMenu(true)}>
                     <FontAwesomeIcon
-                        className={`${props.iconClass ?? 'text-sgt-neutral-1'}`}
+                        className={`${props.iconClass ?? 'text-bela-neutral-1'}`}
                         size={`${props.iconSize ?? "lg"}`}
                         icon={faBars}
                     />

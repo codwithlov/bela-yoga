@@ -39,7 +39,7 @@ const Banner = ({ setBannerImage, bannerImage, editImage }: any) => {
                 <div className="flex flex-col justify-center my-2">
                     <label
                         htmlFor="banner-file"
-                        className="bg-sgt-primary-2 rounded-lg w-full text-center cursor-pointer"
+                        className="bg-bela-primary-2 rounded-lg w-full text-center cursor-pointer"
                     >
                         <p className="text-sx justify-center p-2">
                             <span className="font-semibold">{`${bannerImage?.url ? 'Đổi' : 'Thêm'} banner (2MB)`}</span>
@@ -54,7 +54,7 @@ const Banner = ({ setBannerImage, bannerImage, editImage }: any) => {
                     </label>
                     {bannerImage?.url &&
                         <button
-                            className="bg-sgt-primary-2 rounded-lg w-full text-center p-2 font-semibold text-sx mt-2"
+                            className="bg-bela-primary-2 rounded-lg w-full text-center p-2 font-semibold text-sx mt-2"
                             onClick={() => editImage(null)}
                         >
                             Đường dẫn

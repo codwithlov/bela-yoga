@@ -23,7 +23,7 @@ const Feedback = ({ feedbacks, tagId }: FeedbackProps) => {
             <div className="pb-16 mb-1 max-sm:pb-0">
                 <SubTitle title={title} />
                 <div className='flex flex-row justify-center pt-5 max-sm:px-4'>
-                    <p className='lg:w-4/5 mx-0 text-body-2 max-sm:text-cap-1 text-sgt-secondary-1 text-center'>SPORTVERSE liên tục hoàn thiện trải nghiệm booking và kết nối cộng đồng dựa trên phản hồi thực tế từ người chơi, đội bóng và đơn vị vận hành sân.</p>
+                    <p className='lg:w-4/5 mx-0 text-body-2 max-sm:text-cap-1 text-bela-secondary-1 text-center'>SPORTVERSE liên tục hoàn thiện trải nghiệm booking và kết nối cộng đồng dựa trên phản hồi thực tế từ người chơi, đội bóng và đơn vị vận hành sân.</p>
                 </div>
                 <CustomSlider items={filterFeedbacks}>
                     {(item, index) => (

@@ -114,7 +114,7 @@ const PostList = ({
                     {isFetching ? (
                         [...Array(initialPostList?.pagination?.per_page || 12)].map((_, index) => (
                             <div key={index} className='col-span-4 max-sm:col-span-6'>
-                                <div className='w-full rounded-sgt-10 overflow-hidden' style={{ height: postHeight || 'auto' }}>
+                                <div className='w-full rounded-bela-10 overflow-hidden' style={{ height: postHeight || 'auto' }}>
                                     <Skeleton.Node active className="!w-full !h-full" />
                                 </div>
                             </div>
@@ -123,7 +123,7 @@ const PostList = ({
                         posts?.length > 0 ?
                             posts.map((item: IPost, index: number) => (
                                 <a key={index} href={'/' + item.slug} className='post_item' ref={index === 0 ? firstPostRef : null}>
-                                    <div className={`w-full ${isMedia ? 'aspect-3/2' : 'aspect-16/9'} rounded-sgt-10 overflow-hidden`}>
+                                    <div className={`w-full ${isMedia ? 'aspect-3/2' : 'aspect-16/9'} rounded-bela-10 overflow-hidden`}>
                                         <div className='relative w-full h-full'>
                                             <Image
                                                 src={getFirstImageUrl(item.description) || DEFAULT_THUMBNAIL}

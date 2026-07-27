@@ -94,7 +94,7 @@ const ListingItemVertical = React.memo((props: ViewedParam) => {
         <>
             {isClient && <ListingItemCss />}
             <a href={detailLink} className={`${props.className ? props.className : `col-span-4`} tour_item_vertical cursor-pointer`}>
-                <div className='h-full flex flex-col justify-between gap-0 rounded-[0.625rem] shadow-sgt-black-1 bg-white relative' style={{ marginBottom: "inherit" }}>
+                <div className='h-full flex flex-col justify-between gap-0 rounded-[0.625rem] shadow-bela-black-1 bg-white relative' style={{ marginBottom: "inherit" }}>
                     <div className='aspect-16/9 md:aspect-3/2 w-full rounded-[0.625rem] overflow-hidden'>
                         <div className='relative w-full h-full'>
                             <Image
@@ -113,18 +113,18 @@ const ListingItemVertical = React.memo((props: ViewedParam) => {
                     </div>
                     <div className='search_result_item_detail w-full flex-1 flex flex-col justify-between gap-4 pt-3 pb-5 px-2.5'>
                         <div className='search_result_item_detail flex flex-col gap-0.5'>
-                            <div className='text-cap-1 text-sgt-neutral-3 pb-1'>Tour {capitalizeFirstLetter(item.market_name)}</div>
-                            <h3 className='search_result_item_detail_title text-sub-1 text-sgt-neutral-1 line-clamp-2'>{capitalizeFirstLetter(item.tour_name)}</h3>
+                            <div className='text-cap-1 text-bela-neutral-3 pb-1'>Tour {capitalizeFirstLetter(item.market_name)}</div>
+                            <h3 className='search_result_item_detail_title text-sub-1 text-bela-neutral-1 line-clamp-2'>{capitalizeFirstLetter(item.tour_name)}</h3>
                             {
                                 isTour ?
-                                    <span className='w-full text-cap-1 font-medium text-sgt-secondary-3 line-clamp-1 text-ellipsis'>{item.series_code}</span> :
+                                    <span className='w-full text-cap-1 font-medium text-bela-secondary-3 line-clamp-1 text-ellipsis'>{item.series_code}</span> :
                                     null
                             }
                         </div>
                         <div className='flex flex-row justify-between items-end'>
                             <div className='search_result_item_detail flex flex-col gap-0.5'>
                                 <div className='search_result_item_detail_star flex flex-row justify-start items-center gap-1.5'>
-                                    <div className='bg-sgt-primary-1'
+                                    <div className='bg-bela-primary-1'
                                         style={{
                                             mask: 'url("/assets/icons/location.svg")',
                                             maskSize: 'cover',
@@ -134,14 +134,14 @@ const ListingItemVertical = React.memo((props: ViewedParam) => {
                                         }}
                                     >
                                     </div>
-                                    <p className='text-cap-1 text-sgt-neutral-3'>{fromLocation}</p>
+                                    <p className='text-cap-1 text-bela-neutral-3'>{fromLocation}</p>
                                 </div>
                                 {
                                     isTour ?
                                         <Fragment>
 
                                             <div className='search_result_item_detail_star flex flex-row justify-start place-items-end gap-1.5 pb-0.5'>
-                                                <div className='bg-sgt-primary-1'
+                                                <div className='bg-bela-primary-1'
                                                     style={{
                                                         mask: 'url("/assets/icons/calendar-origin.svg")',
                                                         maskSize: 'cover',
@@ -150,7 +150,7 @@ const ListingItemVertical = React.memo((props: ViewedParam) => {
                                                     }}
                                                 >
                                                 </div>
-                                                <p className='text-cap-1 text-sgt-neutral-3'>{dayjs(item.flight_date).format(dateFormat)}</p>
+                                                <p className='text-cap-1 text-bela-neutral-3'>{dayjs(item.flight_date).format(dateFormat)}</p>
                                             </div>
 
                                             {/* <div className={`absolute left-3 ${iconClass}`}
@@ -168,7 +168,7 @@ const ListingItemVertical = React.memo((props: ViewedParam) => {
 
                                 <div className='search_result_item_detail_time flex flex-row justify-start items-center gap-1.5'>
                                     <Image src="/assets/icons/clock.svg" alt="plane-icon" width={17} height={17} />
-                                    <p className='text-cap-1 text-sgt-neutral-3'>{item.day_number} Ngày {item.night_number} Đêm</p>
+                                    <p className='text-cap-1 text-bela-neutral-3'>{item.day_number} Ngày {item.night_number} Đêm</p>
                                 </div>
                                 {
                                     carriers?.length > 0 ?
@@ -190,7 +190,7 @@ const ListingItemVertical = React.memo((props: ViewedParam) => {
                                         :
                                         <div className='flex flex-row justify-start items-center gap-1.5 overflow-hidden'>
                                             <Image src="/assets/icons/plane.svg" alt="plane-icon" width={20} height={20} />
-                                            <p className='text-cap-1 text-sgt-neutral-3'>{NOT_UPDATED_INFORMATION}</p>
+                                            <p className='text-cap-1 text-bela-neutral-3'>{NOT_UPDATED_INFORMATION}</p>
                                         </div>
                                 }
                             </div>
@@ -207,11 +207,11 @@ const ListingItemVertical = React.memo((props: ViewedParam) => {
                                 }
                                 {
                                     discount > 0 &&
-                                    <div className='search_result_item_detail_price flex flex-row justify-start items-center gap-0.5 text-sgt-neutral-3 text-xs font-normal'>
+                                    <div className='search_result_item_detail_price flex flex-row justify-start items-center gap-0.5 text-bela-neutral-3 text-xs font-normal'>
                                         {(tourPrice == tourPriceOff || tourPrice == 0) ? null : <div className='line-through'>{formatPrice((tourPrice ?? 0).toString())}đ</div>}
                                     </div>
                                 }
-                                <div className='search_result_item_detail_price flex flex-row justify-start items-center gap-0.5 text-sub-1 text-sgt-third-2'>
+                                <div className='search_result_item_detail_price flex flex-row justify-start items-center gap-0.5 text-sub-1 text-bela-third-2'>
                                     <div>{formatPrice((tourPrice == tourPriceOff ? tourPrice : tourPriceOff).toString())}đ</div>
                                 </div>
                             </div>

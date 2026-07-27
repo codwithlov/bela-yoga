@@ -1,9 +1,9 @@
 #feedback_slider {
   .feedback_item {
-    @apply bg-gradient-to-b from-sgt-primary-2 to-white m-0.5 p-0.5 rounded-sgt-10 overflow-hidden;
+    @apply bg-gradient-to-b from-bela-primary-2 to-white m-0.5 p-0.5 rounded-bela-10 overflow-hidden;
 
     >div {
-      @apply rounded-sgt-10 overflow-hidden;
+      @apply rounded-bela-10 overflow-hidden;
     }
   }
 
@@ -18,7 +18,7 @@
     @apply transition-all duration-300;
 
     .feedback_item {
-      @apply shadow-sgt-black-5 mb-5;
+      @apply shadow-bela-black-5 mb-5;
     }
   }
 
@@ -35,7 +35,7 @@
       @apply transition-all duration-700;
 
       .feedback_item {
-        @apply shadow-sgt-black-5 mb-5;
+        @apply shadow-bela-black-5 mb-5;
       }
     }
 
@@ -60,14 +60,14 @@
             @apply w-2.5 h-2.5 rounded-full p-0 text-2xs;
             @apply left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
             @apply transition-all duration-300;
-            @apply border border-sgt-secondary-1 opacity-100;
+            @apply border border-bela-secondary-1 opacity-100;
           }
         }
 
         &.slick-active {
           button {
             &:before {
-              @apply bg-sgt-secondary-1;
+              @apply bg-bela-secondary-1;
             }
           }
 

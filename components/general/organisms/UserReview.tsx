@@ -24,9 +24,9 @@ type Params = {
 const RatingBar = ({ label, value, numberOfRating }: { label: string, value: number, numberOfRating: number }) => (
     <div className="flex items-center mb-[3px]">
         <p className="text-xs lg:text-sm w-[7rem]">{label}</p>
-        <div className="relative h-[5px] bg-sgt-neutral-5 rounded w-full lg:w-[40%]">
+        <div className="relative h-[5px] bg-bela-neutral-5 rounded w-full lg:w-[40%]">
             <div
-                className="bg-gradient-to-r from-sgt-primary-2 to-sgt-primary-1 h-[5px] rounded transition-all ease-in-out duration-700 w-0"
+                className="bg-gradient-to-r from-bela-primary-2 to-bela-primary-1 h-[5px] rounded transition-all ease-in-out duration-700 w-0"
                 style={{ width: `${(value / numberOfRating) * 100}%` }}
             />
         </div>
@@ -148,11 +148,11 @@ const UserReview: React.FC<Params> = ({ marketId, fromAdmin, CommentActions }) =
         }
     }
 
-    const cardClass = ' detail_content_card flex-1 lg:!px-[1.75rem] !py-3 !text-sgt-secondary-1';
+    const cardClass = ' detail_content_card flex-1 lg:!px-[1.75rem] !py-3 !text-bela-secondary-1';
     const avatarClass = " mr-2 lg:mr-7 ";
 
     return (
-        <section className='text-sgt-secondary-1 flex flex-col mb-10'>
+        <section className='text-bela-secondary-1 flex flex-col mb-10'>
             {contextHolder}
             <Loading isLoading={isLoading} />
             {!fromAdmin &&
@@ -162,8 +162,8 @@ const UserReview: React.FC<Params> = ({ marketId, fromAdmin, CommentActions }) =
             }
             <div className='flex flex-row gap-4 lg:gap-8 mb-5'>
                 <div className="flex flex-col items-center">
-                    <div className="w-[4.5rem] lg:w-[5.125rem] aspect-1/1 bg-sgt-primary-4 rounded-full flex items-center justify-center">
-                        <div className="w-[3.5rem] lg:w-16 aspect-1/1 bg-sgt-primary-2 rounded-full flex items-center justify-center">
+                    <div className="w-[4.5rem] lg:w-[5.125rem] aspect-1/1 bg-bela-primary-4 rounded-full flex items-center justify-center">
+                        <div className="w-[3.5rem] lg:w-16 aspect-1/1 bg-bela-primary-2 rounded-full flex items-center justify-center">
                             <span className='font-bold'>{averageRating.toFixed(1)}</span>
                         </div>
                     </div>
@@ -174,7 +174,7 @@ const UserReview: React.FC<Params> = ({ marketId, fromAdmin, CommentActions }) =
                     <p className="text-2xs lg:text-xs max-md:leading-none">{numberOfRating} đánh giá</p>
                 </div>
 
-                <div className={cardClass + 'text-sgt-neutral-1 !mb-0'}>
+                <div className={cardClass + 'text-bela-neutral-1 !mb-0'}>
                     {ratings.map((rating) => (
                         <RatingBar key={rating.value} label={rating.label} value={data?.rating?.starCounts?.[rating.value]} numberOfRating={numberOfRating} />
                     ))}
@@ -193,7 +193,7 @@ const UserReview: React.FC<Params> = ({ marketId, fromAdmin, CommentActions }) =
                                         className='w-1/5 lg:w-[15%] items-center flex flex-col cursor-pointer group transition-all duration-300 hover:font-bold'
                                     >
                                         <div
-                                            className={`w-[1.125rem] lg:w-6 aspect-1/1 cursor-pointer transition-all duration-300 group-hover:bg-sgt-primary-2 ${index < rating ? 'bg-sgt-primary-2' : 'bg-gray-300'}`}
+                                            className={`w-[1.125rem] lg:w-6 aspect-1/1 cursor-pointer transition-all duration-300 group-hover:bg-bela-primary-2 ${index < rating ? 'bg-bela-primary-2' : 'bg-gray-300'}`}
                                             style={{
                                                 mask: 'url("/assets/icons/star.svg")',
                                                 maskSize: 'contain',
@@ -256,7 +256,7 @@ const UserReview: React.FC<Params> = ({ marketId, fromAdmin, CommentActions }) =
                                     </div>
                                 </div>
                                 <Form.Item className="!mb-0">
-                                    <Button type="primary" htmlType="submit" className="ml-1 lg:ml-4 lg:mr-1 !bg-sgt-neutral-5 !text-sgt-secondary-1 !shadow-none">
+                                    <Button type="primary" htmlType="submit" className="ml-1 lg:ml-4 lg:mr-1 !bg-bela-neutral-5 !text-bela-secondary-1 !shadow-none">
                                         Gửi
                                     </Button>
                                 </Form.Item>
@@ -275,10 +275,10 @@ const UserReview: React.FC<Params> = ({ marketId, fromAdmin, CommentActions }) =
             {
                 !isLogin && !fromAdmin &&
                 <button
-                    className='mb-5 hidden lg:flex w-1/2 lg:w-1/5 self-center justify-center items-center py-2.5  rounded-md bg-gradient-to-t from-sgt-primary-1 to-sgt-primary-2 transition-all duration-300 hover:shadow-sgt-primary'
-                    onClick={() => clickClassButton('sgt-login-btn')}
+                    className='mb-5 hidden lg:flex w-1/2 lg:w-1/5 self-center justify-center items-center py-2.5  rounded-md bg-gradient-to-t from-bela-primary-1 to-bela-primary-2 transition-all duration-300 hover:shadow-bela-primary'
+                    onClick={() => clickClassButton('bela-login-btn')}
                 >
-                    <p className='text-button text-sgt-neutral-1'>Để lại đánh giá</p>
+                    <p className='text-button text-bela-neutral-1'>Để lại đánh giá</p>
                 </button>
             }
             <div ref={targetRef} />
@@ -297,13 +297,13 @@ const UserReview: React.FC<Params> = ({ marketId, fromAdmin, CommentActions }) =
                                     <p className="text-2xs lg:text-xs font-normal leading-none mb-1">{formatDate(item.publish_date)}</p>
                                     <div className='flex items-center mb-[6px] lg:mb-2 -ml-[2px]'>
                                         <Rating rating={item.rating} small />
-                                        <p className="text-2xs ml-1 mr-[6px] font-light text-sgt-neutral-3">|</p>
-                                        <p className="text-2xs lg:text-xs mt-[1px] font-normal text-sgt-neutral-3">
+                                        <p className="text-2xs ml-1 mr-[6px] font-light text-bela-neutral-3">|</p>
+                                        <p className="text-2xs lg:text-xs mt-[1px] font-normal text-bela-neutral-3">
                                             {ratings.find(rating => rating.value === (Number(item.rating)))?.label}
                                         </p>
                                     </div>
 
-                                    <p className="text-2xs lg:text-sm leading-4 lg:leading-5 font-normal lg:mb-2 text-sgt-neutral-1 whitespace-pre-line">
+                                    <p className="text-2xs lg:text-sm leading-4 lg:leading-5 font-normal lg:mb-2 text-bela-neutral-1 whitespace-pre-line">
                                         {item.content}
                                     </p>
                                     <div className={`grid grid-cols-3 lg:grid-cols-5 gap-2 lg:gap-3 ${item.images?.length > 0 ? 'lg:mb-2 mt-[10px]' : ''}`}>
@@ -333,7 +333,7 @@ const UserReview: React.FC<Params> = ({ marketId, fromAdmin, CommentActions }) =
             />
             {(data?.comments?.length || 0) > 5 && !fromAdmin &&
                 <button
-                    className="rounded-md mt-4 self-center py-2 px-6 text-[0.1.625rem] font-semibold text-sgt-neutral-1 border border-sgt-primary-1"
+                    className="rounded-md mt-4 self-center py-2 px-6 text-[0.1.625rem] font-semibold text-bela-neutral-1 border border-bela-primary-1"
                     onClick={handleToggle}
                 >
                     {!showAll ? `Xem thêm (${data?.comments?.length - 5})` : 'Thu gọn'}

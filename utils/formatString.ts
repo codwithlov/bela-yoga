@@ -79,7 +79,7 @@ export const highlightText = (item: string, keyword: string | null) => {
         firstIndex,
         (firstIndex + (String(keyword).length ?? 0))
     );
-    let strReplaced = `<strong class="text-sgt-primary-1">${strReplace}</strong>`;
+    let strReplaced = `<strong class="text-bela-primary-1">${strReplace}</strong>`;
     return item.replaceAll(strReplace, strReplaced);
 };
 

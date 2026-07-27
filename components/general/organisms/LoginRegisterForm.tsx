@@ -59,7 +59,7 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({ onSuccess }) => {
 
 const IconButton = ({ iconSrc, text, onClick }: { iconSrc: string; text: string; onClick: any }) => (
     <button
-        className='flex-1 py-2 border border-sgt-gray-1 flex items-center justify-center rounded-md gap-2'
+        className='flex-1 py-2 border border-bela-gray-1 flex items-center justify-center rounded-md gap-2'
         onClick={onClick}
         type='button'
     >
@@ -211,8 +211,8 @@ const LoginRegisterForm: React.FC<Params> = ({ closeModal, afterLogin, fromAdmin
             <div className='flex flex-col items-center'>
                 {loading && <Loading isLoading={loading} />}
                 {isLoginRegister &&
-                    <div className='p-1 absolute top-8 right-9 cursor-pointer hover:bg-sgt-gray-2 rounded-md' onClick={closeModal}>
-                        <div className='bg-sgt-gray-1'
+                    <div className='p-1 absolute top-8 right-9 cursor-pointer hover:bg-bela-gray-2 rounded-md' onClick={closeModal}>
+                        <div className='bg-bela-gray-1'
                             style={{
                                 mask: 'url("/assets/icons/close.svg")',
                                 maskSize: 'cover',
@@ -223,12 +223,12 @@ const LoginRegisterForm: React.FC<Params> = ({ closeModal, afterLogin, fromAdmin
                         </div>
                     </div>
                 }
-                <p className='text-3xl font-semibold leading-[none] text-center text-sgt-primary-1 mb-4'>
+                <p className='text-3xl font-semibold leading-[none] text-center text-bela-primary-1 mb-4'>
                     {showforgetPassword ? 'Quên mật khẩu' : modalType === 'login' ? 'Đăng nhập' : 'Đăng ký'}
                 </p>
                 {isLogin &&
                     <>
-                        <p className='text-sm font-medium leading-[1.3125rem] text-sgt-neutral-4 text-center'>
+                        <p className='text-sm font-medium leading-[1.3125rem] text-bela-neutral-4 text-center'>
                             Chào mừng bạn đến với SPORTVERSE
                             <br />
                             Đăng nhập để theo dõi lịch sân, bài đăng trận đấu
@@ -258,7 +258,7 @@ const LoginRegisterForm: React.FC<Params> = ({ closeModal, afterLogin, fromAdmin
                                 )}
 
                                 <div className='sgt_divider_with_text mt-4'>
-                                    <p className='text-sm !font-normal !text-sgt-gray-1'>Hoặc</p>
+                                    <p className='text-sm !font-normal !text-bela-gray-1'>Hoặc</p>
                                 </div>
                             </>
                         }
@@ -282,7 +282,7 @@ const LoginRegisterForm: React.FC<Params> = ({ closeModal, afterLogin, fromAdmin
                             <PasswordInput className={showforgetPassword ? 'hidden' : ''} />
                             {!fromAdmin &&
                                 <div
-                                    className='text-xs font-normal ml-auto mr-2 text-sgt-primary-1 cursor-pointer hover:text-sgt-primary-2 select-none'
+                                    className='text-xs font-normal ml-auto mr-2 text-bela-primary-1 cursor-pointer hover:text-bela-primary-2 select-none'
                                     onClick={() => setShowForgetPassword(!showforgetPassword)}
                                 >
                                     {showforgetPassword ? 'Đăng nhập' : 'Quên mật khẩu'}

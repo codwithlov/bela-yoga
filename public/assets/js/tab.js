@@ -1,13 +1,13 @@
 
-const rootLinks = document.querySelectorAll(".sgt-tab .sgt-tab-links");
+const rootLinks = document.querySelectorAll(".bela-tab .bela-tab-links");
 
 // Use NodeList
 rootLinks.forEach(tab => {
     tab.addEventListener("click", function (e) {
         const currentId = e.target.id.substring(1);
-        const tabParent = tab.closest('.sgt-tab');
-        const tabLinks = tabParent.getElementsByClassName('sgt-tab-links');
-        const tabContent = tabParent.getElementsByClassName('sgt-tab-content');
+        const tabParent = tab.closest('.bela-tab');
+        const tabLinks = tabParent.getElementsByClassName('bela-tab-links');
+        const tabContent = tabParent.getElementsByClassName('bela-tab-content');
         for (i = 0; i < tabContent.length; i++) {
             tabContent[i].style.display = "none";
         };

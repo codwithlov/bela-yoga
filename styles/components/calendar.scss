@@ -24,13 +24,13 @@
 
         &.ant-picker-cell-today {
             .ant-picker-cell-inner:before {
-                @apply border-sgt-primary-default #{!important};
+                @apply border-bela-primary-default #{!important};
             }
         }
 
         &.ant-picker-cell-selected {
             .ant-picker-cell-inner {
-                @apply text-black bg-sgt-primary-default #{!important};
+                @apply text-black bg-bela-primary-default #{!important};
             }
         }
     }
@@ -52,7 +52,7 @@
 
         &.ant-select-item-option-selected,
         &.ant-select-item-option-active.ant-select-item-option-selected {
-            @apply bg-sgt-primary-light #{!important};
+            @apply bg-bela-primary-light #{!important};
         }
 
     }

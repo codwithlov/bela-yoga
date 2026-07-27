@@ -79,7 +79,7 @@ const AdminPostTable = (props: ActionProps) => {
 
     const getPostStatus = (post: any) => {
         if (post.status === 'draft') return 'Bản nháp';
-        if (post.deleted === 1) return <span className="rounded border border-sgt-third-2 px-2 py-0.5">Đã xóa</span>;
+        if (post.deleted === 1) return <span className="rounded border border-bela-third-2 px-2 py-0.5">Đã xóa</span>;
         if (isBeforeNow(post?.publish_date)) return 'Lên lịch';
         return 'Xuất bản';
     }

@@ -42,7 +42,7 @@ const TitleOfTopic: React.FC<TitleOfTopicParams> = ({
         <>
             <div className={`flex flex-row justify-between items-center pl-4 pr-2 xl:px-0 relative ${className}`}>
                 <div>
-                    <h2 className="flex flex-row justify-start items-start gap-2 text-sgt-secondary-1 font-bold max-sm:text-lg sm:text-xl md:text-h3">
+                    <h2 className="flex flex-row justify-start items-start gap-2 text-bela-secondary-1 font-bold max-sm:text-lg sm:text-xl md:text-h3">
                         {title}
                         {
                             iconTitle &&
@@ -66,7 +66,7 @@ const TitleOfTopic: React.FC<TitleOfTopicParams> = ({
                 </div>
                 {
                     link ? <>
-                        <a href={`/search`} className="flex flex-row justify-center items-center gap-1 rt_load_more max-sm:!hidden hover:shadow-sgt-primary">
+                        <a href={`/search`} className="flex flex-row justify-center items-center gap-1 rt_load_more max-sm:!hidden hover:shadow-bela-primary">
                             <span>{loadMore}</span>
                             <Image
                                 src="/assets/icons/long-arrow-right.svg"
@@ -75,7 +75,7 @@ const TitleOfTopic: React.FC<TitleOfTopicParams> = ({
                                 height={24}
                             />
                         </a>
-                        <a href={`/search`} className="hidden max-sm:flex flex-row justify-center items-center gap-1 text-sgt-secondary-dark font-bold">
+                        <a href={`/search`} className="hidden max-sm:flex flex-row justify-center items-center gap-1 text-bela-secondary-dark font-bold">
                             <span>{loadMore}</span>
                             <Image
                                 src="/assets/icons/long-arrow-right.svg"

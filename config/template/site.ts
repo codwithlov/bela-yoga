@@ -83,7 +83,7 @@ export const templateSiteConfig = {
     description: 'BelaYoga là không gian luyện tập chuyên nghiệp, nơi bạn được hướng dẫn bài bản để cải thiện vóc dáng, tăng sức bền, giảm căng thẳng và nuôi dưỡng sự an nhiên từ bên trong.',
     primaryCta: 'Khám phá lớp học',
     secondaryCta: 'Nhận tư vấn lộ trình',
-    scopeTitle: 'Cơ sở dạy tập yoga uy tín hàng đầu',
+    scopeTitle: 'Cơ sở dạy, tập yoga uy tín hàng đầu',
     quickLinks: [
       'Huấn luyện viên tận tâm, giàu kinh nghiệm',
       'Lớp học đa dạng cho mọi trình độ',
@@ -91,17 +91,17 @@ export const templateSiteConfig = {
       'Lịch học linh hoạt, dễ dàng sắp xếp',
     ],
     actionSection: {
-      eyebrow: 'Tập luyện cùng BelaYoga',
+      eyebrow: 'Tập luyện cùng Bela Yoga',
       title: 'Đồng hành cùng bạn trên hành trình sống khỏe, sống an yên',
       description: 'BelaYoga mang đến các lớp yoga chất lượng cao, từ cơ bản đến nâng cao, giúp bạn cải thiện sức khỏe thể chất và tinh thần, đồng thời nuôi dưỡng sự an yên nội tâm mỗi ngày.',
-      cta: 'Xem toàn bộ lớp học →',
+      cta: 'Xem toàn bộ →',
       empty: 'Chưa có gói tập công khai.',
     },
     courseSection: {
       eyebrow: 'Các Khóa học nổi bật',
       title: 'Khám phá các khóa học Yoga được thiết kế khoa học, phù hợp cho mọi trình độ',
       description: 'BelaYoga cung cấp các khóa học Yoga từ cơ bản đến nâng cao, giúp bạn cải thiện sức khỏe thể chất và tinh thần, đồng thời nuôi dưỡng sự an yên nội tâm mỗi ngày.',
-      cta: 'Xem toàn bộ Khóa học →',
+      cta: 'Xem toàn bộ →',
       empty: 'Chưa có Khóa học công khai.',
     },
     cmsSection: {

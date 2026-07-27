@@ -45,6 +45,7 @@ export const ADMIN_SECTION = `${ADMIN}/section`;
 export const ADMIN_ROLE = `${ADMIN}/role`;
 export const ADMIN_USER = `${ADMIN}/user`;
 export const ADMIN_POST = `${ADMIN}/post`;
+export const ADMIN_POST_CATEGORY = `${ADMIN}/post-category`;
 export const ADMIN_TAG = `${ADMIN}/tag`;
 export const ADMIN_AUTHOR = `${ADMIN}/author`;
 export const ADMIN_SLIDER_BANNER = `${ADMIN}/slider-banner`;

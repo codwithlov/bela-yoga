@@ -42,7 +42,7 @@ const Column = React.memo(({ columnId, column, setColumns, editImage, colKey, it
                     <div className="flex items-center justify-center cursor-pointer mb-4">
                         <label
                             htmlFor={"upload-file" + colKey}
-                            className="bg-sgt-primary-2 rounded-lg w-full text-center cursor-pointer"
+                            className="bg-bela-primary-2 rounded-lg w-full text-center cursor-pointer"
                         >
                             <p className="text-sx justify-center p-2">
                                 <span className="font-semibold">Tải ảnh mới {'(2MB)'}</span>

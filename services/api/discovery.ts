@@ -42,6 +42,7 @@ const toFallbackMenus = (location?: 'header' | 'footer' | 'account'): Menu[] => 
 async function requestJson<T>(path: string): Promise<T | null> {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), FETCH_API_TIMEOUT_MS);
+    const shouldBypassCache = process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_FORCE_FRESH_CMS === 'true';
 
     try {
         const response = await fetch(buildApiUrl(path), {
@@ -49,9 +50,13 @@ async function requestJson<T>(path: string): Promise<T | null> {
             headers: {
                 'Content-Type': 'application/json',
             },
-            next: {
-                revalidate: FETCH_API_REVALIDATE,
-            },
+            ...(shouldBypassCache
+                ? { cache: 'no-store' as const }
+                : {
+                    next: {
+                        revalidate: FETCH_API_REVALIDATE,
+                    },
+                }),
         });
 
         if (!response.ok) {

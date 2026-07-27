@@ -23,8 +23,8 @@ type SVPageFrameProps = {
 };
 
 const actionClassName: Record<NonNullable<ActionLink['variant']>, string> = {
-    primary: 'sv-brand-gradient text-white shadow-sgt-primary',
-    secondary: 'border border-sgt-gray-2 bg-white text-sgt-secondary-2',
+    primary: 'sv-brand-gradient text-white shadow-bela-primary',
+    secondary: 'border border-bela-gray-2 bg-white text-bela-secondary-2',
     ghost: 'border border-white/15 bg-white/10 text-white backdrop-blur',
 };
 
@@ -42,7 +42,7 @@ export default function SVPageFrame({
             <div className="width-primary mx-auto px-4 pb-14 pt-12 md:pt-16">
                 <div className="grid gap-6 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
                     <div className="sv-brand-surface sv-accent-ring rounded-[2rem] border border-white/10 p-6 text-white shadow-2xl shadow-black/15 backdrop-blur md:p-8">
-                        <div className="inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-sgt-primary-3">
+                        <div className="inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-bela-primary-3">
                             {eyebrow}
                         </div>
                         <h1 className="mt-5 max-w-3xl text-3xl font-bold leading-tight md:text-5xl">
@@ -77,22 +77,22 @@ export default function SVPageFrame({
                         )}
                     </div>
 
-                    <div className="rounded-[2rem] border border-sgt-gray-2 bg-white p-6 shadow-sm md:p-8">
-                        <div className="text-xs font-semibold uppercase tracking-[0.2em] text-sgt-primary-1">SPORTVERSE snapshot</div>
-                        <h2 className="mt-3 text-2xl font-bold text-sgt-secondary-2 md:text-3xl">
+                    <div className="rounded-[2rem] border border-bela-gray-2 bg-white p-6 shadow-sm md:p-8">
+                        <div className="text-xs font-semibold uppercase tracking-[0.2em] text-bela-primary-1">SPORTVERSE snapshot</div>
+                        <h2 className="mt-3 text-2xl font-bold text-bela-secondary-2 md:text-3xl">
                             Khung nội dung public gọn, rõ và đúng ngữ cảnh booking sân.
                         </h2>
-                        <p className="mt-3 text-sm leading-6 text-sgt-neutral-3">
+                        <p className="mt-3 text-sm leading-6 text-bela-neutral-3">
                             Các page cơ bản được làm lại theo phong cách SPORTVERSE để thống nhất trải nghiệm giữa landing page, booking, trận đấu và cộng đồng.
                         </p>
 
                         <div className="mt-6 grid gap-3">
                             {infoCards.map((card) => (
-                                <div key={`${card.label}-${card.value}`} className="rounded-2xl border border-sgt-gray-2 bg-sgt-bg-primary px-4 py-4">
-                                    <div className="text-xs font-semibold uppercase tracking-[0.18em] text-sgt-primary-1">{card.label}</div>
-                                    <div className="mt-2 text-lg font-bold text-sgt-secondary-2">{card.value}</div>
+                                <div key={`${card.label}-${card.value}`} className="rounded-2xl border border-bela-gray-2 bg-bela-bg-primary px-4 py-4">
+                                    <div className="text-xs font-semibold uppercase tracking-[0.18em] text-bela-primary-1">{card.label}</div>
+                                    <div className="mt-2 text-lg font-bold text-bela-secondary-2">{card.value}</div>
                                     {card.description ? (
-                                        <div className="mt-1 text-sm leading-6 text-sgt-neutral-3">{card.description}</div>
+                                        <div className="mt-1 text-sm leading-6 text-bela-neutral-3">{card.description}</div>
                                     ) : null}
                                 </div>
                             ))}

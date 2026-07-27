@@ -16,7 +16,7 @@ type SupportRequestFormProps = {
     showTitle?: boolean;
 };
 
-const inputClassName = 'mt-1 font-medium text-sm lg:text-base rounded-xl w-full py-3 px-4 border border-sgt-neutral-4 bg-white focus:outline-none focus:border-sgt-primary-1 placeholder:text-sgt-neutral-3 placeholder:font-normal placeholder:text-xs lg:placeholder:text-sm';
+const inputClassName = 'mt-1 font-medium text-sm lg:text-base rounded-xl w-full py-3 px-4 border border-bela-neutral-4 bg-white focus:outline-none focus:border-bela-primary-1 placeholder:text-bela-neutral-3 placeholder:font-normal placeholder:text-xs lg:placeholder:text-sm';
 
 export default function SupportRequestForm({ closeModal, messageApi, source, showTitle = true }: SupportRequestFormProps) {
     const { control, handleSubmit, formState: { errors }, reset } = useForm();
@@ -53,8 +53,8 @@ export default function SupportRequestForm({ closeModal, messageApi, source, sho
 
             {showTitle && (
                 <div className='space-y-2'>
-                    <p className='text-2xl font-semibold text-sgt-secondary-1'>Đăng ký tư vấn</p>
-                    <p className='text-sm leading-6 text-sgt-neutral-3'>
+                    <p className='text-2xl font-semibold text-bela-secondary-1'>Đăng ký tư vấn</p>
+                    <p className='text-sm leading-6 text-bela-neutral-3'>
                         Để lại thông tin để đội ngũ hỗ trợ liên hệ nhanh cho bạn về lịch sân, booking hoặc nhu cầu liên quan.
                     </p>
                 </div>
@@ -97,7 +97,7 @@ export default function SupportRequestForm({ closeModal, messageApi, source, sho
                 defaultValue={source ? `Nguồn quan tâm: ${source}` : ''}
             />
 
-            <button type='submit' className='rounded-xl bg-gradient-to-r from-sgt-primary-1 to-sgt-primary-2 px-5 py-3 text-sm font-semibold text-white shadow-sgt-primary transition hover:-translate-y-0.5'>
+            <button type='submit' className='rounded-xl bg-gradient-to-r from-bela-primary-1 to-bela-primary-2 px-5 py-3 text-sm font-semibold text-white shadow-bela-primary transition hover:-translate-y-0.5'>
                 Gửi yêu cầu tư vấn
             </button>
         </form>

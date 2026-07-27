@@ -112,8 +112,8 @@ const HtmlContent: React.FC<Props> = ({
                                 <p
                                     style={getHeadingClass(heading.tagName).marginStyle}
                                     className={
-                                        'whitespace-nowrap overflow-hidden text-ellipsis cursor-pointer hover:text-sgt-primary-1' +
-                                        ` ${getHeadingClass(heading.tagName).className} ${activeHeading === index ? 'text-sgt-primary-1' : ''}`
+                                        'whitespace-nowrap overflow-hidden text-ellipsis cursor-pointer hover:text-bela-primary-1' +
+                                        ` ${getHeadingClass(heading.tagName).className} ${activeHeading === index ? 'text-bela-primary-1' : ''}`
                                     }
                                     onClick={(e) => handleScrollToHeading(e, heading.id)}
                                 >
@@ -128,7 +128,7 @@ const HtmlContent: React.FC<Props> = ({
 
     const ContentContainer: React.FC<{ content?: any, showSummary?: any, children: React.ReactNode }> = ({ children, showSummary, content }) => {
         return (
-            <div className="flex-1 justify-center bg-sgt-bg-primary mb-2 flex pb-2">
+            <div className="flex-1 justify-center bg-bela-bg-primary mb-2 flex pb-2">
                 {showSummary && <HeadingMenu content={content} />}
                 {articleMenu && articleMenu}
                 <div className="w-[800px] p-2 bg-white overflow-hidden" style={{ minHeight: `calc(100vh - 120px)` }}>
@@ -142,7 +142,7 @@ const HtmlContent: React.FC<Props> = ({
     const ChildrenContent = ({ content, showSummary }: { content: string; showSummary?: any }) => {
         return (
             <ContentContainer showSummary={showSummary} content={content}>
-                <div dangerouslySetInnerHTML={{ __html: content || '' }} className='ck-content text-sgt-neutral-1' />
+                <div dangerouslySetInnerHTML={{ __html: content || '' }} className='ck-content text-bela-neutral-1' />
             </ContentContainer>
         );
     };

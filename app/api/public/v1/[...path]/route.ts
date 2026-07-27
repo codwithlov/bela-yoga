@@ -2,16 +2,19 @@ import { createDbSession, createSessionToken, csrfCookieOptions, getSessionFromR
 import { SESSION_COOKIE_NAME, CSRF_COOKIE_NAME } from '@/lib/auth-shared';
 import { connectToDatabase } from '@/lib/db';
 import {
+    createAdminPostCategory,
     createAdminMenuItem,
     createAdminPost,
     createAdminSection,
     createAdminStoreItem,
+    deleteAdminPostCategory,
     deleteAdminMenuItem,
     deleteAdminPost,
     deleteAdminSection,
     deleteAdminStoreItem,
     getAdminMenuBundleFromStore,
     getAdminMenuTargetOptionsFromStore,
+    getAdminPostCategoriesFromStore,
     getAdminPostsFromStore,
     getAdminStoreItemsFromStore,
     getPublicMenusFromStore,
@@ -20,6 +23,7 @@ import {
     getPublicSectionsFromStore,
     getPublicStoreItemsFromStore,
     updateAdminMenuItem,
+    updateAdminPostCategory,
     updateAdminPost,
     updateAdminSection,
     updateAdminStoreItem,
@@ -341,7 +345,11 @@ function getAdminRoles() {
 }
 
 async function getAdminPosts() {
-    return getAdminPostsFromStore();
+    const [posts, categories] = await Promise.all([
+        getAdminPostsFromStore(),
+        getAdminPostCategoriesFromStore(),
+    ]);
+    return { posts, categories };
 }
 
 async function getAdminStoreItems() {
@@ -496,7 +504,8 @@ async function handleGet(request: NextRequest, path: string[]) {
         if (second === 'bookings') return ok({ bookings: getAdminBookings() });
         if (second === 'users') return ok({ users: getAdminUsers() });
         if (second === 'roles') return ok({ roles: getAdminRoles() });
-        if (second === 'posts') return ok({ posts: await getAdminPosts() });
+        if (second === 'posts') return ok(await getAdminPosts());
+        if (second === 'post-categories') return ok({ categories: await getAdminPostCategoriesFromStore() });
         if (second === 'store-items') return ok({ store_items: await getAdminStoreItems() });
         if (second === 'menus') return ok(await getAdminMenus());
         if (second === 'sections') return ok(await getAdminSections());
@@ -556,6 +565,27 @@ async function handlePost(request: NextRequest, path: string[]) {
                 canonical: String(body.canonical || defaultPostCanonical(slug)),
                 index: body.index ?? true,
                 follow: body.follow ?? true,
+            });
+            return ok(created, 'success');
+        }
+
+        if (second === 'post-categories') {
+            const name = String(body.name || '').trim();
+            if (!name) {
+                return fail('fill_required_infomation', 422);
+            }
+
+            const categories = await getAdminPostCategoriesFromStore();
+            const normalizedName = name.toLowerCase();
+            const existed = categories.some((item) => item.name.trim().toLowerCase() === normalizedName);
+            if (existed) {
+                return fail('name_existed', 422);
+            }
+
+            const created = await createAdminPostCategory({
+                name,
+                sort_order: Number(body.sort_order || 0) || undefined,
+                status: body.status || 'active',
             });
             return ok(created, 'success');
         }
@@ -657,6 +687,28 @@ async function handlePatch(request: NextRequest, path: string[]) {
         return updated ? ok(updated, 'success') : fail('record_not_found', 404);
     }
 
+    if (second === 'post-categories' && third) {
+        const name = String(body.name || '').trim();
+        if (!name) {
+            return fail('fill_required_infomation', 422);
+        }
+
+        const categories = await getAdminPostCategoriesFromStore();
+        const normalizedName = name.toLowerCase();
+        const currentId = Number(third);
+        const existed = categories.some((item) => item.id !== currentId && item.name.trim().toLowerCase() === normalizedName);
+        if (existed) {
+            return fail('name_existed', 422);
+        }
+
+        const updated = await updateAdminPostCategory(Number(third), {
+            name,
+            sort_order: Number(body.sort_order || 0) || undefined,
+            status: body.status || 'active',
+        });
+        return updated ? ok(updated, 'success') : fail('record_not_found', 404);
+    }
+
     if (second === 'store-items' && third) {
         const updated = await updateAdminStoreItem(Number(third), {
             name: String(body.name || ''),
@@ -737,6 +789,20 @@ export async function DELETE(request: NextRequest, context: { params: Promise<{ 
         if (second === 'posts' && third) {
             const deleted = await deleteAdminPost(Number(third));
             return deleted ? ok(deleted, 'success') : fail('record_not_found', 404);
+        }
+
+        if (second === 'post-categories' && third) {
+            const deleted = await deleteAdminPostCategory(Number(third));
+            if (!deleted) {
+                return fail('record_not_found', 404);
+            }
+
+            const reassignedCount = Number((deleted as any)?.reassigned_count || 0);
+            const message = reassignedCount > 0
+                ? `Đã xóa danh mục và chuyển ${reassignedCount} bài viết sang "Chưa phân loại".`
+                : 'Đã xóa danh mục thành công.';
+
+            return ok(deleted, message);
         }
 
         if (second === 'store-items' && third) {

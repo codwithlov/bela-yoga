@@ -99,7 +99,7 @@ const CommentDrawer: React.FC<CommentDrawerProps> = ({ marketId, title, openComm
             open={openComment}
             {...getUpdateDrawerProps(830)}
             onClose={() => setOpenComment(false)}
-            className='drawer-bg-sgt-bg-primary sgt_drawer_tour_detail'
+            className='drawer-bg-bela-bg-primary sgt_drawer_tour_detail'
             extra={
                 <Space>
                     <ShowCreateDrawer title='Thêm bình luận' code='MARKET_REVIEW_CREATE' width='500px'>

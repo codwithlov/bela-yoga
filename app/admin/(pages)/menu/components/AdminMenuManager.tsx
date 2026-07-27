@@ -223,11 +223,11 @@ const AdminMenuManager = () => {
                         title: 'Menu item',
                         render: (row) => (
                             <div>
-                                <div className='font-semibold text-sgt-secondary-2'>{row.title}</div>
-                                <div className='mt-1 text-xs text-sgt-neutral-3'>{row.path}</div>
-                                <div className='mt-2 text-[11px] uppercase tracking-[0.18em] text-sgt-primary-1'>{row.page_type}{row.page_ref ? ` #${row.page_ref}` : ''}</div>
+                                <div className='font-semibold text-bela-secondary-2'>{row.title}</div>
+                                <div className='mt-1 text-xs text-bela-neutral-3'>{row.path}</div>
+                                <div className='mt-2 text-[11px] uppercase tracking-[0.18em] text-bela-primary-1'>{row.page_type}{row.page_ref ? ` #${row.page_ref}` : ''}</div>
                                 {row.page_type === 'custom' ? (
-                                    <div className='mt-2 text-xs text-sgt-neutral-3'>Sections: {row.custom_page?.sections?.length || 0} · Related posts: {row.custom_page?.related_post_ids?.length || 0}</div>
+                                    <div className='mt-2 text-xs text-bela-neutral-3'>Sections: {row.custom_page?.sections?.length || 0} · Related posts: {row.custom_page?.related_post_ids?.length || 0}</div>
                                 ) : null}
                             </div>
                         ),
@@ -358,10 +358,10 @@ const AdminMenuManager = () => {
                     <div className='space-y-6 pb-24'>
                         <div className='grid gap-6 xl:grid-cols-[minmax(0,1.5fr)_360px]'>
                             <div className='space-y-6'>
-                                <Card className='rounded-2xl border border-sgt-gray-2'>
+                                <Card className='rounded-2xl border border-bela-gray-2'>
                                     <div className='mb-4'>
-                                        <div className='text-xs font-semibold uppercase tracking-[0.2em] text-sgt-primary-1'>Custom page editor</div>
-                                        <div className='mt-1 text-sm text-sgt-neutral-3'>Dùng editor này như một mini WordPress page builder: có nội dung chính, section và bài viết liên quan cho menu custom.</div>
+                                        <div className='text-xs font-semibold uppercase tracking-[0.2em] text-bela-primary-1'>Custom page editor</div>
+                                        <div className='mt-1 text-sm text-bela-neutral-3'>Dùng editor này như một mini WordPress page builder: có nội dung chính, section và bài viết liên quan cho menu custom.</div>
                                     </div>
 
                                     <div className='grid gap-4 md:grid-cols-2'>
@@ -382,16 +382,16 @@ const AdminMenuManager = () => {
                                     </Form.Item>
                                 </Card>
 
-                                <Card className='rounded-2xl border border-sgt-gray-2' title='Sections'>
+                                <Card className='rounded-2xl border border-bela-gray-2' title='Sections'>
                                     <Form.List name='sections'>
                                         {(fields, { add, remove }) => (
                                             <div className='space-y-4'>
                                                 {fields.map((field, index) => (
-                                                    <div key={field.key} className='rounded-2xl border border-sgt-gray-2 p-4'>
+                                                    <div key={field.key} className='rounded-2xl border border-bela-gray-2 p-4'>
                                                         <div className='mb-4 flex items-center justify-between gap-3'>
                                                             <div>
-                                                                <div className='text-sm font-semibold text-sgt-secondary-2'>Section #{index + 1}</div>
-                                                                <div className='text-xs text-sgt-neutral-3'>Khối nội dung con hiển thị bên dưới nội dung chính.</div>
+                                                                <div className='text-sm font-semibold text-bela-secondary-2'>Section #{index + 1}</div>
+                                                                <div className='text-xs text-bela-neutral-3'>Khối nội dung con hiển thị bên dưới nội dung chính.</div>
                                                             </div>
                                                             <Button danger icon={<DeleteOutlined />} onClick={() => remove(field.name)}>Xoá section</Button>
                                                         </div>
@@ -438,7 +438,7 @@ const AdminMenuManager = () => {
                             </div>
 
                             <div className='space-y-6'>
-                                <Card className='rounded-2xl border border-sgt-gray-2' title='Bài viết liên quan'>
+                                <Card className='rounded-2xl border border-bela-gray-2' title='Bài viết liên quan'>
                                     <Form.Item name='related_post_ids'>
                                         <Select
                                             mode='multiple'
@@ -451,10 +451,10 @@ const AdminMenuManager = () => {
                                             showSearch
                                         />
                                     </Form.Item>
-                                    <div className='text-xs leading-6 text-sgt-neutral-3'>Các bài này sẽ được render thành khối related posts ở cuối custom page.</div>
+                                    <div className='text-xs leading-6 text-bela-neutral-3'>Các bài này sẽ được render thành khối related posts ở cuối custom page.</div>
                                 </Card>
 
-                                <Card className='rounded-2xl border border-sgt-gray-2' title='SEO'>
+                                <Card className='rounded-2xl border border-bela-gray-2' title='SEO'>
                                     <Form.Item label='Meta title' name='meta_title'>
                                         <Input placeholder='Meta title cho custom page' />
                                     </Form.Item>
@@ -463,11 +463,11 @@ const AdminMenuManager = () => {
                                     </Form.Item>
                                 </Card>
 
-                                <Card className='rounded-2xl border border-sgt-gray-2' title='Điều hướng'>
-                                    <div className='space-y-2 text-sm text-sgt-neutral-3'>
-                                        <div><span className='font-semibold text-sgt-secondary-2'>Path:</span> {editingCustomPageMenu?.path}</div>
-                                        <div><span className='font-semibold text-sgt-secondary-2'>Location:</span> {editingCustomPageMenu?.location}</div>
-                                        <div><span className='font-semibold text-sgt-secondary-2'>Menu:</span> {editingCustomPageMenu?.title}</div>
+                                <Card className='rounded-2xl border border-bela-gray-2' title='Điều hướng'>
+                                    <div className='space-y-2 text-sm text-bela-neutral-3'>
+                                        <div><span className='font-semibold text-bela-secondary-2'>Path:</span> {editingCustomPageMenu?.path}</div>
+                                        <div><span className='font-semibold text-bela-secondary-2'>Location:</span> {editingCustomPageMenu?.location}</div>
+                                        <div><span className='font-semibold text-bela-secondary-2'>Menu:</span> {editingCustomPageMenu?.title}</div>
                                     </div>
                                 </Card>
                             </div>

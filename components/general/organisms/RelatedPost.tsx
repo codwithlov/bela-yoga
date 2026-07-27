@@ -14,7 +14,7 @@ const RelatedPost: React.FC<RelatedPostProps> = ({ relatedPosts }) => {
 
   return (
     <div>
-      <h3 className="text-h3 text-sgt-secondary-1 mb-6">
+      <h3 className="text-h3 text-bela-secondary-1 mb-6">
         Bài viết liên quan
       </h3>
       <div>

@@ -144,7 +144,7 @@ const SearchFeaturedListings = ({
                                                     isAnimation={true}
                                                     isShowDiscount={true}
                                                     discountPosition='top-left'
-                                                    cardBorder='border border-sgt-third-2'
+                                                    cardBorder='border border-bela-third-2'
                                                 >
                                                 </ListingItemHorizontal>
                                             }) :
@@ -158,11 +158,11 @@ const SearchFeaturedListings = ({
                                     goodPriceTourPagination?.length == goodPriceTour?.length ?
                                         null :
                                         <div className='md:hidden col-span-12 flex flex-row justify-center items-center pt-6'>
-                                            <button className='flex flex-row justify-center items-center gap-0.5 py-1.5 px-4 rounded-md border border-sgt-primary-1'
+                                            <button className='flex flex-row justify-center items-center gap-0.5 py-1.5 px-4 rounded-md border border-bela-primary-1'
                                                 onClick={onLoadMore}>
-                                                <p className='text-button text-sgt-neutral-1'>Xem thêm</p>
-                                                <p className='text-button text-sgt-neutral-1'>({defaultPageSize})</p>
-                                                <div className='bg-sgt-neutral-1'
+                                                <p className='text-button text-bela-neutral-1'>Xem thêm</p>
+                                                <p className='text-button text-bela-neutral-1'>({defaultPageSize})</p>
+                                                <div className='bg-bela-neutral-1'
                                                     style={{
                                                         mask: 'url("/assets/icons/long-arrow-right.svg")',
                                                         maskSize: 'cover',

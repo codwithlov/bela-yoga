@@ -22,7 +22,7 @@
     .mobile_contact_support_item {
         width: $mobile_contact_support_item_w;
         height: $mobile_contact_support_item_w;
-        @apply rounded-full flex flex-row justify-center items-center bg-sgt-primary-1 overflow-hidden shadow-sgt-black-10;
+        @apply rounded-full flex flex-row justify-center items-center bg-bela-primary-1 overflow-hidden shadow-bela-black-10;
         @apply transition-all duration-500;
 
         &:nth-child(1) {
@@ -50,8 +50,8 @@
             border-radius: 100%;
             position: relative;
             @apply transition-all duration-500;
-            @apply flex flex-row justify-center items-center mt-4 border-2 border-sgt-primary-1;
-            @apply bg-sgt-primary-1;
+            @apply flex flex-row justify-center items-center mt-4 border-2 border-bela-primary-1;
+            @apply bg-bela-primary-1;
 
 
             &:after,
@@ -62,7 +62,7 @@
                 height: 5rem;
                 border-radius: 100%;
                 z-index: -1;
-                @apply bg-sgt-primary-1 bg-opacity-30;
+                @apply bg-bela-primary-1 bg-opacity-30;
                 animation: contact_support_ripple 1500ms linear infinite;
             }
 
@@ -91,7 +91,7 @@
 
         #support_message_btn {
             .support_message_btn_contain {
-                @apply bg-sgt-neutral-7;
+                @apply bg-bela-neutral-7;
 
                 .customer_service_icon {
                     display: none;

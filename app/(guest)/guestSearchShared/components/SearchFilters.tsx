@@ -42,7 +42,7 @@ export const OptionFilters = React.memo(({
         <div className='search_filter_item'>
             <div className='flex flex-row justify-between items-center'>
                 <div className='search_filter_item_title'>{options.title}</div>
-                {/* <button className='font-medium transition-all duration-300 text-sgt-neutral-3 hover:text-sgt-secondary-1' onClick={resetDaynumberFilter}>Đặt lại</button> */}
+                {/* <button className='font-medium transition-all duration-300 text-bela-neutral-3 hover:text-bela-secondary-1' onClick={resetDaynumberFilter}>Đặt lại</button> */}
             </div>
             {/*  */}
             <div className={`flex flex-row flex-wrap gap-2 pt-4 overflow-hidden max-h-0 max-sm:!max-h-max ${isAnimation ? 'search_filter_item_container' : '!max-h-max'}`}>
@@ -365,8 +365,8 @@ const SearchFilters: React.FC<SearchFilterParams> = ({
     return (
         <section id='search_filters' className='relative'>
             <div className='flex flex-row justify-between items-center py-2 pb-4 max-sm:hidden'>
-                <span className='text-sub-1 font-medium px-2 text-sgt-secondary-1'>Bộ lọc tìm kiếm </span>
-                <button className='text-body-2 transition-all duration-300 text-sgt-neutral-3 hover:text-sgt-secondary-1'
+                <span className='text-sub-1 font-medium px-2 text-bela-secondary-1'>Bộ lọc tìm kiếm </span>
+                <button className='text-body-2 transition-all duration-300 text-bela-neutral-3 hover:text-bela-secondary-1'
                     onClick={resetFilter}>
                     Đặt lại
                 </button>
@@ -380,20 +380,20 @@ const SearchFilters: React.FC<SearchFilterParams> = ({
                     onClickFilter={onClickFilter}
                 />
             }
-            <hr className='border-sgt-neutral-5 mt-1 mx-4 md:hidden' />
+            <hr className='border-bela-neutral-5 mt-1 mx-4 md:hidden' />
             <OptionFilters
                 isAnimation={false}
                 options={fromOptions}
                 filterConditions={filterConditions}
                 onClickFilter={onClickFilter}
             />
-            <hr className='border-sgt-neutral-5 mt-1 mx-4 md:hidden' />
+            <hr className='border-bela-neutral-5 mt-1 mx-4 md:hidden' />
             <div className='search_filter_item'>
                 <div className='flex flex-row justify-between items-center pb-4'>
                     <div className='search_filter_item_title'>Phạm vi giá</div>
-                    <div className='text-cap-1 text-sgt-neutral-3'>1 người</div>
+                    <div className='text-cap-1 text-bela-neutral-3'>1 người</div>
                     {/* <button
-                            className='font-medium transition-all duration-300 text-sgt-neutral-3 hover:text-sgt-secondary-1'
+                            className='font-medium transition-all duration-300 text-bela-neutral-3 hover:text-bela-secondary-1'
                             onClick={resetPriceRangeFilter}>
                             Đặt lại
                         </button> */}
@@ -414,14 +414,14 @@ const SearchFilters: React.FC<SearchFilterParams> = ({
                         // ariaLabelForHandle={'filter by price range'}
                         />
                     </div>
-                    <div className='flex flex-row justify-between items-center text-sgt-neutral-3 text-cap-1 pb-2'>
+                    <div className='flex flex-row justify-between items-center text-bela-neutral-3 text-cap-1 pb-2'>
                         <p>{formatPrice(priceFrom.toString())}đ</p>
                         <p>{formatPrice(priceTo.toString())}đ</p>
                     </div>
                 </div>
 
             </div>
-            <hr className='border-sgt-neutral-5 mt-1 mx-4 md:hidden' />
+            <hr className='border-bela-neutral-5 mt-1 mx-4 md:hidden' />
             {/* <div className='search_filter_item'>
                 <div className={`max-h-0 overflow-hidden max-sm:!max-h-max ${!isLoading ? 'search_filter_item_container' : ''}`}>
                     <Radio.Group onChange={onbestTourTypeKeyChange} value={filterConditions[bestTourTypeKey]}>
@@ -431,7 +431,7 @@ const SearchFilters: React.FC<SearchFilterParams> = ({
                                     <Radio
                                         key={index}
                                         value={item.value}
-                                        className='sgt_ant_radio !text-body-2 !text-sgt-secondary-1'>
+                                        className='sgt_ant_radio !text-body-2 !text-bela-secondary-1'>
                                         {item.label}
                                     </Radio>
                                 )
@@ -440,14 +440,14 @@ const SearchFilters: React.FC<SearchFilterParams> = ({
                     </Radio.Group>
                 </div>
             </div>
-            <hr className='border-sgt-neutral-5 mt-1 mx-4 md:hidden' /> */}
+            <hr className='border-bela-neutral-5 mt-1 mx-4 md:hidden' /> */}
             <OptionFilters
                 isAnimation={false}
                 options={dayOptions}
                 filterConditions={filterConditions}
                 onClickFilter={onClickFilter}
             />
-            <hr className='border-sgt-neutral-5 mt-1 mx-4 md:hidden' />
+            <hr className='border-bela-neutral-5 mt-1 mx-4 md:hidden' />
             {
                 slugType !== DESTINATION_SLUG &&
                 <OptionFilters
@@ -461,7 +461,7 @@ const SearchFilters: React.FC<SearchFilterParams> = ({
             {
                 isMobile ?
                     <div className='w-full px-4 pb-4 fixed bottom-0 z-10 md:hidden'>
-                        <button className='w-full py-3 text-button bg-gradient-to-t from-sgt-primary-1 to-sgt-primary-2 text-sgt-secondary-1 rounded-md'
+                        <button className='w-full py-3 text-button bg-gradient-to-t from-bela-primary-1 to-bela-primary-2 text-bela-secondary-1 rounded-md'
                             onClick={onMobileApplyFilter}
                         >
                             Áp dụng

@@ -75,7 +75,7 @@ const FeedbackList = ({
                 {isFetching ? (
                     [...Array(initialList?.pagination?.per_page || 12)].map((_, index) => (
                         <div key={index} className='col-span-4 max-sm:col-span-6'>
-                            <div className='w-full rounded-sgt-10 overflow-hidden' style={{ height: postHeight || 'auto' }}>
+                            <div className='w-full rounded-bela-10 overflow-hidden' style={{ height: postHeight || 'auto' }}>
                                 <Skeleton.Node active className="!w-full !h-full" />
                             </div>
                         </div>

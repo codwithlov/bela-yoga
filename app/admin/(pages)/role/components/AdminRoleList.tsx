@@ -36,8 +36,8 @@ const AdminRoleList = () => {
             title: 'Vai trò',
             render: (row) => (
               <div>
-                <div className='font-semibold text-sgt-secondary-2'>{row.name}</div>
-                <div className='mt-1 text-xs text-sgt-neutral-3'>{row.code}</div>
+                <div className='font-semibold text-bela-secondary-2'>{row.name}</div>
+                <div className='mt-1 text-xs text-bela-neutral-3'>{row.code}</div>
               </div>
             ),
           },
@@ -52,7 +52,7 @@ const AdminRoleList = () => {
             render: (row) => (
               <div className='space-y-1 text-xs'>
                 <div>{row.permissions_count} permission(s)</div>
-                <div className='text-sgt-neutral-3'>{row.permissions_preview.join(' · ') || '—'}</div>
+                <div className='text-bela-neutral-3'>{row.permissions_preview.join(' · ') || '—'}</div>
               </div>
             ),
           },

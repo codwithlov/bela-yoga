@@ -29,10 +29,10 @@ type SearchViewByButtonParam = {
 
 export const SearchViewByMobileButton: React.FC<SearchViewByButtonParam> = (({ btnIcon, btnText, className, onClick }) => {
     return <button
-        className={`search_view_by_button flex-1 flex flex-row justify-center items-center gap-2.5 bg-sgt-neutral-5 py-3 rounded-md transition-all duration-300 ${className}`}
+        className={`search_view_by_button flex-1 flex flex-row justify-center items-center gap-2.5 bg-bela-neutral-5 py-3 rounded-md transition-all duration-300 ${className}`}
         onClick={onClick}
     >
-        <div className='bg-sgt-secondary-1'
+        <div className='bg-bela-secondary-1'
             style={{
                 mask: `url("/assets/icons/${btnIcon}")`,
                 maskSize: 'cover',
@@ -40,7 +40,7 @@ export const SearchViewByMobileButton: React.FC<SearchViewByButtonParam> = (({ b
                 height: "1.25rem",
             }}
         ></div>
-        <p className='text-body-1 text-sgt-secondary-1'>{btnText}</p>
+        <p className='text-body-1 text-bela-secondary-1'>{btnText}</p>
     </button>
 });
 
@@ -155,19 +155,19 @@ const SearchViewBy = (props: SearchViewByParam) => {
     }, []);
 
     const SearchViewByDesktop = (
-        <div className='bg-gradient-to-t from-sgt-primary-1 to-sgt-primary-2 rounded-md hidden md:flex justify-between items-center py-3.5 px-8 mx-2'>
-            <div className='text-lg font-semibold text-sgt-secondary-1'>Có {props.tourNumber || 0} tour du lịch {props.tourName}</div>
+        <div className='bg-gradient-to-t from-bela-primary-1 to-bela-primary-2 rounded-md hidden md:flex justify-between items-center py-3.5 px-8 mx-2'>
+            <div className='text-lg font-semibold text-bela-secondary-1'>Có {props.tourNumber || 0} tour du lịch {props.tourName}</div>
             <div className='flex flex-row justify-center items-center gap-2'>
-                <div className='text-button text-sgt-secondary-1'>Sắp xếp theo</div>
+                <div className='text-button text-bela-secondary-1'>Sắp xếp theo</div>
                 <Dropdown
                     menu={menuProps}
                     className='w-48'
                     overlayClassName='search_view_by_dropdown'
                     openClassName='search_view_by_dropdown_opened'
                 >
-                    <div className='flex flex-row justify-between items-center rounded-md bg-sgt-neutral-6 py-1.5 px-3 cursor-pointer'>
-                        <div className='text-body-2 text-sgt-secondary-1'>{arrangeSelected.label}</div>
-                        <div className='bg-sgt-secondary-1 dropdown_icon'
+                    <div className='flex flex-row justify-between items-center rounded-md bg-bela-neutral-6 py-1.5 px-3 cursor-pointer'>
+                        <div className='text-body-2 text-bela-secondary-1'>{arrangeSelected.label}</div>
+                        <div className='bg-bela-secondary-1 dropdown_icon'
                             style={{
                                 mask: 'url("/assets/icons/chevron-down.svg")',
                                 maskSize: 'cover',
@@ -180,8 +180,8 @@ const SearchViewBy = (props: SearchViewByParam) => {
                 </Dropdown>
             </div>
             <div className='flex flex-row justify-center items-center gap-2'>
-                <div className='text-button text-sgt-secondary-1'>Xem theo</div>
-                <div className=' flex flex-row bg-sgt-neutral-7 rounded-md'>
+                <div className='text-button text-bela-secondary-1'>Xem theo</div>
+                <div className=' flex flex-row bg-bela-neutral-7 rounded-md'>
                     <button
                         aria-label='horizontal view'
                         onClick={() => changeView(HORIZONTAL_VIEW)}
@@ -189,7 +189,7 @@ const SearchViewBy = (props: SearchViewByParam) => {
                     >
                         <div className='view_by_icon'
                             style={{
-                                mask: 'url("/assets/icons/sgt-list-ul.svg")',
+                                mask: 'url("/assets/icons/bela-list-ul.svg")',
                                 maskSize: 'contain',
                                 width: "1.25rem",
                                 height: "1.25rem",
@@ -197,7 +197,7 @@ const SearchViewBy = (props: SearchViewByParam) => {
                         >
                         </div>
                     </button>
-                    <div className="h-5 my-1 bg-sgt-primary-1 " style={{ width: '1px' }}></div>
+                    <div className="h-5 my-1 bg-bela-primary-1 " style={{ width: '1px' }}></div>
                     <button
                         aria-label='vertical view'
                         onClick={() => changeView(VERTICAL_VIEW)}
@@ -205,7 +205,7 @@ const SearchViewBy = (props: SearchViewByParam) => {
                     >
                         <div className='view_by_icon'
                             style={{
-                                mask: 'url("/assets/icons/sgt-grip.svg") no-repeat',
+                                mask: 'url("/assets/icons/bela-grip.svg") no-repeat',
                                 maskSize: 'contain',
                                 maskRepeat: 'no-repeat',
                                 width: "1.25rem",
@@ -221,30 +221,30 @@ const SearchViewBy = (props: SearchViewByParam) => {
 
     const SearchViewByMobile = (
         <div id='search_view_by_mobile' className='hidden max-sm:block pb-4 mx-4'>
-            <div className='bg-sgt-neutral-7 shadow-sgt-black-1 flex flex-row p-1 rounded-md gap-1'>
+            <div className='bg-bela-neutral-7 shadow-bela-black-1 flex flex-row p-1 rounded-md gap-1'>
                 <SearchViewByMobileButton
                     btnIcon='filters.svg'
                     btnText='Bộ lọc'
                     btnType={filterType}
                     onClick={() => onChangeType(filterType)}
-                    className={`${type == filterType ? 'bg-sgt-primary-2' : ''}`}
+                    className={`${type == filterType ? 'bg-bela-primary-2' : ''}`}
                 />
                 <SearchViewByMobileButton
                     btnIcon='arrange.svg'
                     btnText='Sắp xếp'
                     btnType={arrangeType}
                     onClick={() => onChangeType(arrangeType)}
-                    className={`${type == arrangeType ? 'bg-sgt-primary-2' : ''}`}
+                    className={`${type == arrangeType ? 'bg-bela-primary-2' : ''}`}
                 />
             </div>
-            <div className='text-lg font-bold text-sgt-secondary-1 pt-4'>
-                Có <span className='text-sgt-third-2'>{props.tourNumber} </span>tour du lịch {props.tourName}
+            <div className='text-lg font-bold text-bela-secondary-1 pt-4'>
+                Có <span className='text-bela-third-2'>{props.tourNumber} </span>tour du lịch {props.tourName}
             </div>
         </div>
     )
 
     return (
-        <section ref={searchViewBy} id='search_view_by' className="pb-10 pt-2.5 max-sm:pb-0 sticky z-50 bg-sgt-bg-primary -mx-2 max-sm:-mx-4">
+        <section ref={searchViewBy} id='search_view_by' className="pb-10 pt-2.5 max-sm:pb-0 sticky z-50 bg-bela-bg-primary -mx-2 max-sm:-mx-4">
             {SearchViewByDesktop}
             {SearchViewByMobile}
             <Drawer
@@ -293,7 +293,7 @@ const SearchViewBy = (props: SearchViewByParam) => {
                     close={() => setOpenArrange(false)}
                 />
                 <div className='mx-4'>
-                    <hr className='border border-sgt-neutral-5 -mt-1' />
+                    <hr className='border border-bela-neutral-5 -mt-1' />
                     <div className='search_view_by_arrange pt-6 pb-16'>
                         <Radio.Group onChange={onMobileArrangeBy} value={arrangeSelected.key}>
                             <Space direction="vertical" size={20}>
@@ -302,7 +302,7 @@ const SearchViewBy = (props: SearchViewByParam) => {
                                         <Radio
                                             key={index}
                                             value={item.key}
-                                            className='sgt_ant_radio !text-sub-1 !font-normal !text-sgt-secondary-1'>
+                                            className='sgt_ant_radio !text-sub-1 !font-normal !text-bela-secondary-1'>
                                             {item.label}
                                         </Radio>
                                     )

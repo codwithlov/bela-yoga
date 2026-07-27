@@ -29,7 +29,7 @@ const Avatar: React.FC<AvatarProps> = ({ src, className = '', name = '' }) => {
     const fallbackLetter = name?.charAt(0).toUpperCase() || 'U';
     const bgColor = useMemo(() => stringToColor(name), [name]);
     const defaultAvatar = "/assets/icons/default-avatar.svg";
-    const avatarClass = "w-10 lg:w-[2.8125rem] h-10 lg:h-[2.8125rem] bg-sgt-primary-3 rounded-full flex items-end justify-center overflow-hidden ";
+    const avatarClass = "w-10 lg:w-[2.8125rem] h-10 lg:h-[2.8125rem] bg-bela-primary-3 rounded-full flex items-end justify-center overflow-hidden ";
 
     return (
         <div className={avatarClass + className} style={{ backgroundColor: useFallback ? bgColor : undefined }}>

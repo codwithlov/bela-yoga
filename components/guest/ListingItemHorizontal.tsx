@@ -82,7 +82,7 @@ const ListingItemHorizontal = (props: ViewedParam) => {
     return (
         <>
             {isClient && <ListingItemCss />}
-            <a href={detailLink} className={`tour_item_horizontal h-full col-span-12 rounded-sgt-10 bg-white shadow-sgt-black-1 cursor-pointer ${cardBorder}`}>
+            <a href={detailLink} className={`tour_item_horizontal h-full col-span-12 rounded-bela-10 bg-white shadow-bela-black-1 cursor-pointer ${cardBorder}`}>
                 <div className='grid grid-cols-12 gap-4 h-full max-sm:gap-2.5 relative'>
                     <div className='col-span-5 rounded-tl-lg rounded-bl-lg overflow-hidden aspect-auto'>
                         <div className='relative w-full h-full overflow-hidden'>
@@ -103,18 +103,18 @@ const ListingItemHorizontal = (props: ViewedParam) => {
                     <div className='col-span-7 flex flex-col justify-between pt-3 pb-3 px-2.5 max-sm:pl-0 max-sm:pb-2.5 '>
                         <div className="flex flex-row justify-between items-start relative mb-4">
                             <div className='flex flex-col gap-0.5 overflow-hidden'>
-                                <div className='tour_item_horizontal_subtitle text-cap-1 text-sgt-neutral-3 pb-1'>Tour {capitalizeFirstLetter(item.market_name)}</div>
-                                <span className='tour_item_horizontal_title text-sub-1 text-sgt-neutral-1 line-clamp-2 pb-0.5'>{capitalizeFirstLetter(item.tour_name)}</span>
+                                <div className='tour_item_horizontal_subtitle text-cap-1 text-bela-neutral-3 pb-1'>Tour {capitalizeFirstLetter(item.market_name)}</div>
+                                <span className='tour_item_horizontal_title text-sub-1 text-bela-neutral-1 line-clamp-2 pb-0.5'>{capitalizeFirstLetter(item.tour_name)}</span>
                                 {
                                     isTour ?
-                                        <span className='block text-cap-1 font-medium text-sgt-secondary-3 line-clamp-1 text-ellipsis'>{item.series_code}</span> :
+                                        <span className='block text-cap-1 font-medium text-bela-secondary-3 line-clamp-1 text-ellipsis'>{item.series_code}</span> :
                                         null
                                 }
                             </div>
                         </div>
                         <div className=' flex flex-col gap-0.5'>
                             <div className='search_result_item_detail_star flex flex-row justify-start items-center gap-1.5'>
-                                <div className='bg-sgt-primary-1'
+                                <div className='bg-bela-primary-1'
                                     style={{
                                         mask: 'url("/assets/icons/location.svg")',
                                         maskSize: 'cover',
@@ -124,13 +124,13 @@ const ListingItemHorizontal = (props: ViewedParam) => {
                                     }}
                                 >
                                 </div>
-                                <p className='text-cap-1 text-sgt-neutral-3'>{fromLocation || FROM_LIST[0].label}</p>
+                                <p className='text-cap-1 text-bela-neutral-3'>{fromLocation || FROM_LIST[0].label}</p>
                             </div>
                             {
                                 isTour ?
                                     <div className='tour_item_horizontal_star flex flex-row justify-start place-items-end gap-1.5 pb-0.5 '>
 
-                                        <div className='bg-sgt-primary-1'
+                                        <div className='bg-bela-primary-1'
                                             style={{
                                                 mask: 'url("/assets/icons/calendar-origin.svg")',
                                                 maskSize: 'cover',
@@ -139,12 +139,12 @@ const ListingItemHorizontal = (props: ViewedParam) => {
                                             }}
                                         >
                                         </div>
-                                        <p className='text-cap-1 text-sgt-neutral-3'>{dayjs(item.flight_date).format(dateFormat)}</p>
+                                        <p className='text-cap-1 text-bela-neutral-3'>{dayjs(item.flight_date).format(dateFormat)}</p>
                                     </div> :
                                     null
                             }
                             <div className='tour_item_horizontal_day flex flex-row justify-start items-center gap-1.5'>
-                                <div className='bg-sgt-primary-1'
+                                <div className='bg-bela-primary-1'
                                     style={{
                                         mask: 'url("/assets/icons/clock.svg")',
                                         maskSize: 'cover',
@@ -153,7 +153,7 @@ const ListingItemHorizontal = (props: ViewedParam) => {
                                     }}
                                 >
                                 </div>
-                                <p className='text-cap-1 text-sgt-neutral-3'>{item.day_number} Ngày {item.night_number} Đêm</p>
+                                <p className='text-cap-1 text-bela-neutral-3'>{item.day_number} Ngày {item.night_number} Đêm</p>
                             </div>
                         </div>
                         <div className='flex flex-row justify-between items-center gap-2 mt-1'>
@@ -176,18 +176,18 @@ const ListingItemHorizontal = (props: ViewedParam) => {
                                         :
                                         <div className='flex flex-row justify-start items-center gap-1.5 overflow-hidden'>
                                             <Image src="/assets/icons/plane.svg" alt="plane-icon" width={20} height={20} />
-                                            <p className='text-cap-1 text-sgt-neutral-3'>{NOT_UPDATED_INFORMATION}</p>
+                                            <p className='text-cap-1 text-bela-neutral-3'>{NOT_UPDATED_INFORMATION}</p>
                                         </div>
                                 }
                             </div>
                             <div className='flex flex-col justify-end items-end'>
                                 {
                                     discount > 0 &&
-                                    <div className='tour_item_horizontal_price flex flex-row justify-start items-center gap-0.5 text-sgt-neutral-4 font-normal text-xs'>
+                                    <div className='tour_item_horizontal_price flex flex-row justify-start items-center gap-0.5 text-bela-neutral-4 font-normal text-xs'>
                                         {(tourPrice == tourPriceOff || tourPrice == 0) ? null : <div className='line-through'>{formatPrice((tourPrice ?? 0).toString())}đ</div>}
                                     </div>
                                 }
-                                <div className='tour_item_horizontal_price flex flex-row justify-start items-center gap-0.5 font-bold text-sub-1 text-sgt-third-2'>
+                                <div className='tour_item_horizontal_price flex flex-row justify-start items-center gap-0.5 font-bold text-sub-1 text-bela-third-2'>
                                     <div>{formatPrice((tourPrice == tourPriceOff ? tourPrice : tourPriceOff).toString())}đ</div>
                                 </div>
                             </div>

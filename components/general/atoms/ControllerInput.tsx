@@ -33,7 +33,7 @@ const ControllerInput: React.FC<ControllerInputProps> = ({
     return (
         <div className='flex-1'>
             {label &&
-                <label className="font-medium text-sm lg:text-base text-sgt-neutral-1">
+                <label className="font-medium text-sm lg:text-base text-bela-neutral-1">
                     {label}{required && <span className="text-red-500">*</span>}:
                 </label>
             }
@@ -45,9 +45,9 @@ const ControllerInput: React.FC<ControllerInputProps> = ({
                 defaultValue={defaultValue}
                 render={({ field }) => {
                     const inputClassName = `mt-1 font-medium text-sm lg:text-base rounded-md w-full py-1.5 px-3
-                                            border border-sgt-neutral-4 focus:outline-none 
-                                            placeholder:text-sgt-neutral-3 placeholder:font-normal 
-                                            placeholder:text-xs lg:placeholder:text-sm focus:border-sgt-primary-1`;
+                                            border border-bela-neutral-4 focus:outline-none 
+                                            placeholder:text-bela-neutral-3 placeholder:font-normal 
+                                            placeholder:text-xs lg:placeholder:text-sm focus:border-bela-primary-1`;
 
                     return isTextArea ? (
                         <textarea

@@ -28,8 +28,8 @@ const FeedbackItem = ({ item, canShowDetail }: { item: IFeedback, canShowDetail?
             </div>
             <div className="flex items-center mt-1.5 mb-2">
                 <Rating rating={item.rating} small />
-                <p className="text-2xs ml-1 mr-[6px] font-light text-sgt-neutral-3">|</p>
-                <p className="text-2xs lg:text-xs mt-[1px] font-normal text-sgt-neutral-3">
+                <p className="text-2xs ml-1 mr-[6px] font-light text-bela-neutral-3">|</p>
+                <p className="text-2xs lg:text-xs mt-[1px] font-normal text-bela-neutral-3">
                     {ratings.find(rating => rating.value === Number(item.rating))?.label}
                 </p>
             </div>
@@ -140,16 +140,16 @@ const FeedbackItem = ({ item, canShowDetail }: { item: IFeedback, canShowDetail?
     };
 
     return (
-        <div className='feedback_item_wrap w-full h-full bg-gradient-to-b from-sgt-primary-2 to-white m-0.5 p-0.5 rounded-sgt-10 overflow-hidden'>
+        <div className='feedback_item_wrap w-full h-full bg-gradient-to-b from-bela-primary-2 to-white m-0.5 p-0.5 rounded-bela-10 overflow-hidden'>
             <div
-                className="w-full h-full flex flex-col bg-white cursor-pointer rounded-sgt-10"
+                className="w-full h-full flex flex-col bg-white cursor-pointer rounded-bela-10"
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
                 onClick={handleClick}
             >
                 <div className="p-4 pb-2">
                     {topSection()}
-                    <p className="text-2xs lg:text-sm leading-4 font-normal text-sgt-neutral-1 line-clamp-[3] min-h-[18px] max-w-[400px]">
+                    <p className="text-2xs lg:text-sm leading-4 font-normal text-bela-neutral-1 line-clamp-[3] min-h-[18px] max-w-[400px]">
                         {item.content}
                     </p>
                 </div>

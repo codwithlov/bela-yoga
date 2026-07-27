@@ -68,7 +68,7 @@ function ListingViewed(props: ViewedParam) {
                             <div className='grid grid-cols-12 gap-5 pt-5 max-sm:pt-6 pb-5 px-4 xl:px-0'>
                                 {
                                     markets?.data?.map((item: any, index) =>
-                                        <div key={index} className='col-span-12 md:col-span-6 lg:col-span-4 rounded-lg bg-white shadow-sgt-black-1'>
+                                        <div key={index} className='col-span-12 md:col-span-6 lg:col-span-4 rounded-lg bg-white shadow-bela-black-1'>
                                             <ListingItemHorizontal
                                                 item={item}
                                                 index={index}

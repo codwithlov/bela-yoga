@@ -32,7 +32,7 @@ export default function RootLayout({
   const googleClientId = process.env.NEXT_PUBLIC_CLIENT_ID?.trim();
 
   return (
-    <html lang={templateSiteConfig.locale} className="!scroll-smooth" suppressHydrationWarning>
+    <html lang={templateSiteConfig.locale} className="!scroll-smooth" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         {/* <link rel="preconnect" href="https://cdn.saigontimestravel.com" />
         <link rel="dns-prefetch" href="https://cdn.saigontimestravel.com" /> */}

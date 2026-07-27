@@ -23,10 +23,10 @@ const ListingTable = (props: Props) => {
     };
 
     return (
-        <div className={`${dataSource.length > 10 ? 'mb-6' : 'mb-12'} text-sgt-secondary-1 ant-table input-focus`}>
+        <div className={`${dataSource.length > 10 ? 'mb-6' : 'mb-12'} text-bela-secondary-1 ant-table input-focus`}>
             <h2 className="text-sm lg:text-xl font-semibold text-center mb-3">
                 Lịch khởi hành
-                <a href={'/' + dataSource?.[0]?.market_slug} target="_blank" className="hover:text-sgt-secondary-2">
+                <a href={'/' + dataSource?.[0]?.market_slug} target="_blank" className="hover:text-bela-secondary-2">
                     {` ${dataSource?.[0]?.tour_name || ''} - ${dataSource?.[0]?.day_number || ''}N${dataSource?.[0]?.night_number || ''}D`}
                 </a>
             </h2>

@@ -1,6 +1,6 @@
 import SocialLinkIcon, { SocialLinkProps } from "../../atoms/SocialLinkIcon";
 
-const SgtHotline2 = (props: SocialLinkProps) => {
+const Hotline2 = (props: SocialLinkProps) => {
     const { href, style } = props;
     return <SocialLinkIcon
         href={href}
@@ -14,4 +14,4 @@ const SgtHotline2 = (props: SocialLinkProps) => {
     />
 }
 
-export default SgtHotline2;
+export default Hotline2;

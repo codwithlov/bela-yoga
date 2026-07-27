@@ -4,7 +4,7 @@ import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
 const QuickChat: React.FC<SocialLinkProps> = ({ href, onClick, style, styleImg }) => {
   return (
     <SocialLinkIcon
-      className="shadow-sgt-black-1"
+      className="shadow-bela-black-1"
       href={href}
       icon={faCommentDots}
       alt="fchat"

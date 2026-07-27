@@ -47,7 +47,7 @@ const Index = ({ content }: { content: string }) => {
                                 <a
                                     href={`#${heading.id}`}
                                     onClick={(e) => handleScrollToHeading(e, heading.id)}
-                                    className='text-sgt-neutral-1 hover:text-sgt-primary-1'
+                                    className='text-bela-neutral-1 hover:text-bela-primary-1'
                                 >
                                     {heading.text}
                                 </a>

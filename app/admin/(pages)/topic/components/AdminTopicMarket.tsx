@@ -636,7 +636,7 @@ const AdminTopicAddMarket: React.FC<AdminTopicAddMarketParams> = ({
                                 }
                                 {
                                     (fields.length - 1) != index ?
-                                        <Divider className='!mt-0 !mb-5 !border-sgt-neutral-4 opacity-10'></Divider>
+                                        <Divider className='!mt-0 !mb-5 !border-bela-neutral-4 opacity-10'></Divider>
                                         : null
                                 }
                             </React.Fragment>

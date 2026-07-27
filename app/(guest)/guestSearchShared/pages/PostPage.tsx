@@ -44,15 +44,15 @@ const PostPage = async ({ slugPermalink, admin }: Props) => {
     ];
     const editedContent = addHeadingIdsForContent(post.description || '');
     return (
-        <div className='bg-sgt-bg-primary w-full px-4'>
+        <div className='bg-bela-bg-primary w-full px-4'>
             <SchemaScript id="article-schema" schema={generateArticleSchema(post, slugPermalink)} />
             <SchemaScript id="breadcrumb-schema" schema={generateBreadcrumbSchema(breadcrumb)} />
-            <section id='diary_page' className='text-sgt-neutral-1 width-primary m-auto lg:pt-10 pb-16'>
+            <section id='diary_page' className='text-bela-neutral-1 width-primary m-auto lg:pt-10 pb-16'>
                 <AdminNavBarReduxUpdater slugPermalink={slugPermalink} />
                 <Breadcrumb items={breadcrumb} />
                 <div className='grid grid-cols-12 gap-x-5 pt-10 mb-10'>
                     <div className='col-span-12 lg:col-span-8 overflow-hidden'>
-                        <h1 className='text-h3 text-sgt-secondary-1'>{slugPermalink?.meta_title}</h1>
+                        <h1 className='text-h3 text-bela-secondary-1'>{slugPermalink?.meta_title}</h1>
                         <p className='text-body-2 mt-4'>{`Posted on ${formatDate(post.publish_date)} by `}
                             <a href={author?.author_slug ? `author/${author.author_slug}` : '/#'}>
                                 {author?.display_name || 'Thảo Yoko'}
@@ -72,7 +72,7 @@ const PostPage = async ({ slugPermalink, admin }: Props) => {
                     <div className='col-span-12 lg:col-span-4'>
                         <SupportForm source={slugPermalink?.meta_title} />
                         {!isEmpty(postData?.relatedPosts) &&
-                            <h2 className='text-h3 text-sgt-secondary-1 mb-6'>
+                            <h2 className='text-h3 text-bela-secondary-1 mb-6'>
                                 Bài viết liên quan
                             </h2>
                         }
@@ -89,12 +89,12 @@ const PostPage = async ({ slugPermalink, admin }: Props) => {
                                     />
                                 </div>
                                 <div className='flex-1'>
-                                    {/* <p className='text-body-2 text-sgt-neutral-3 mb-0.5'>Đoàn Nhật Bản 5N5Đ</p> */}
+                                    {/* <p className='text-body-2 text-bela-neutral-3 mb-0.5'>Đoàn Nhật Bản 5N5Đ</p> */}
                                     <h3 className='text-sub-1 mb-1.5'>
                                         {item?.meta_title}
                                     </h3>
                                     <div className='flex items-center gap-1'>
-                                        <div className='bg-sgt-neutral-4'
+                                        <div className='bg-bela-neutral-4'
                                             style={{
                                                 mask: 'url("/assets/icons/clock.svg")',
                                                 maskSize: 'cover',
@@ -102,7 +102,7 @@ const PostPage = async ({ slugPermalink, admin }: Props) => {
                                                 height: '1rem',
                                             }}
                                         />
-                                        <p className='text-cap-1 text-sgt-neutral-4'>{formatDate(item.publish_date)}</p>
+                                        <p className='text-cap-1 text-bela-neutral-4'>{formatDate(item.publish_date)}</p>
                                     </div>
                                 </div>
                             </a>

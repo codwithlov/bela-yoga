@@ -36,8 +36,8 @@ const AdminBookingList = () => {
                         title: 'Booking',
                         render: (row) => (
                             <div>
-                                <div className='font-semibold text-sgt-secondary-2'>#{row.id}</div>
-                                <div className='mt-1 text-xs text-sgt-neutral-3'>{row.organization_name || '—'} · {row.venue_name || '—'}</div>
+                                <div className='font-semibold text-bela-secondary-2'>#{row.id}</div>
+                                <div className='mt-1 text-xs text-bela-neutral-3'>{row.organization_name || '—'} · {row.venue_name || '—'}</div>
                             </div>
                         ),
                     },
@@ -47,7 +47,7 @@ const AdminBookingList = () => {
                         render: (row) => (
                             <div>
                                 <div>{row.user_name || '—'}</div>
-                                <div className='mt-1 text-xs text-sgt-neutral-3'>{row.user_email || row.team_name || '—'}</div>
+                                <div className='mt-1 text-xs text-bela-neutral-3'>{row.user_email || row.team_name || '—'}</div>
                             </div>
                         ),
                     },
@@ -57,7 +57,7 @@ const AdminBookingList = () => {
                         render: (row) => (
                             <div className='text-xs'>
                                 <div>{row.starts_at ? new Date(row.starts_at).toLocaleString('vi-VN') : '—'}</div>
-                                <div className='mt-1 text-sgt-neutral-3'>{row.ends_at ? new Date(row.ends_at).toLocaleString('vi-VN') : '—'}</div>
+                                <div className='mt-1 text-bela-neutral-3'>{row.ends_at ? new Date(row.ends_at).toLocaleString('vi-VN') : '—'}</div>
                             </div>
                         ),
                     },
@@ -66,7 +66,7 @@ const AdminBookingList = () => {
                         title: 'Trạng thái',
                         render: (row) => (
                             <div className='space-y-1 text-xs'>
-                                <div className='inline-flex rounded-full bg-sgt-bg-primary px-3 py-1 font-semibold text-sgt-primary-1'>{row.status}</div>
+                                <div className='inline-flex rounded-full bg-bela-bg-primary px-3 py-1 font-semibold text-bela-primary-1'>{row.status}</div>
                                 <div>{row.payment_status}</div>
                             </div>
                         ),

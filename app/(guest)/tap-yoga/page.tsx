@@ -25,7 +25,7 @@ export default async function PublicPostsPage() {
             <section className="width-primary mx-auto px-4 pb-12">
                 <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
                     {posts.length > 0 ? posts.map((post) => (
-                        <Link key={post.id} href={`${GUEST_ACTION}/${post.slug}`} className="overflow-hidden rounded-[1.5rem] border border-sgt-gray-2 bg-white shadow-sm transition hover:-translate-y-1 hover:border-sgt-primary-2 hover:shadow-lg">
+                        <Link key={post.id} href={`${GUEST_ACTION}/${post.slug}`} className="overflow-hidden rounded-[1.5rem] border border-bela-gray-2 bg-white shadow-sm transition hover:-translate-y-1 hover:border-bela-primary-2 hover:shadow-lg">
                             <div className="relative h-52 w-full">
                                 <Image
                                     src={getFirstImageUrl(post.description) || DEFAULT_THUMBNAIL}
@@ -36,19 +36,19 @@ export default async function PublicPostsPage() {
                                 />
                             </div>
                             <div className="p-5">
-                                <div className="flex items-center justify-between gap-2 text-xs text-sgt-primary-1">
+                                <div className="flex items-center justify-between gap-2 text-xs text-bela-primary-1">
                                     <span className="font-semibold uppercase tracking-[0.18em]">{post.category || 'Yoga Session'}</span>
                                     <span>{post.published_at ? new Date(post.published_at).toLocaleDateString('vi-VN') : 'Sắp cập nhật'}</span>
                                 </div>
-                                <h2 className="mt-3 line-clamp-2 text-xl font-bold text-sgt-secondary-2">{post.title}</h2>
-                                <p className="mt-3 line-clamp-3 text-sm leading-6 text-sgt-neutral-3">{post.excerpt || getTextOnly(post.description).slice(0, 140)}</p>
-                                <div className="mt-4 text-xs text-sgt-neutral-2">
+                                <h2 className="mt-3 line-clamp-2 text-xl font-bold text-bela-secondary-2">{post.title}</h2>
+                                <p className="mt-3 line-clamp-3 text-sm leading-6 text-bela-neutral-3">{post.excerpt || getTextOnly(post.description).slice(0, 140)}</p>
+                                <div className="mt-4 text-xs text-bela-neutral-2">
                                     Huấn luyện viên: {post.author_name || 'BelaYoga Team'}
                                 </div>
                             </div>
                         </Link>
                     )) : (
-                        <div className="rounded-[1.5rem] border border-dashed border-sgt-gray-2 bg-white p-5 text-sm text-sgt-neutral-3 xl:col-span-3">
+                        <div className="rounded-[1.5rem] border border-dashed border-bela-gray-2 bg-white p-5 text-sm text-bela-neutral-3 xl:col-span-3">
                             Chưa có buổi tập Yoga nào được xuất bản.
                         </div>
                     )}

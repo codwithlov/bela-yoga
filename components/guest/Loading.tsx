@@ -19,10 +19,10 @@ export const Loading = (props: any) => {
             }}
         >
             <Spin
-                className='sgt-ant-spin-fullcreen'
+                className='bela-ant-spin-fullcreen'
                 spinning={isLoading}
                 fullscreen
-                indicator={<LoadingOutlined className='!text-sgt-primary-default' style={{ fontSize: 48 }} />}
+                indicator={<LoadingOutlined className='!text-bela-primary-default' style={{ fontSize: 48 }} />}
             >
             </Spin>
         </ConfigProvider>
@@ -33,10 +33,10 @@ export const LoadingMini = (props: any) => {
     return (
         <>
             <div className={`loading-mini-wrap`}>
-                <div className={`loading-mini bg-sgt-primary-default h-5 w-5 rounded-full ${props.className ?? ''}`}></div>
-                <div className={`loading-mini bg-sgt-primary-default h-5 w-5 rounded-full ${props.className ?? ''}`}></div>
-                <div className={`loading-mini bg-sgt-primary-default h-5 w-5 rounded-full ${props.className ?? ''}`}></div>
-                <div className={`loading-mini bg-sgt-primary-default h-5 w-5 rounded-full ${props.className ?? ''}`}></div>
+                <div className={`loading-mini bg-bela-primary-default h-5 w-5 rounded-full ${props.className ?? ''}`}></div>
+                <div className={`loading-mini bg-bela-primary-default h-5 w-5 rounded-full ${props.className ?? ''}`}></div>
+                <div className={`loading-mini bg-bela-primary-default h-5 w-5 rounded-full ${props.className ?? ''}`}></div>
+                <div className={`loading-mini bg-bela-primary-default h-5 w-5 rounded-full ${props.className ?? ''}`}></div>
             </div>
         </>
     )
@@ -47,9 +47,9 @@ export const ComponentLoading = (props: any) => {
     return (
         <Spin
             delay={3}
-            className='sgt-ant-spin-fullcreen'
+            className='bela-ant-spin-fullcreen'
             spinning={isLoading}
-            indicator={<LoadingOutlined className='!text-sgt-primary-default' style={{ fontSize: 48 }} />}
+            indicator={<LoadingOutlined className='!text-bela-primary-default' style={{ fontSize: 48 }} />}
         >
         </Spin>
     )

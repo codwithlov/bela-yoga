@@ -11,12 +11,12 @@ interface Props {
 
 export const ShowMoreBtn: React.FC<Props> = (props) => {
     const { onLoadMore, className, showArrow, href } = props;
-    const button = <button className='flex flex-row justify-center items-center gap-0.5 py-1.5 px-4 rounded-md border border-sgt-primary-1 h-9'
+    const button = <button className='flex flex-row justify-center items-center gap-0.5 py-1.5 px-4 rounded-md border border-bela-primary-1 h-9'
         onClick={onLoadMore ? onLoadMore : () => { }}>
-        <p className='text-button text-sgt-neutral-1 leading-3'>Xem thêm</p>
+        <p className='text-button text-bela-neutral-1 leading-3'>Xem thêm</p>
         {
             showArrow &&
-            <div className='bg-sgt-neutral-1'
+            <div className='bg-bela-neutral-1'
                 style={{
                     mask: 'url("/assets/icons/long-arrow-right.svg")',
                     maskSize: 'cover',

@@ -12,7 +12,7 @@ import { controlerRule } from '@/utils/validateRule';
 import { Loading } from '@/components/guest/Loading';
 
 const SupportForm = ({ source }: { source: string }) => {
-    const inputClasses = 'bg-sgt-neutral-5 text-sgt-neutral-3 text-body-2 rounded-md w-full p-2 focus:outline-none text-center';
+    const inputClasses = 'bg-bela-neutral-5 text-bela-neutral-3 text-body-2 rounded-md w-full p-2 focus:outline-none text-center';
     const { control, handleSubmit, formState: { errors }, reset } = useForm();
     const [postApi] = usePostDataMutation();
     const [messageApi, contextHolder] = message.useMessage();
@@ -38,9 +38,9 @@ const SupportForm = ({ source }: { source: string }) => {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className='bg-sgt-neutral-7 rounded-sgt-10 pt-8 pb-5 px-4 flex flex-col items-center mb-10'>
+        <form onSubmit={handleSubmit(onSubmit)} className='bg-bela-neutral-7 rounded-bela-10 pt-8 pb-5 px-4 flex flex-col items-center mb-10'>
             {loading && <Loading isLoading={loading} />}
-            <p className='text-sub-1 text-sgt-secondary-1'>Liên hệ càng sớm - Giá càng rẻ</p>
+            <p className='text-sub-1 text-bela-secondary-1'>Liên hệ càng sớm - Giá càng rẻ</p>
             <a className='mt-4 flex gap-2 items-center justify-center' href={`tel:${PHONE.trim()}`}>
                 <Image
                     src="/assets/images/journey-diary/red-phone.png"
@@ -49,7 +49,7 @@ const SupportForm = ({ source }: { source: string }) => {
                     height={30}
                     className="w-[30px] h-[30px]"
                 />
-                <p className='text-sgt-secondary-1 text-[1.375rem] font-bold leading-none'>
+                <p className='text-bela-secondary-1 text-[1.375rem] font-bold leading-none'>
                     {PHONE}
                 </p>
             </a>
@@ -77,7 +77,7 @@ const SupportForm = ({ source }: { source: string }) => {
                     className={inputClasses}
                 />
             </div>
-            <button className='mt-2 bg-sgt-primary-1 rounded-md p-2 text-center w-full'>
+            <button className='mt-2 bg-bela-primary-1 rounded-md p-2 text-center w-full'>
                 <p className='text-body-2'>Gửi ngay</p>
             </button>
             {contextHolder}

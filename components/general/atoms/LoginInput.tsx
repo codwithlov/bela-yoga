@@ -38,11 +38,11 @@ const LoginInput: React.FC<LoginInputProps> = ({
                 type: name === 'email' ? 'email' : undefined
             }]}
         >
-            <div className="relative flex w-full items-center bg-sgt-gray-3 rounded-md">
+            <div className="relative flex w-full items-center bg-bela-gray-3 rounded-md">
                 {/* Left-side Icon */}
-                <div className="flex items-center min-w-12 h-12 bg-sgt-gray-2 rounded-md justify-center">
+                <div className="flex items-center min-w-12 h-12 bg-bela-gray-2 rounded-md justify-center">
                     <div
-                        className="w-6 aspect-1/1 bg-sgt-third-2"
+                        className="w-6 aspect-1/1 bg-bela-third-2"
                         style={{
                             mask: `url(${iconUrl})`,
                         }}
@@ -53,7 +53,7 @@ const LoginInput: React.FC<LoginInputProps> = ({
                 <input
                     type={isPasswordInput && !showPassword ? 'password' : 'text'}
                     placeholder={placeholder}
-                    className={"w-full pl-4 py-2 focus:outline-none bg-sgt-gray-3 placeholder-custom text-base font-normal " + (isPasswordInput ? 'pr-10' : 'pr-3')}
+                    className={"w-full pl-4 py-2 focus:outline-none bg-bela-gray-3 placeholder-custom text-base font-normal " + (isPasswordInput ? 'pr-10' : 'pr-3')}
                     maxLength={maxLength}
                     autoComplete={isPasswordInput ? "current-password" : "username"}
                 />

@@ -145,12 +145,12 @@ const SearchBarInputLocation: React.FC<SearchBarInputLocationParams> = ({
     }
 
     const renderTitle = (title: string, className?: string) => (
-        <span className={`text-base font-medium text-sgt-secondary-1 ${className}`}>
+        <span className={`text-base font-medium text-bela-secondary-1 ${className}`}>
             {title}
         </span>
     );
     const renderItemClassName = "flex flex-row justify-between items-center py-1.5 px-3 pl-6 cursor-pointer rounded-md ";
-    const renderItemClassNameHover = "hover:bg-sgt-neutral-6";
+    const renderItemClassNameHover = "hover:bg-bela-neutral-6";
     const renderNationItem = useCallback((
         slug: string,
         count: number,
@@ -231,7 +231,7 @@ const SearchBarInputLocation: React.FC<SearchBarInputLocationParams> = ({
                 className="flex flex-wrap justify-between items-center"
             >
                 <div
-                    className="px-3 py-1 rounded-2xl border cursor-pointer border-sgt-secondary-1 hover:bg-sgt-neutral-6"
+                    className="px-3 py-1 rounded-2xl border cursor-pointer border-bela-secondary-1 hover:bg-bela-neutral-6"
                     data-slug={value}
                     dangerouslySetInnerHTML={{ __html: highlightLabel ?? '' }}>
                 </div>
@@ -318,7 +318,7 @@ const SearchBarInputLocation: React.FC<SearchBarInputLocationParams> = ({
     //                 <div className="flex justify-center items-center py-3">
     //                     <Spin indicator={
     //                         <LoadingOutlined
-    //                             className="!text-sgt-primary-1"
+    //                             className="!text-bela-primary-1"
     //                             style={{ fontSize: 32 }} spin
     //                         />
     //                     }
@@ -422,7 +422,7 @@ const SearchBarInputLocation: React.FC<SearchBarInputLocationParams> = ({
                         indicator={
                             <LoadingOutlined
 
-                                className="!text-sgt-primary-2"
+                                className="!text-bela-primary-2"
                                 style={{
                                     fontSize: 26
                                 }}

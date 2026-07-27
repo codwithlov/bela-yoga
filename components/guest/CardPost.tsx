@@ -18,7 +18,7 @@ const CardPost: React.FC<CardPostProps> = ({ post, index }) => {
 
   return (
     <a key={index} href={`/${post.slug}`} className="post_item">
-      <div className="w-full aspect-16/9 rounded-sgt-10 overflow-hidden">
+      <div className="w-full aspect-16/9 rounded-bela-10 overflow-hidden">
         <div className="relative w-full h-full">
           <Image
             src={imageUrl}

@@ -1,1 +1,0 @@
-(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,686997,e=>{"use strict";let t=e.i(271645).default.memo(()=>null);t.displayName="MenuCss",e.s(["default",0,t])},994612,e=>{e.n(e.i(686997))}]);

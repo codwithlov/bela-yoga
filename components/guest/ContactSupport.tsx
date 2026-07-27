@@ -4,7 +4,7 @@ import { MESSENGER, PHONE, ZALO } from '@/constants/link';
 import ContactMobilePart from '../general/organisms/ContactMobilePart';
 import { useMediaQuery } from 'react-responsive';
 // import PopupQuickChat from '../general/molecules/socialIcon/PopupQuickChat';
-import SgtHotline2 from '../general/molecules/socialIcon/SgtHotline2';
+import SgtHotline2 from '../general/molecules/socialIcon/Hotline2';
 import ZaloIcon2 from '../general/molecules/socialIcon/ZaloIcon2';
 import dynamic from 'next/dynamic';
 
@@ -45,7 +45,7 @@ const ContactSupport = () => {
             {/* <a href={zaloLink} target="_blank" aria-label="zalo link">
               <Image
                 src="/assets/icons/zalo.png"
-                alt="sgt-zalo-shadow"
+                alt="bela-zalo-shadow"
                 width={0}
                 height={0}
                 sizes="100vw"
@@ -55,7 +55,7 @@ const ContactSupport = () => {
             <a href={phone} aria-label="phone link">
               <Image
                 src="/assets/icons/hotline.png"
-                alt="sgt-hotline"
+                alt="bela-hotline"
                 width={0}
                 height={0}
                 sizes="100vw"

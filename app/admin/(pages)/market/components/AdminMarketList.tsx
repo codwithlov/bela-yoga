@@ -130,8 +130,8 @@ const AdminMarketList = () => {
                         title: 'Sản phẩm / dịch vụ',
                         render: (row) => (
                             <div>
-                                <div className='font-semibold text-sgt-secondary-2'>{row.name}</div>
-                                <div className='mt-1 text-xs text-sgt-neutral-3'>{row.sku} · {row.category}</div>
+                                <div className='font-semibold text-bela-secondary-2'>{row.name}</div>
+                                <div className='mt-1 text-xs text-bela-neutral-3'>{row.sku} · {row.category}</div>
                             </div>
                         ),
                     },
@@ -141,7 +141,7 @@ const AdminMarketList = () => {
                         render: (row) => (
                             <div className='space-y-1 text-xs'>
                                 <div>{row.type}</div>
-                                <div className='text-sgt-neutral-3'>{row.organization_name || 'Global catalog'}</div>
+                                <div className='text-bela-neutral-3'>{row.organization_name || 'Global catalog'}</div>
                             </div>
                         ),
                     },
@@ -160,7 +160,7 @@ const AdminMarketList = () => {
                         title: 'Trạng thái',
                         render: (row) => (
                             <div className='space-y-1 text-xs'>
-                                <div className='inline-flex rounded-full bg-sgt-bg-primary px-3 py-1 font-semibold text-sgt-primary-1'>{row.status}</div>
+                                <div className='inline-flex rounded-full bg-bela-bg-primary px-3 py-1 font-semibold text-bela-primary-1'>{row.status}</div>
                                 <div>{row.featured ? 'Featured' : 'Standard'}</div>
                             </div>
                         ),

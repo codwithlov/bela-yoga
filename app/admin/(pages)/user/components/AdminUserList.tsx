@@ -36,8 +36,8 @@ const AdminUserList = () => {
             title: 'Người dùng',
             render: (row) => (
               <div>
-                <div className='font-semibold text-sgt-secondary-2'>{row.name}</div>
-                <div className='mt-1 text-xs text-sgt-neutral-3'>{row.email}</div>
+                <div className='font-semibold text-bela-secondary-2'>{row.name}</div>
+                <div className='mt-1 text-xs text-bela-neutral-3'>{row.email}</div>
               </div>
             ),
           },
@@ -52,7 +52,7 @@ const AdminUserList = () => {
             render: (row) => (
               <div className='space-y-1 text-xs'>
                 <div>{row.role_name || (row.is_super_admin ? 'Super admin' : '—')}</div>
-                <div className='text-sgt-neutral-3'>{row.role_code || '—'}</div>
+                <div className='text-bela-neutral-3'>{row.role_code || '—'}</div>
               </div>
             ),
           },

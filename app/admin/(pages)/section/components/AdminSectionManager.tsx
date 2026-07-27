@@ -126,8 +126,8 @@ const AdminSectionManager = () => {
                         title: 'Section',
                         render: (row) => (
                             <div>
-                                <div className='font-semibold text-sgt-secondary-2'>{row.name}</div>
-                                <div className='mt-1 text-xs text-sgt-neutral-3'>{row.summary}</div>
+                                <div className='font-semibold text-bela-secondary-2'>{row.name}</div>
+                                <div className='mt-1 text-xs text-bela-neutral-3'>{row.summary}</div>
                             </div>
                         ),
                     },
@@ -146,7 +146,7 @@ const AdminSectionManager = () => {
                         title: 'Trạng thái',
                         render: (row) => (
                             <div className='space-y-1 text-xs'>
-                                <div className='inline-flex rounded-full bg-sgt-bg-primary px-3 py-1 font-semibold text-sgt-primary-1'>{row.status}</div>
+                                <div className='inline-flex rounded-full bg-bela-bg-primary px-3 py-1 font-semibold text-bela-primary-1'>{row.status}</div>
                                 <div>Order: {row.display_order}</div>
                             </div>
                         ),

@@ -1,20 +1,17 @@
 import { connectToDatabase } from '@/lib/db';
 import {
-  demoAdminPages,
-  demoAdminMenuItems,
-  demoAdminPosts,
-  demoAdminSections,
-  demoAdminStoreItems,
   type AdminTemplateCustomPage,
   type AdminTemplateCustomPageSection,
   type AdminTemplatePage,
   type AdminTemplateMenuItem,
+  type AdminTemplatePostCategory,
   type AdminTemplatePost,
   type AdminTemplateSection,
   type AdminTemplateStoreItem,
 } from '@/lib/template-cms-data';
 import { TemplateCmsPage } from '@/models/TemplateCmsPage';
 import { TemplateMenuItem } from '@/models/TemplateMenuItem';
+import { TemplatePostCategory } from '@/models/TemplatePostCategory';
 import { TemplatePost } from '@/models/TemplatePost';
 import { TemplateSection } from '@/models/TemplateSection';
 import { TemplateStoreItem } from '@/models/TemplateStoreItem';
@@ -29,12 +26,18 @@ const getDefaultPostDescription = (item: Pick<AdminTemplatePost, 'title' | 'exce
 
 const getDefaultCanonical = (slug: string) => `${GUEST_ACTION}/${slug}`;
 const getDefaultPageCanonical = (slug: string) => `/${slug}`;
+const slugifyCategory = (value: string) => (value || '')
+  .trim()
+  .toLowerCase()
+  .normalize('NFD')
+  .replace(/[\u0300-\u036f]/g, '')
+  .replace(/[^a-z0-9]+/g, '-')
+  .replace(/(^-|-$)/g, '');
 const normalizeMenuPath = (path: string) => {
   if (!path) return '/';
   const ensured = path.startsWith('/') ? path : `/${path}`;
   return ensured.length > 1 ? ensured.replace(/\/+$/, '') : ensured;
 };
-const legacySampleMenuPaths = ['/san', '/san-bong', '/tran-dau', '/highlight', '/cua-hang', '/ve-chung-toi', '/lien-he', '/dang-nhap', '/dang-ky', '/nang-luc-sportverse-cms', '/tin-nen-tang', '/tap-yoga'];
 const stripTags = (value: string) => (value || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 
 const createDefaultCustomPage = (title: string, path: string): AdminTemplateCustomPage => ({
@@ -52,7 +55,7 @@ const createDefaultCustomPage = (title: string, path: string): AdminTemplateCust
       sort_order: 1,
     },
   ],
-  related_post_ids: demoAdminPosts.filter((item) => item.status === 'published').slice(0, 2).map((item) => item.id),
+  related_post_ids: [],
   keywords: `${title}, custom page, belayoga cms`,
   meta_title: title,
   meta_description: `${title} là trang custom của BelaYoga, được quản trị từ menu với nội dung, section và bài viết liên quan.`,
@@ -122,6 +125,14 @@ const mapPost = (item: AdminTemplatePost) => ({
   canonical: item.canonical,
   index: item.index,
   follow: item.follow,
+});
+
+const mapPostCategory = (item: AdminTemplatePostCategory) => ({
+  templateId: item.id,
+  name: item.name,
+  slug: slugifyCategory(item.name),
+  sortOrder: item.sort_order,
+  status: item.status,
 });
 
 const mapStoreItem = (item: AdminTemplateStoreItem) => ({
@@ -195,6 +206,13 @@ const serializePost = (doc: any): AdminTemplatePost => normalizePostRecord({
   canonical: doc.canonical,
   index: doc.index,
   follow: doc.follow,
+});
+
+const serializePostCategory = (doc: any): AdminTemplatePostCategory => ({
+  id: doc.templateId,
+  name: doc.name,
+  sort_order: Number(doc.sortOrder || 1),
+  status: doc.status || 'active',
 });
 
 const serializeStoreItem = (doc: any): AdminTemplateStoreItem => ({
@@ -276,68 +294,160 @@ async function withFallback<T>(loader: () => Promise<T>, fallback: T): Promise<T
 
 export async function ensureTemplateCmsSeed() {
   await connectToDatabase();
+  const fallbackCategoryName = 'Chưa phân loại';
 
   await TemplateMenuItem.deleteMany({
-    $or: [
-      { templateId: { $in: [3105, 3106, 3107, 3108, 3109] } },
-      { path: { $in: legacySampleMenuPaths } },
-    ],
+    templateId: { $in: [3105, 3106, 3107, 3108, 3109] },
   });
 
-  await TemplatePost.bulkWrite(
-    demoAdminPosts.map((item) => ({
-      updateOne: {
-        filter: { slug: item.slug },
-        update: { $setOnInsert: mapPost(item) },
-        upsert: true,
-      },
-    })),
-    { ordered: false },
-  );
+  const fallbackSlug = slugifyCategory(fallbackCategoryName);
+  const fallbackCategory = await TemplatePostCategory.findOne({ slug: fallbackSlug }).lean();
+  if (!fallbackCategory) {
+    const maxCategory: any = await TemplatePostCategory.findOne().sort({ templateId: -1 }).lean();
+    const nextCategoryId = Math.max(9200, Number(maxCategory?.templateId || 9200)) + 1;
+    const categoryCount = await TemplatePostCategory.countDocuments();
 
-  await TemplateStoreItem.bulkWrite(
-    demoAdminStoreItems.map((item) => ({
-      updateOne: {
-        filter: { sku: item.sku },
-        update: { $setOnInsert: mapStoreItem(item) },
-        upsert: true,
-      },
-    })),
-    { ordered: false },
-  );
+    await TemplatePostCategory.create({
+      templateId: nextCategoryId,
+      name: fallbackCategoryName,
+      slug: fallbackSlug,
+      sortOrder: categoryCount + 1,
+      status: 'active',
+    });
+  }
 
-  await TemplateMenuItem.bulkWrite(
-    demoAdminMenuItems.map((item) => ({
-      updateOne: {
-        filter: { templateId: item.id },
-        update: { $set: mapMenuItem(item) },
-        upsert: true,
-      },
-    })),
-    { ordered: false },
-  );
+  const currentPostCategories = await TemplatePost.find({}, { category: 1, _id: 0 }).lean();
+  const categoryNames = Array.from(new Set(currentPostCategories.map((item: any) => String(item.category || '').trim()).filter(Boolean)));
 
-  await TemplateCmsPage.bulkWrite(
-    demoAdminPages.map((item) => ({
-      updateOne: {
-        filter: { slug: item.slug },
-        update: { $setOnInsert: mapCmsPage(item) },
-        upsert: true,
-      },
-    })),
-    { ordered: false },
-  );
+  if (categoryNames.length) {
+    const existing = await TemplatePostCategory.find({}, { name: 1 }).lean();
+    const existingNames = new Set(existing.map((item: any) => String(item.name || '').trim().toLowerCase()));
 
-  await TemplateSection.bulkWrite(
-    demoAdminSections.map((item) => ({
-      updateOne: {
-        filter: { templateId: item.id },
-        update: { $setOnInsert: mapSection(item) },
-        upsert: true,
-      },
-    })),
-    { ordered: false },
-  );
+    const nextCategories = categoryNames.filter((name) => !existingNames.has(name.toLowerCase()));
+    if (nextCategories.length) {
+      const maxDoc: any = await TemplatePostCategory.findOne().sort({ templateId: -1 }).lean();
+      let nextTemplateId = Math.max(9200, Number(maxDoc?.templateId || 9200));
+      await TemplatePostCategory.insertMany(nextCategories.map((name, index) => {
+        nextTemplateId += 1;
+        return {
+          templateId: nextTemplateId,
+          name,
+          slug: slugifyCategory(name),
+          sortOrder: (existing.length + index + 1),
+          status: 'active',
+        };
+      }));
+    }
+  }
+
+  const categoryDocs = await TemplatePostCategory.find({}, { name: 1 }).lean();
+  const availableCategoryNames = new Set(categoryDocs.map((item: any) => String(item.name || '').trim().toLowerCase()).filter(Boolean));
+  const postDocs = await TemplatePost.find({}, { templateId: 1, category: 1 }).lean();
+  const invalidPostIds = postDocs
+    .filter((item: any) => !availableCategoryNames.has(String(item.category || '').trim().toLowerCase()))
+    .map((item: any) => item.templateId);
+
+  if (invalidPostIds.length) {
+    await TemplatePost.updateMany(
+      { templateId: { $in: invalidPostIds } },
+      { $set: { category: fallbackCategoryName } },
+    );
+  }
+
+}
+
+export async function getAdminPostCategoriesFromStore() {
+  return withFallback(async () => {
+    await ensureTemplateCmsSeed();
+    const docs = await TemplatePostCategory.find().sort({ sortOrder: 1, updatedAt: -1 }).lean();
+    return docs.map(serializePostCategory);
+  }, [] as AdminTemplatePostCategory[]);
+}
+
+export async function createAdminPostCategory(input: { name: string; sort_order?: number; status?: 'active' | 'hidden' }) {
+  await ensureTemplateCmsSeed();
+  const maxDoc: any = await TemplatePostCategory.findOne().sort({ templateId: -1 }).lean();
+  const templateId = Math.max(9200, Number(maxDoc?.templateId || 9200)) + 1;
+  const existingCount = await TemplatePostCategory.countDocuments();
+  const normalizedName = String(input.name || '').trim();
+
+  const created = await TemplatePostCategory.create({
+    templateId,
+    name: normalizedName,
+    slug: slugifyCategory(normalizedName),
+    sortOrder: Number(input.sort_order || existingCount + 1),
+    status: input.status || 'active',
+  });
+
+  return serializePostCategory(created.toObject());
+}
+
+export async function updateAdminPostCategory(templateId: number, input: { name: string; sort_order?: number; status?: 'active' | 'hidden' }) {
+  await ensureTemplateCmsSeed();
+  const normalizedName = String(input.name || '').trim();
+
+  const current: any = await TemplatePostCategory.findOne({ templateId }).lean();
+  const updated = await TemplatePostCategory.findOneAndUpdate(
+    { templateId },
+    {
+      name: normalizedName,
+      slug: slugifyCategory(normalizedName),
+      sortOrder: Number(input.sort_order || current?.sortOrder || 1),
+      status: input.status || current?.status || 'active',
+    },
+    { new: true },
+  ).lean();
+
+  if (current?.name && current.name !== normalizedName) {
+    await TemplatePost.updateMany({ category: current.name }, { $set: { category: normalizedName } });
+  }
+
+  return updated ? serializePostCategory(updated) : null;
+}
+
+export async function deleteAdminPostCategory(templateId: number) {
+  await ensureTemplateCmsSeed();
+  const deleted: any = await TemplatePostCategory.findOneAndDelete({ templateId }).lean();
+  if (!deleted) {
+    return null;
+  }
+
+  const fallbackCategoryName = 'Chưa phân loại';
+  let reassignedCount = 0;
+
+  if (String(deleted.name || '').trim().toLowerCase() !== fallbackCategoryName.toLowerCase()) {
+    const updateResult = await TemplatePost.updateMany(
+      { category: deleted.name },
+      { $set: { category: fallbackCategoryName } },
+    );
+    reassignedCount = Number(updateResult.modifiedCount || 0);
+  }
+
+  let fallbackCategoryCreated = false;
+  const fallbackSlug = slugifyCategory(fallbackCategoryName);
+  const fallbackCategory = await TemplatePostCategory.findOne({ slug: fallbackSlug }).lean();
+
+  if (!fallbackCategory) {
+    const maxDoc: any = await TemplatePostCategory.findOne().sort({ templateId: -1 }).lean();
+    const nextTemplateId = Math.max(9200, Number(maxDoc?.templateId || 9200)) + 1;
+    const existingCount = await TemplatePostCategory.countDocuments();
+
+    await TemplatePostCategory.create({
+      templateId: nextTemplateId,
+      name: fallbackCategoryName,
+      slug: fallbackSlug,
+      sortOrder: existingCount + 1,
+      status: 'active',
+    });
+    fallbackCategoryCreated = true;
+  }
+
+  return {
+    deleted_category: serializePostCategory(deleted),
+    reassigned_count: reassignedCount,
+    reassigned_to: fallbackCategoryName,
+    fallback_category_created: fallbackCategoryCreated,
+  };
 }
 
 export async function getAdminPostsFromStore() {
@@ -345,7 +455,7 @@ export async function getAdminPostsFromStore() {
     await ensureTemplateCmsSeed();
     const docs = await TemplatePost.find().sort({ publishedAt: -1, updatedAt: -1 }).lean();
     return docs.map(serializePost);
-  }, demoAdminPosts);
+  }, [] as AdminTemplatePost[]);
 }
 
 export async function getPublicPostsFromStore(limit?: number) {
@@ -353,7 +463,7 @@ export async function getPublicPostsFromStore(limit?: number) {
     await ensureTemplateCmsSeed();
     const docs = await TemplatePost.find({ status: 'published' }).sort({ featured: -1, publishedAt: -1, updatedAt: -1 }).lean();
     return docs.map(serializePost);
-  }, demoAdminPosts.filter((item) => item.status === 'published'));
+  }, [] as AdminTemplatePost[]);
 
   return items.slice(0, limit && limit > 0 ? limit : items.length);
 }
@@ -363,7 +473,7 @@ export async function getPublicPostBySlugFromStore(slug: string) {
     await ensureTemplateCmsSeed();
     const doc = await TemplatePost.findOne({ slug, status: 'published' }).lean();
     return doc ? serializePost(doc) : null;
-  }, demoAdminPosts.find((item) => item.slug === slug && item.status === 'published') || null);
+  }, null as AdminTemplatePost | null);
 
   return items;
 }
@@ -433,7 +543,7 @@ export async function getAdminStoreItemsFromStore() {
     await ensureTemplateCmsSeed();
     const docs = await TemplateStoreItem.find().sort({ featured: -1, updatedAt: -1 }).lean();
     return docs.map(serializeStoreItem);
-  }, demoAdminStoreItems);
+  }, [] as AdminTemplateStoreItem[]);
 }
 
 export async function getPublicStoreItemsFromStore(limit?: number): Promise<IPublicStoreItem[]> {
@@ -454,22 +564,8 @@ export async function getPublicStoreItemsFromStore(limit?: number): Promise<IPub
       field_format: null,
       is_addon: doc.type !== 'package',
       stock_quantity: doc.stockQuantity ?? null,
-    }));
-  }, demoAdminStoreItems.map((item) => ({
-    id: item.id,
-    organization_id: item.id,
-    organization_name: item.organization_name || null,
-    name: item.name,
-    type: item.type,
-    category: item.category,
-    price: item.price,
-    unit: item.unit,
-    description: null,
-    sport_type: null,
-    field_format: null,
-    is_addon: item.type !== 'package',
-    stock_quantity: item.stock_quantity,
-  })));
+    })) as IPublicStoreItem[];
+  }, [] as IPublicStoreItem[]);
 
   return items.slice(0, limit && limit > 0 ? limit : items.length);
 }
@@ -535,7 +631,7 @@ export async function getAdminMenuBundleFromStore() {
       sections: sectionDocs.map(serializeSection),
       pages: pageDocs.map(serializeCmsPage),
     };
-  }, { menus: demoAdminMenuItems, sections: demoAdminSections, pages: demoAdminPages });
+  }, { menus: [] as AdminTemplateMenuItem[], sections: [] as AdminTemplateSection[], pages: [] as AdminTemplatePage[] });
 }
 
 export async function getPublicMenusFromStore(location?: AdminTemplateMenuItem['location']): Promise<Menu[]> {
@@ -646,7 +742,7 @@ export async function getAdminMenuTargetOptionsFromStore(): Promise<{ post_optio
       await ensureTemplateCmsSeed();
       const docs = await TemplateCmsPage.find().sort({ updatedAt: -1, title: 1 }).lean();
       return docs.map(serializeCmsPage);
-    }, demoAdminPages),
+    }, [] as AdminTemplatePage[]),
   ]);
 
   return {
@@ -672,7 +768,7 @@ export async function getPublicPostByIdFromStore(templateId: number) {
     await ensureTemplateCmsSeed();
     const doc = await TemplatePost.findOne({ templateId, status: 'published' }).lean();
     return doc ? serializePost(doc) : null;
-  }, demoAdminPosts.find((item) => item.id === templateId && item.status === 'published') || null);
+  }, null as AdminTemplatePost | null);
 }
 
 export async function getPublicPostsByIdsFromStore(templateIds: number[]) {
@@ -686,7 +782,7 @@ export async function getPublicPostsByIdsFromStore(templateIds: number[]) {
     const docs = await TemplatePost.find({ templateId: { $in: ids }, status: 'published' }).lean();
     const mapped = docs.map(serializePost);
     return ids.map((id) => mapped.find((item) => item.id === id)).filter(Boolean) as AdminTemplatePost[];
-  }, ids.map((id) => demoAdminPosts.find((item) => item.id === id && item.status === 'published')).filter(Boolean) as AdminTemplatePost[]);
+  }, [] as AdminTemplatePost[]);
 }
 
 export async function getPublicCmsPageByIdFromStore(templateId: number) {
@@ -694,7 +790,7 @@ export async function getPublicCmsPageByIdFromStore(templateId: number) {
     await ensureTemplateCmsSeed();
     const doc = await TemplateCmsPage.findOne({ templateId, status: 'published' }).lean();
     return doc ? serializeCmsPage(doc) : null;
-  }, demoAdminPages.find((item) => item.id === templateId && item.status === 'published') || null);
+  }, null as AdminTemplatePage | null);
 }
 
 export async function resolvePublicMenuRouteByPathFromStore(path: string) {

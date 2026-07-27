@@ -40,11 +40,11 @@ const SearchHeaderMobile = (props: SearchHeaderMobileParam) => {
 
     return (
         <section id='search_header_mobile'>
-            <div className='w-full bg-sgt-primary-2 px-4'>
+            <div className='w-full bg-bela-primary-2 px-4'>
                 <div className='h-16 flex flex-row gap-4 justify-between items-center py-1'>
                     <div className='w-8' />
                     {/* <button onClick={router.back}>
-                        <div className='bg-sgt-neutral-1 rotate-180'
+                        <div className='bg-bela-neutral-1 rotate-180'
                             style={{
                                 mask: 'url("/assets/icons/long-arrow-right.svg")',
                                 maskSize: 'cover',
@@ -58,8 +58,8 @@ const SearchHeaderMobile = (props: SearchHeaderMobileParam) => {
                         {
                             search.searchTitle || search.flightDateParam
                                 ? <>
-                                    <div className='text-sub-1 font-bold text-sgt-secondary-1 line-clamp-1'>{title ? title : search.searchTitle ?? "Tour du lịch"}</div>
-                                    <div className='text-body-2 text-sgt-secondary-1'>{search.flightDateParam}</div>
+                                    <div className='text-sub-1 font-bold text-bela-secondary-1 line-clamp-1'>{title ? title : search.searchTitle ?? "Tour du lịch"}</div>
+                                    <div className='text-body-2 text-bela-secondary-1'>{search.flightDateParam}</div>
                                 </>
                                 : <div className='text-center'>
                                     <Skeleton
@@ -75,7 +75,7 @@ const SearchHeaderMobile = (props: SearchHeaderMobileParam) => {
                         }
                     </div>
                     <button className='text-base font-bold' onClick={() => setOpenSearchBar(!openSearchBar)}>
-                        <div className='bg-sgt-neutral-1'
+                        <div className='bg-bela-neutral-1'
                             style={{
                                 mask: 'url("/assets/icons/search.svg")',
                                 maskSize: 'cover',
@@ -116,8 +116,8 @@ const SearchHeaderMobile = (props: SearchHeaderMobileParam) => {
                             <SearchBarVerticalMobile
                                 apiComponent={(api) => setSearchBarVerticalMobileAPI(api)}
                                 itemGap='gap-3'
-                                borderColorInput='border-sgt-primary-1'
-                                bgInput='bg-sgt-neutral-7'
+                                borderColorInput='border-bela-primary-1'
+                                bgInput='bg-bela-neutral-7'
                                 location={title || ''}
                                 date={search.flightDateParam || ''}
                                 nationList={nationList}

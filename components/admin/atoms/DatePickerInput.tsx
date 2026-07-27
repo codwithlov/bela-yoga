@@ -34,7 +34,7 @@ const DatePickerInput: React.FC<Props> = ({ control, name, label, errors, requir
 		children,
 	}) => (
 		<div
-			className={"p-4 bg-white rounded-sgt-10 " + (isMobile ? "px-5" : "")}
+			className={"p-4 bg-white rounded-bela-10 " + (isMobile ? "px-5" : "")}
 			style={!isMobile ? { boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)" } : {}}
 		>
 			<CalendarContainer className={`${className} !border-none custom-date-picker w-full`}>
@@ -44,25 +44,25 @@ const DatePickerInput: React.FC<Props> = ({ control, name, label, errors, requir
 	);
 
 	const renderCustomHeader = ({ date, decreaseMonth, increaseMonth }: ReactDatePickerCustomHeaderProps) => (
-		<div className="mb-1.5 text-sgt-neutral-1">
+		<div className="mb-1.5 text-bela-neutral-1">
 			<div
-				className={`flex items-center justify-between px-5 ${isMobile ? "mb-5 py-3" : "mb-4 py-2.5"} bg-sgt-primary-2 rounded`}
+				className={`flex items-center justify-between px-5 ${isMobile ? "mb-5 py-3" : "mb-4 py-2.5"} bg-bela-primary-2 rounded`}
 			>
 				<div
-					className="bg-sgt-neutral-1 w-6 h-6 cursor-pointer"
+					className="bg-bela-neutral-1 w-6 h-6 cursor-pointer"
 					onClick={decreaseMonth}
 					style={{ mask: 'url("/assets/icons/chevron-left.svg")', maskSize: "cover" }}
 				/>
 				<span className="text-sub-1 font-medium">{`Tháng ${date.getMonth() + 1}/${date.getFullYear()}`}</span>
 				<div
-					className="bg-sgt-neutral-1 w-6 h-6 cursor-pointer"
+					className="bg-bela-neutral-1 w-6 h-6 cursor-pointer"
 					onClick={increaseMonth}
 					style={{ mask: 'url("/assets/icons/chevron-right.svg")', maskSize: "cover" }}
 				/>
 			</div>
 			<div className="grid grid-cols-7 text-center">
 				{["T2", "T3", "T4", "T5", "T6", "T7", "CN"].map((day, index) => (
-					<span key={index} className={`text-button font-medium ${index >= 5 ? "text-sgt-third-2" : ""}`}>
+					<span key={index} className={`text-button font-medium ${index >= 5 ? "text-bela-third-2" : ""}`}>
 						{day}
 					</span>
 				))}
@@ -79,12 +79,12 @@ const DatePickerInput: React.FC<Props> = ({ control, name, label, errors, requir
 		const isToday = date.toDateString() === today.toDateString();
 		const isPast = date < new Date(today.setHours(0, 0, 0, 0));
 
-		return `!flex-1 !flex aspect-1/1 !text-body-2 !text-sgt-neutral-1 !rounded-md !items-center justify-center !leading-none !m-1 md:!m-0.5 !select-none
-			${isPast ? "hover:!bg-transparent !cursor-not-allowed " : "hover:!bg-sgt-primary-3 "}
-			${isSelected ? "!bg-sgt-primary-2" : ""}
-			${isWeekend ? "!text-sgt-third-2" : ""}
+		return `!flex-1 !flex aspect-1/1 !text-body-2 !text-bela-neutral-1 !rounded-md !items-center justify-center !leading-none !m-1 md:!m-0.5 !select-none
+			${isPast ? "hover:!bg-transparent !cursor-not-allowed " : "hover:!bg-bela-primary-3 "}
+			${isSelected ? "!bg-bela-primary-2" : ""}
+			${isWeekend ? "!text-bela-third-2" : ""}
 			${!isInCurrentMonth ? (isWeekend ? "!text-[#FF3F15] opacity-30" : "!text-[#A7A7A7] opacity-50") : ""}
-			${(isToday && !isSelected) ? "ring-1 ring-sgt-primary-2" : ""}`;
+			${(isToday && !isSelected) ? "ring-1 ring-bela-primary-2" : ""}`;
 	};
 
 	const CustomInput = forwardRef<HTMLButtonElement, React.ComponentPropsWithoutRef<"button">>(
@@ -94,7 +94,7 @@ const DatePickerInput: React.FC<Props> = ({ control, name, label, errors, requir
 				<button
 					ref={ref}
 					type="button"
-					className={`${open ? "border-sgt-primary-1" : "border-sgt-neutral-4"} 
+					className={`${open ? "border-bela-primary-1" : "border-bela-neutral-4"} 
 						mt-1 font-medium text-sm lg:text-base rounded-md !w-full py-1.5 px-3 border
 						relative flex justify-between items-center`}
 					onClick={!isMobile ? () => setOpen(!open) : () => setOpenMobleCalendar(true)}
@@ -110,7 +110,7 @@ const DatePickerInput: React.FC<Props> = ({ control, name, label, errors, requir
 									{field.value ? (
 										formatDate(field.value)
 									) : (
-										<span className="text-sgt-neutral-3 font-normal text-xs lg:text-sm">
+										<span className="text-bela-neutral-3 font-normal text-xs lg:text-sm">
 											Chọn ngày
 										</span>
 									)}
@@ -154,7 +154,7 @@ const DatePickerInput: React.FC<Props> = ({ control, name, label, errors, requir
 				render={({ field }) => {
 					return (
 						<div className="custom-input">
-							{label && <label className="font-medium text-sm lg:text-base text-sgt-neutral-1">{label}:</label>}
+							{label && <label className="font-medium text-sm lg:text-base text-bela-neutral-1">{label}:</label>}
 							<DatePicker
 								selected={field.value}
 								onChange={(date: any) => onChangeDate(date, field)}

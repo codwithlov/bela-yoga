@@ -6,7 +6,7 @@ import TwitterIcon from './TwitterIcon';
 import LinkedinIcon from './LinkedinIcon';
 import MailIcon from './MailIcon';
 import PinterestIcon from './PinterestIcon';
-import SgtHotline2 from './SgtHotline2';
+import SgtHotline2 from './Hotline2';
 import MessengerIcon2 from './MessegerIcon2';
 import ZaloIcon2 from './ZaloIcon2';
 import AdviseIcon from './AdviseIcon';

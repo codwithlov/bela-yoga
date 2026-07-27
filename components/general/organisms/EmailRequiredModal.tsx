@@ -44,7 +44,7 @@ const EmailRequiredModal: React.FC<Params> = ({ onFinish, setEmailRequiredDrawer
                 onFinish={onFinish}
                 validateMessages={validateMessages}
             >
-                <p className='text-sm font-medium leading-[1.3125rem] text-sgt-neutral-4 text-center mb-5'>
+                <p className='text-sm font-medium leading-[1.3125rem] text-bela-neutral-4 text-center mb-5'>
                     Tài khoản Facebook của bạn chưa có Email
                     <br />
                     Để hoàn tất đăng nhập vui lòng

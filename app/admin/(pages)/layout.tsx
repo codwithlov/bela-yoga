@@ -40,8 +40,8 @@ function AdminLayout(
           <div className='sticky top-0'>
             <div className='flex flex-row justify-center pt-2'>
               <Image
-                src="/assets/images/logo/merge-logo.png"
-                alt="sportverse-logo"
+                src="/assets/images/logo/belayoga-logo-web.png"
+                alt="belayoga-logo"
                 width={0}
                 height={0}
                 sizes='100vw'

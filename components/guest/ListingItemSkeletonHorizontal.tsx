@@ -6,7 +6,7 @@ type ListingItemSkeletonHorizontalParams = {
 
 const ListingItemSkeletonHorizontal: React.FC<ListingItemSkeletonHorizontalParams> = ({ className }) => {
     return (
-        <div className={` ${className ?? 'col-span-12'} search_result_list rounded-sgt-10 bg-white overflow-hidden`}>
+        <div className={` ${className ?? 'col-span-12'} search_result_list rounded-bela-10 bg-white overflow-hidden`}>
             <div className='search_result_item grid grid-cols-12'>
                 <Skeleton.Node rootClassName="col-span-12 !h-auto" className="!h-auto !w-full overflow-hidden" active={true}>
                     <div className="flex-1 grid grid-cols-12 gap-4">

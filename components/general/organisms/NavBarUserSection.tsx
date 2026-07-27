@@ -87,7 +87,7 @@ const NavBarUserSection: React.FC<NavBarUserSectionParams> = ({ fromAdmin, isMob
   }
 
   const adminUrl = getAdminPathFromPermissions(userInfo?.permissionCodes)
-  const optionClassName = " flex flex-row items-center gap-3 py-0.5 text-base font-semibold text-sgt-secondary-1 ";
+  const optionClassName = " flex flex-row items-center gap-3 py-0.5 text-base font-semibold text-bela-secondary-1 ";
   const userOptions = [
     ...(userInfo?.role === ADMIN_ROLE_NAME
       ? [
@@ -133,7 +133,7 @@ const NavBarUserSection: React.FC<NavBarUserSectionParams> = ({ fromAdmin, isMob
     userOptions.unshift({
       key: 4,
       label: (
-        <div className="flex flex-row items-center gap-3 pt-0.5 font-semibold text-sgt-primary-1 text-base">
+        <div className="flex flex-row items-center gap-3 pt-0.5 font-semibold text-bela-primary-1 text-base">
           {userInfo?.full_name}
         </div>
       ),
@@ -201,12 +201,12 @@ const NavBarUserSection: React.FC<NavBarUserSectionParams> = ({ fromAdmin, isMob
         <div className='flex justify-end items-center gap-2.5'>
           {!isMobile ? (
             <>
-              <div onClick={() => setModalType('login')} className='flex flex-row gap-1.5 justify-center items-center px-4 py-2 border rounded-lg border-sgt-primary-1 cursor-pointer sgt-login-btn'>
-                <FontAwesomeIcon className='text-sgt-primary-1' icon={faUser} />
-                <p className='text-button text-sgt-neutral-1'>Đăng nhập</p>
+              <div onClick={() => setModalType('login')} className='flex flex-row gap-1.5 justify-center items-center px-4 py-2 border rounded-lg border-bela-primary-1 cursor-pointer bela-login-btn'>
+                <FontAwesomeIcon className='text-bela-primary-1' icon={faUser} />
+                <p className='text-button text-bela-neutral-1'>Đăng nhập</p>
               </div>
-              <div onClick={() => setModalType('register')} className='flex flex-row gap-1.5 justify-center items-center px-4 py-2 border rounded-lg border-sgt-primary-1 cursor-pointer'>
-                <p className='text-button text-sgt-neutral-1'>Đăng ký</p>
+              <div onClick={() => setModalType('register')} className='flex flex-row gap-1.5 justify-center items-center px-4 py-2 border rounded-lg border-bela-primary-1 cursor-pointer'>
+                <p className='text-button text-bela-neutral-1'>Đăng ký</p>
               </div>
             </>
           ) : (
@@ -217,7 +217,7 @@ const NavBarUserSection: React.FC<NavBarUserSectionParams> = ({ fromAdmin, isMob
               overlayStyle={{ minWidth: 0 }}
               placement="bottomRight" >
               <div>
-                <FontAwesomeIcon className='text-sgt-neutral-1' size='lg' icon={faUser} />
+                <FontAwesomeIcon className='text-bela-neutral-1' size='lg' icon={faUser} />
               </div>
             </Dropdown>
           )}
@@ -248,12 +248,12 @@ const NavBarUserSection: React.FC<NavBarUserSectionParams> = ({ fromAdmin, isMob
             }}
             placement="bottomRight"
           >
-            <div className='flex justify-end items-center gap-2.5 text-base text-sgt-secondary-1 font-semibold ml-5'>
+            <div className='flex justify-end items-center gap-2.5 text-base text-bela-secondary-1 font-semibold ml-5'>
               <Avatar src={userInfo?.avatar} className='!h-9 !w-9' />
               {!isMobile && (
                 <button onClick={(e) => e.preventDefault()} className='flex flex-row gap-1 justify-center items-center py-2'>
                   {userInfo?.full_name}
-                  <FontAwesomeIcon className='text-2xs text-sgt-neutral-1' icon={faChevronDown} />
+                  <FontAwesomeIcon className='text-2xs text-bela-neutral-1' icon={faChevronDown} />
                 </button>
               )}
             </div>

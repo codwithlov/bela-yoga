@@ -13,13 +13,13 @@ const NoticeTabs: React.FC<NoticeTabsProps> = ({ tabs }) => {
     };
 
     return (
-        <div className='bg-white rounded-sgt-10 px-5 py-3.5'>
+        <div className='bg-white rounded-bela-10 px-5 py-3.5'>
             {/* Tab Buttons */}
-            <div className='flex gap-2.5 border-b border-sgt-neutral-5 mb-3.5 pb-3.5 '>
+            <div className='flex gap-2.5 border-b border-bela-neutral-5 mb-3.5 pb-3.5 '>
                 {tabs.map((tab, index) => (
                     <button
                         key={index}
-                        className={`py-2.5 px-4 text-body-1 rounded-md transition-colors duration-200 leading-none hover:bg-sgt-primary-light ${activeTab === index ? 'bg-sgt-primary-2' : 'bg-sgt-neutral-5'}`}
+                        className={`py-2.5 px-4 text-body-1 rounded-md transition-colors duration-200 leading-none hover:bg-bela-primary-light ${activeTab === index ? 'bg-bela-primary-2' : 'bg-bela-neutral-5'}`}
                         onClick={() => handleTabClick(index)}
                     >
                         {tab.title}

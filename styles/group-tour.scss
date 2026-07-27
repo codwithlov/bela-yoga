@@ -12,13 +12,13 @@
 
         .working_process_item {
             @apply relative z-50;
-            @apply rounded-sgt-10 flex-1 pt-12 pb-4 px-6 flex flex-col gap-2 justify-between items-center bg-sgt-neutral-5 text-center;
-            @apply text-sub-1 text-sgt-neutral-1;
+            @apply rounded-bela-10 flex-1 pt-12 pb-4 px-6 flex flex-col gap-2 justify-between items-center bg-bela-neutral-5 text-center;
+            @apply text-sub-1 text-bela-neutral-1;
             @apply transition-all duration-300;
 
             &:before {
                 content: '';
-                @apply h-7 w-7 bg-sgt-neutral-5;
+                @apply h-7 w-7 bg-bela-neutral-5;
                 @apply absolute -z-10 bottom-0 translate-y-1/2 rotate-45;
                 @apply transition-all duration-300;
                 @apply max-sm:content-none;
@@ -26,27 +26,27 @@
 
             &:after {
                 content: '';
-                @apply h-0 w-7 border border-dashed border-sgt-neutral-5 rotate-90;
+                @apply h-0 w-7 border border-dashed border-bela-neutral-5 rotate-90;
                 @apply absolute -z-10 -bottom-9 translate-y-1/2;
                 @apply max-sm:content-none;
 
             }
 
             &:hover {
-                @apply bg-sgt-primary-4 shadow-sgt-black-5 cursor-pointer;
+                @apply bg-bela-primary-4 shadow-bela-black-5 cursor-pointer;
 
                 &:before {
-                    @apply bg-sgt-primary-4;
+                    @apply bg-bela-primary-4;
                     box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
                 }
 
                 &:after {
-                    @apply border-2 border-sgt-primary-4;
+                    @apply border-2 border-bela-primary-4;
                 }
 
                 .working_process_item_circle {
 
-                    @apply shadow-sgt-black-5;
+                    @apply shadow-bela-black-5;
                 }
             }
         }
@@ -54,19 +54,19 @@
         .working_process_item_ordinal_number {
             width: 4.375rem;
             height: 4.375rem;
-            @apply rounded-full bg-sgt-primary-2 bg-opacity-30;
+            @apply rounded-full bg-bela-primary-2 bg-opacity-30;
             @apply flex justify-center items-center;
             @apply absolute top-0 -translate-y-1/2;
 
             >div {
-                @apply w-14 h-14 rounded-full bg-sgt-primary-2 flex flex-row justify-center items-center text-h3 text-sgt-secondary-1;
+                @apply w-14 h-14 rounded-full bg-bela-primary-2 flex flex-row justify-center items-center text-h3 text-bela-secondary-1;
             }
         }
 
         .working_process_item_circle {
             width: 0.9375rem;
             height: 0.9375rem;
-            @apply rounded-full bg-gradient-to-t from-sgt-primary-4 to-sgt-primary-2;
+            @apply rounded-full bg-gradient-to-t from-bela-primary-4 to-bela-primary-2;
             @apply absolute z-10 -bottom-14 translate-y-1/2;
             @apply transition-all duration-300;
             @apply max-sm:w-0 max-sm:h-0;
@@ -101,7 +101,7 @@
                 @apply w-12 h-12;
 
                 >div {
-                    @apply w-9 h-9 text-sub-1 font-bold text-sgt-secondary-1;
+                    @apply w-9 h-9 text-sub-1 font-bold text-bela-secondary-1;
                 }
             }
         }
@@ -122,15 +122,15 @@
     #group_tour_advise {
         .group_tour_advise_from {
             .form_item {
-                @apply h-[3.125rem] w-full bg-sgt-neutral-5 bg-opacity-50 rounded-md relative flex flex-row justify-start items-center;
+                @apply h-[3.125rem] w-full bg-bela-neutral-5 bg-opacity-50 rounded-md relative flex flex-row justify-start items-center;
             }
 
             .form_icon {
-                @apply bg-sgt-primary-2 ml-2.5 w-6 h-6;
+                @apply bg-bela-primary-2 ml-2.5 w-6 h-6;
             }
 
             .form_control {
-                @apply text-sub-1 text-sgt-neutral-1 placeholder:text-sgt-neutral-1;
+                @apply text-sub-1 text-bela-neutral-1 placeholder:text-bela-neutral-1;
                 background: transparent;
                 border: none !important;
                 box-shadow: none;
@@ -147,7 +147,7 @@
                 }
 
                 textarea {
-                    @apply text-sub-1 text-sgt-neutral-1 placeholder:text-sgt-neutral-1;
+                    @apply text-sub-1 text-bela-neutral-1 placeholder:text-bela-neutral-1;
                     @apply pt-0;
                 }
             }

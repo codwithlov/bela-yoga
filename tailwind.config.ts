@@ -27,7 +27,7 @@ const config: Config = {
         '17/10': '17 / 10',
       },
       colors: {
-        sgt: {
+        bela: {
           primary: {
             light: cssColor('--template-color-primary-light-rgb'),
             default: cssColor('--template-color-primary-default-rgb'),
@@ -148,20 +148,20 @@ const config: Config = {
       },
       boxShadow: {
         "shadow-top-sm": "0 5px 20px 0 rgba(0, 0, 0, 0.3)",
-        "sgt-primary": "0 12px 32px 0 rgba(0, 136, 240, 0.24)",
-        "sgt-black-1": "0 2px 4px 0 rgba(0, 0, 0, 0.25)",
-        "sgt-black-2": "0 2px 2px 0 rgba(0, 0, 0, 0.15)",
-        "sgt-black-3": "0 2px 4px 0 rgba(0, 0, 0, 0.4)",
-        "sgt-black-4": "0 0 8px 0 rgba(0, 0, 0, 0.25)",
-        "sgt-black-5": "0 4px 4px 0 rgba(0, 0, 0, 0.25)",
-        "sgt-black-6": "0 4px 4px 0 rgba(0, 0, 0, 0.4)",
-        "sgt-black-7": "0 4px 4px 0 rgba(0, 0, 0, 0.3)",
-        "sgt-black-8": "0 2px 2px 0 rgba(0, 0, 0, 0.25)",
-        "sgt-black-9": "0 0 2px 0 rgba(0, 0, 0, 0.25)",
-        "sgt-black-10": "0 0 4px 0 rgba(0, 0, 0, 0.4)",
+        "bela-primary": "0 12px 32px 0 rgba(0, 136, 240, 0.24)",
+        "bela-black-1": "0 2px 4px 0 rgba(0, 0, 0, 0.25)",
+        "bela-black-2": "0 2px 2px 0 rgba(0, 0, 0, 0.15)",
+        "bela-black-3": "0 2px 4px 0 rgba(0, 0, 0, 0.4)",
+        "bela-black-4": "0 0 8px 0 rgba(0, 0, 0, 0.25)",
+        "bela-black-5": "0 4px 4px 0 rgba(0, 0, 0, 0.25)",
+        "bela-black-6": "0 4px 4px 0 rgba(0, 0, 0, 0.4)",
+        "bela-black-7": "0 4px 4px 0 rgba(0, 0, 0, 0.3)",
+        "bela-black-8": "0 2px 2px 0 rgba(0, 0, 0, 0.25)",
+        "bela-black-9": "0 0 2px 0 rgba(0, 0, 0, 0.25)",
+        "bela-black-10": "0 0 4px 0 rgba(0, 0, 0, 0.4)",
       },
       borderRadius: {
-        'sgt-10': templateTheme.layout.radius === 12 ? '0.625rem' : `${templateTheme.layout.radius}px`
+        'bela-10': templateTheme.layout.radius === 12 ? '0.625rem' : `${templateTheme.layout.radius}px`
       },
       screens: {
         'xs': '412px',

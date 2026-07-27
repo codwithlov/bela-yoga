@@ -36,10 +36,10 @@ const Hashtag = ({
                                 onClick={() => handleSelectHastag(item.id)}
                                 className={
                                     [
-                                        `px-4 py-1.5 rounded-sgt-10 text-body-2 transition-all duration-300 text-sgt-neutral-3      `,
-                                        `hover:bg-sgt-primary-light hover:text-sgt-secondary-1`,
-                                        `${type !== DIARY ? 'border border-sgt-neutral-4' : 'bg-sgt-neutral-7'}`,
-                                        `    ${currentHashtag === item.id ? 'bg-sgt-primary-2 text-sgt-secondary-1' : ''}`,
+                                        `px-4 py-1.5 rounded-bela-10 text-body-2 transition-all duration-300 text-bela-neutral-3      `,
+                                        `hover:bg-bela-primary-light hover:text-bela-secondary-1`,
+                                        `${type !== DIARY ? 'border border-bela-neutral-4' : 'bg-bela-neutral-7'}`,
+                                        `    ${currentHashtag === item.id ? 'bg-bela-primary-2 text-bela-secondary-1' : ''}`,
                                     ]
                                         .map(e => e.trim())
                                         .join(' ')

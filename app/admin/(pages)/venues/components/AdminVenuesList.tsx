@@ -36,8 +36,8 @@ const AdminVenuesList = () => {
                         title: 'Venue',
                         render: (row) => (
                             <div>
-                                <div className='font-semibold text-sgt-secondary-2'>{row.name}</div>
-                                <div className='mt-1 text-xs text-sgt-neutral-3'>{row.organization_name || 'Không rõ tổ chức'}</div>
+                                <div className='font-semibold text-bela-secondary-2'>{row.name}</div>
+                                <div className='mt-1 text-xs text-bela-neutral-3'>{row.organization_name || 'Không rõ tổ chức'}</div>
                             </div>
                         ),
                     },
@@ -56,8 +56,8 @@ const AdminVenuesList = () => {
                         title: 'Trạng thái',
                         render: (row) => (
                             <div className='space-y-1'>
-                                <div className='rounded-full bg-sgt-bg-primary px-3 py-1 text-xs font-semibold text-sgt-primary-1 inline-flex'>{row.status}</div>
-                                <div className='text-xs text-sgt-neutral-3'>{row.is_bookable ? 'Bookable' : 'Tạm khóa'}</div>
+                                <div className='rounded-full bg-bela-bg-primary px-3 py-1 text-xs font-semibold text-bela-primary-1 inline-flex'>{row.status}</div>
+                                <div className='text-xs text-bela-neutral-3'>{row.is_bookable ? 'Bookable' : 'Tạm khóa'}</div>
                             </div>
                         ),
                     },

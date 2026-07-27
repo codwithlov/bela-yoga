@@ -18,7 +18,7 @@ const ScrollToTop = () => {
     const scrollBottomLimit = (scollY + clientHeight) + bottomHeight;
     let colorInBottom = '';
     if (scrollHeight < scrollBottomLimit) {
-        colorInBottom = 'bg-sgt-secondary-default text-white';
+        colorInBottom = 'bg-bela-secondary-default text-white';
     } else {
         colorInBottom = '';
     }
@@ -36,7 +36,7 @@ const ScrollToTop = () => {
                     onClick={toTop}
                     className={`fixed bottom-3 right-3 duration-300 transition-all ${scroll.scrollY as number > scrollYMax ? 'opacity-100' : 'opacity-0'}`}
                     style={{ zIndex: 9999 }}>
-                    <div className={`mb-2 h-10 w-10 rounded-full bg-sgt-primary-default ${colorInBottom} ${scrollHeight < scrollBottomLimit ? 'bg-opacity-65' : 'bg-opacity-55'} hover:bg-opacity-100 duration-300 transition-all shadow-lg flex justify-center items-center cursor-pointer`}>
+                    <div className={`mb-2 h-10 w-10 rounded-full bg-bela-primary-default ${colorInBottom} ${scrollHeight < scrollBottomLimit ? 'bg-opacity-65' : 'bg-opacity-55'} hover:bg-opacity-100 duration-300 transition-all shadow-lg flex justify-center items-center cursor-pointer`}>
                         <FontAwesomeIcon icon={faArrowUp}></FontAwesomeIcon>
                     </div>
                 </div >

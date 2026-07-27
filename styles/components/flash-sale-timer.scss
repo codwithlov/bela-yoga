@@ -16,7 +16,7 @@
 
     &.sgt_timer .sgt_timer_item {
         height: var(--flash-sale-timer-height);
-        @apply flex flex-row bg-sgt-third-2 text-sgt-neutral-7 text-xs font-bold rounded-md px-1 overflow-hidden;
+        @apply flex flex-row bg-bela-third-2 text-bela-neutral-7 text-xs font-bold rounded-md px-1 overflow-hidden;
     }
 }
 
@@ -24,7 +24,7 @@
 
     .sgt_timer_item {
         height: var(--flash-sale-timer-height);
-        @apply flex flex-row bg-sgt-third-2 text-sgt-neutral-7 text-lg font-bold rounded-md px-1 overflow-hidden;
+        @apply flex flex-row bg-bela-third-2 text-bela-neutral-7 text-lg font-bold rounded-md px-1 overflow-hidden;
         @apply max-sm:text-base;
 
         .sgt_timer_item_number {

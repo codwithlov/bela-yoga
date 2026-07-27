@@ -128,7 +128,7 @@ const NavBar: React.FC<NavBarParams> = React.memo(({ menuList }) => {
         >
           <Link href={normalizeUrl(item.slug_permalink?.slug || item.url_to)} className="flex flex-row gap-1 justify-center items-center pt-1">
             <p>{item.title}</p>
-            <div className='bg-sgt-secondary-1 dropdown_icon'
+            <div className='bg-bela-secondary-1 dropdown_icon'
               style={{
                 mask: 'url("/assets/icons/chevron-down.svg")',
                 maskSize: 'cover',
@@ -136,7 +136,7 @@ const NavBar: React.FC<NavBarParams> = React.memo(({ menuList }) => {
                 height: "1.125rem",
               }}
             ></div>
-            {/* <FontAwesomeIcon className="text-2xs text-sgt-neutral-1" icon={faChevronDown} /> */}
+            {/* <FontAwesomeIcon className="text-2xs text-bela-neutral-1" icon={faChevronDown} /> */}
           </Link>
         </Dropdown>
       ) : (
@@ -158,7 +158,7 @@ const NavBar: React.FC<NavBarParams> = React.memo(({ menuList }) => {
       {isClient && <DropdownMenuCss />}
       {
         staticMobileRoutes.includes(pathname) ?
-          <nav id="mobile_nav" className='block lg:hidden w-full h-16 sticky left-0 top-0 z-50 shadow-sgt-black-2' style={{ zIndex: 1000 }}>
+          <nav id="mobile_nav" className='block lg:hidden w-full h-16 sticky left-0 top-0 z-50 shadow-bela-black-2' style={{ zIndex: 1000 }}>
             <div className='h-full flex flex-row justify-between items-center px-4 py-4 bg-white'>
               <div className='navbar_logo'>
                 <Link href="/">
@@ -176,13 +176,13 @@ const NavBar: React.FC<NavBarParams> = React.memo(({ menuList }) => {
               </div>
               <div className='flex flex-row justify-end gap-5'>
                 {/* <a aria-label='Account'>
-                  <FontAwesomeIcon className='text-sgt-neutral-1' size='lg' icon={faUser} />
+                  <FontAwesomeIcon className='text-bela-neutral-1' size='lg' icon={faUser} />
                 </a> */}
                 <Suspense>
                   <NavBarUserSection isMobile />
                 </Suspense>
                 <div className='flex justify-center items-center'>
-                  <MenuMobile menuList={menuList} btnClass='border-sgt-primary-light' />
+                  <MenuMobile menuList={menuList} btnClass='border-bela-primary-light' />
                 </div>
               </div>
             </div>
@@ -210,11 +210,11 @@ const NavBar: React.FC<NavBarParams> = React.memo(({ menuList }) => {
           </div>
           <div className={`flex-1 flex flex-col justify-end gap-3.5 transition-all duration-300 ${scrollTop > maxScroll ? '!gap-0' : 'gap-3.5'}`}>
             <div className='flex justify-end items-center gap-2.5 text-sm font-medium transition-all duration-300'>
-              <div id="nav_sub_has_scroll" className={`flex gap-6 text-sgt-secondary-1 text-sub-1 ${navSubHeight === 'h-auto' ? 'hidden' : ''}`}>
+              <div id="nav_sub_has_scroll" className={`flex gap-6 text-bela-secondary-1 text-sub-1 ${navSubHeight === 'h-auto' ? 'hidden' : ''}`}>
                 {renderNavBar(true)}
               </div>
               <a href={`tel:${PHONE.trim()}`} className='hotline-btn'>
-                <p className='text-button text-sgt-neutral-1'>{templateSiteConfig.contact.hotlineLabel} · {PHONE}</p>
+                <p className='text-button text-bela-neutral-1'>{templateSiteConfig.contact.hotlineLabel} · {PHONE}</p>
               </a>
               <div className={navSubHeight === 'h-auto' ? '' : 'hidden'}>
                 <Suspense>

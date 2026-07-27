@@ -296,7 +296,7 @@ const AdminPostCreateUpdate: React.FC<Params> = ({
                                 <TagSelect tagOptions={initData?.data?.tagOptions} name="related_tag_ids" label="Tag liên quan"/>
                             </Col>
                         </Row>
-                        <div className={'flex flex-1 justify-center bg-sgt-bg-primary mb-2'}>
+                        <div className={'flex flex-1 justify-center bg-bela-bg-primary mb-2'}>
                             <Form.Item name="description" className='w-[800px] !my-2'>
                                 <CustomEditor data={description} histories={histories} type="description" />
                             </Form.Item>

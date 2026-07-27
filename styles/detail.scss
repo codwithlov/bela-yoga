@@ -2,7 +2,7 @@
 .sgt_drawer_tour_detail {
 
     .detail_content_card {
-        @apply bg-white rounded-sgt-10 lg:px-[18px] px-3 py-5 mb-5;
+        @apply bg-white rounded-bela-10 lg:px-[18px] px-3 py-5 mb-5;
     }
 
     .slick-slide {
@@ -37,30 +37,30 @@
     }
 }
 
-.ant-modal.sgt-booking-modal .ant-modal-content {
+.ant-modal.bela-booking-modal .ant-modal-content {
     padding: 0px;
     @apply rounded-lg;
 }
 
 .detail-tour-schedule-calendar {
     .ant-picker-cell {
-        .sgt-picker-cell-special-date {
-            @apply border border-sgt-primary-default;
+        .bela-picker-cell-special-date {
+            @apply border border-bela-primary-default;
 
             &:hover {
-                @apply bg-sgt-primary-default #{!important};
+                @apply bg-bela-primary-default #{!important};
             }
         }
 
         &.ant-picker-cell-selected,
         &:hover {
-            .sgt-picker-cell-special-date {
-                @apply text-black bg-sgt-primary-default #{!important};
+            .bela-picker-cell-special-date {
+                @apply text-black bg-bela-primary-default #{!important};
             }
         }
     }
 
-    .sgt-picker-cell-special-date-seats {
+    .bela-picker-cell-special-date-seats {
         position: absolute;
         width: 100%;
         z-index: 10;
@@ -71,7 +71,7 @@
         font-weight: 600;
         transform: translateX(-50%);
         background: transparent;
-        // @apply text-sgt-secondary-default;
+        // @apply text-bela-secondary-default;
     }
 }
 

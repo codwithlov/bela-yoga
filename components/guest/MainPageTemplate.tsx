@@ -66,11 +66,11 @@ export default function MainPageTemplate({ eyebrow, title, description, highligh
                     <a
                         key={item.title}
                         href={item.href}
-                        className="rounded-[1.5rem] border border-sgt-gray-2 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+                        className="rounded-[1.5rem] border border-bela-gray-2 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
                     >
-                        <div className="text-xs font-semibold uppercase tracking-[0.18em] text-sgt-primary-1">Quick path</div>
-                        <h3 className="mt-2 text-xl font-bold text-sgt-secondary-2">{item.title}</h3>
-                        <p className="mt-3 text-sm leading-6 text-sgt-neutral-3">{item.description}</p>
+                        <div className="text-xs font-semibold uppercase tracking-[0.18em] text-bela-primary-1">Quick path</div>
+                        <h3 className="mt-2 text-xl font-bold text-bela-secondary-2">{item.title}</h3>
+                        <p className="mt-3 text-sm leading-6 text-bela-neutral-3">{item.description}</p>
                     </a>
                 ))}
             </div>

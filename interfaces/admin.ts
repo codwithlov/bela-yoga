@@ -99,6 +99,13 @@ export interface IAdminPostRow {
     follow: boolean;
 }
 
+export interface IAdminPostCategory {
+    id: number;
+    name: string;
+    sort_order: number;
+    status: 'active' | 'hidden';
+}
+
 export interface IAdminStoreItemRow {
     id: number;
     name: string;

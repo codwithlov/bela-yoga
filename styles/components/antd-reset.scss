@@ -16,7 +16,7 @@
         .ant-pagination-jump-prev {
 
             @apply transition-all duration-300;
-            @apply border border-sgt-neutral-3 bg-transparent #{!important};
+            @apply border border-bela-neutral-3 bg-transparent #{!important};
             display: flex;
             flex-direction: row;
             justify-content: center;
@@ -27,23 +27,23 @@
             min-width: 1.5rem !important;
 
             a {
-                @apply text-sm font-normal text-sgt-neutral-1;
+                @apply text-sm font-normal text-bela-neutral-1;
             }
 
             &:hover {
-                @apply bg-sgt-primary-2 border-sgt-primary-2 #{!important};
+                @apply bg-bela-primary-2 border-bela-primary-2 #{!important};
 
                 a {
-                    @apply text-sgt-neutral-1;
+                    @apply text-bela-neutral-1;
                 }
             }
         }
 
         .ant-pagination-item-active {
-            @apply bg-sgt-primary-2 border-sgt-primary-2 #{!important};
+            @apply bg-bela-primary-2 border-bela-primary-2 #{!important};
 
             a {
-                @apply text-sm font-normal text-sgt-neutral-1;
+                @apply text-sm font-normal text-bela-neutral-1;
             }
         }
 
@@ -51,15 +51,15 @@
         .ant-pagination-prev,
         .ant-pagination-next {
             &.ant-pagination-disabled {
-                @apply bg-transparent border-sgt-neutral-4 border-opacity-30 #{!important};
+                @apply bg-transparent border-bela-neutral-4 border-opacity-30 #{!important};
 
                 a {
-                    @apply bg-sgt-neutral-3 opacity-30;
+                    @apply bg-bela-neutral-3 opacity-30;
                 }
 
                 &:hover {
                     a {
-                        @apply bg-sgt-neutral-3 opacity-30;
+                        @apply bg-bela-neutral-3 opacity-30;
                     }
                 }
             }
@@ -70,7 +70,7 @@
         .ant-pagination-next .ant-pagination-item-link:not(:disabled),
         .ant-pagination-prev .ant-pagination-item-link:not(:disabled) {
             &:hover {
-                @apply bg-sgt-primary-2 border-sgt-primary-2;
+                @apply bg-bela-primary-2 border-bela-primary-2;
             }
         }
 
@@ -78,7 +78,7 @@
         .ant-pagination-jump-prev,
         .ant-pagination-jump-next {
             .ant-pagination-item-link-icon {
-                @apply text-sgt-neutral-1 #{!important};
+                @apply text-bela-neutral-1 #{!important};
             }
 
             .ant-pagination-item-ellipsis {
@@ -87,7 +87,7 @@
                 left: 2px !important;
                 letter-spacing: 1px !important;
                 @apply -translate-x-1/2 translate-y-1/2;
-                @apply text-[9px] text-sgt-neutral-1 #{!important};
+                @apply text-[9px] text-bela-neutral-1 #{!important};
             }
         }
 
@@ -96,12 +96,12 @@
         .ant-pagination-next,
         .ant-pagination-prev {
             a {
-                @apply bg-sgt-neutral-1;
+                @apply bg-bela-neutral-1;
             }
 
             &:hover {
                 a {
-                    @apply bg-sgt-neutral-1;
+                    @apply bg-bela-neutral-1;
                 }
             }
         }

@@ -57,7 +57,7 @@ const FooterField = () => {
                 <button
                     onClick={handleSubmit}
                     disabled={loading}
-                    className='text-button px-7 py-2.5 rounded-md bg-gradient-to-t from-sgt-primary-1 to-sgt-primary-2 transition-all duration-300 hover:shadow-sgt-primary'
+                    className='text-button px-7 py-2.5 rounded-md bg-gradient-to-t from-bela-primary-1 to-bela-primary-2 transition-all duration-300 hover:shadow-bela-primary'
                 >
                     {loading ? 'Đang xử lý...' : 'Đăng ký ngay'}
                 </button>

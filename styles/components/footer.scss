@@ -6,7 +6,7 @@
     }
 
     .email_form_wrap {
-        @apply relative w-full grid grid-cols-12 gap-5 bg-sgt-primary-4 rounded-sgt-10 pt-5 pb-5 px-8;
+        @apply relative w-full grid grid-cols-12 gap-5 bg-bela-primary-4 rounded-bela-10 pt-5 pb-5 px-8;
     }
 
     .email_icon {
@@ -36,6 +36,6 @@
     }
 
     .email_input {
-        @apply flex-1 h-10 pl-4 rounded-md text-sgt-neutral-3 placeholder:text-sgt-neutral-4 focus-visible:outline-none;
+        @apply flex-1 h-10 pl-4 rounded-md text-bela-neutral-3 placeholder:text-bela-neutral-4 focus-visible:outline-none;
     }
 }

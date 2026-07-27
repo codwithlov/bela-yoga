@@ -18,7 +18,7 @@ const HtmlSections = (props: ActionProps) => {
         key: index,
         label: item.title,
         children: (
-            <div key={item.title} dangerouslySetInnerHTML={{ __html: item.content }} className='ck-content text-sgt-neutral-1 overflow-hidden' />
+            <div key={item.title} dangerouslySetInnerHTML={{ __html: item.content }} className='ck-content text-bela-neutral-1 overflow-hidden' />
         ),
     }));
 

@@ -6,7 +6,7 @@ type ViewedParam = {
 const ListingItemSkeletonVertical = (props: ViewedParam) => {
     let ishowBtn = props.isShowBtn ?? true;
     return (
-        <div className={`${props.className ? props.className : 'col-span-3'} rounded-sgt-10 bg-white overflow-hidden`}>
+        <div className={`${props.className ? props.className : 'col-span-3'} rounded-bela-10 bg-white overflow-hidden`}>
             <div className='grid grid-cols-12'>
                 <Skeleton.Node rootClassName="col-span-12 !h-auto" className="!h-auto !w-full overflow-hidden" active={true}>
                     <div className='flex-1 flex flex-col justify-between gap-0 rounded-[0.625rem] relative'>

@@ -268,7 +268,7 @@ const CustomEditor: React.FC<CustomEditorProps> = (props) => {
             />
 
             <div className="mb-3 flex items-center justify-between gap-3">
-                <div className="text-xs text-sgt-neutral-3">
+                <div className="text-xs text-bela-neutral-3">
                     Biên tập trực quan, chèn ảnh thật và chuyển nhanh sang chế độ HTML source như CMS chuyên nghiệp.
                 </div>
                 <div className="flex items-center gap-2">
@@ -293,8 +293,8 @@ const CustomEditor: React.FC<CustomEditorProps> = (props) => {
             </div>
 
             {mode === 'edit' ? (
-                <div className="tiptap-editor-wrapper rounded-xl border border-sgt-gray-2 bg-white overflow-hidden">
-                    <div className="border-b border-sgt-gray-2 bg-slate-50 p-3">
+                <div className="tiptap-editor-wrapper rounded-xl border border-bela-gray-2 bg-white overflow-hidden">
+                    <div className="border-b border-bela-gray-2 bg-slate-50 p-3">
                         <Space wrap>
                             <ToolbarButton title="Tiêu đề 1" icon={<span className="text-xs font-bold">H1</span>} active={editor?.isActive('heading', { level: 1 })} onClick={() => editor?.chain().focus().toggleHeading({ level: 1 }).run()} disabled={!editor} />
                             <ToolbarButton title="Tiêu đề 2" icon={<span className="text-xs font-bold">H2</span>} active={editor?.isActive('heading', { level: 2 })} onClick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()} disabled={!editor} />
@@ -329,11 +329,11 @@ const CustomEditor: React.FC<CustomEditorProps> = (props) => {
                     />
                 </div>
             ) : (
-                <div className="min-h-[420px] rounded-lg border border-sgt-gray-2 bg-white p-4">
+                <div className="min-h-[420px] rounded-lg border border-bela-gray-2 bg-white p-4">
                     {editorData ? (
-                        <div className="prose max-w-none prose-p:text-sgt-neutral-3 prose-headings:text-sgt-secondary-2" dangerouslySetInnerHTML={{ __html: editorData }} />
+                        <div className="prose max-w-none prose-p:text-bela-neutral-3 prose-headings:text-bela-secondary-2" dangerouslySetInnerHTML={{ __html: editorData }} />
                     ) : (
-                        <div className="text-sm text-sgt-neutral-3">Chưa có nội dung để xem trước.</div>
+                        <div className="text-sm text-bela-neutral-3">Chưa có nội dung để xem trước.</div>
                     )}
                 </div>
             )}

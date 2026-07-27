@@ -40,7 +40,7 @@ const ArticalSections: React.FC<ArticalSectionsProps> = ({ sections, isMainSecti
         return () => clearTimeout(timer);
     }, [isMainSection]);
 
-    const contentClass = ' px-4 lg:px-6 bg-white border-l-[3px] border-sgt-primary-2 ';
+    const contentClass = ' px-4 lg:px-6 bg-white border-l-[3px] border-bela-primary-2 ';
 
     return (
         <>
@@ -49,9 +49,9 @@ const ArticalSections: React.FC<ArticalSectionsProps> = ({ sections, isMainSecti
                     {activeMenus.includes(index) ? (
                         <div className={contentClass}>
                             <div className='pt-3.5 pb-2 flex justify-between items-center cursor-pointer select-none' onClick={() => onClickTitle(index)}>
-                                <h3 className='text-body-1 lg:text-sub-1 text-sgt-secondary-1 w-5/6'>{item.title}</h3>
+                                <h3 className='text-body-1 lg:text-sub-1 text-bela-secondary-1 w-5/6'>{item.title}</h3>
                                 <div
-                                    className='bg-sgt-neutral-3 w-5 h-5'
+                                    className='bg-bela-neutral-3 w-5 h-5'
                                     style={{
                                         mask: 'url("/assets/icons/chevron-up.svg")',
                                         maskSize: 'cover',
@@ -61,14 +61,14 @@ const ArticalSections: React.FC<ArticalSectionsProps> = ({ sections, isMainSecti
                         </div>
                     ) : (
                         <div
-                            className='border-l-[3px] border-l-transparent border-b-[1px] px-4 lg:px-6 border-sgt-neutral-5 flex justify-between cursor-pointer select-none'
+                            className='border-l-[3px] border-l-transparent border-b-[1px] px-4 lg:px-6 border-bela-neutral-5 flex justify-between cursor-pointer select-none'
                             onClick={() => onClickTitle(index)}
                         >
-                            <h3 className='text-button lg:text-sub-1 text-sgt-neutral-3 mt-3.5 mb-3 w-5/6'>
+                            <h3 className='text-button lg:text-sub-1 text-bela-neutral-3 mt-3.5 mb-3 w-5/6'>
                                 {item.title}
                             </h3>
                             <div
-                                className='bg-sgt-neutral-3 w-5 h-5 max-lg:self-center lg:mt-2'
+                                className='bg-bela-neutral-3 w-5 h-5 max-lg:self-center lg:mt-2'
                                 style={{
                                     mask: 'url("/assets/icons/chevron-down.svg")',
                                     maskSize: 'cover',

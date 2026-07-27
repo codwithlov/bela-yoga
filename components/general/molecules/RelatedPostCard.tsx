@@ -34,7 +34,7 @@ const RelatedPostCard: React.FC<RelatedPostCardProps> = ({ item }) => {
         <div className="flex items-center gap-1">
           {/* Icon thời gian */}
           <div
-            className="bg-sgt-neutral-4"
+            className="bg-bela-neutral-4"
             style={{
               mask: 'url("/assets/icons/clock.svg")',
               maskSize: 'cover',
@@ -42,7 +42,7 @@ const RelatedPostCard: React.FC<RelatedPostCardProps> = ({ item }) => {
               height: '1rem',
             }}
           />
-          <p className="text-cap-1 text-sgt-neutral-4">
+          <p className="text-cap-1 text-bela-neutral-4">
             {item.created_at ? formatDate(item.created_at) : 'Không rõ ngày'}
           </p>
         </div>

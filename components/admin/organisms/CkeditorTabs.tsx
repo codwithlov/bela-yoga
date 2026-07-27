@@ -29,7 +29,7 @@ const CkeditorTabs: React.FC<CkeditorTabsProps> = ({
     key,
     label,
     children: (
-      <div className={'flex flex-1 justify-center bg-sgt-bg-primary mb-2 -mt-4' + (stickyTab ? ' pt-4' : '')}>
+      <div className={'flex flex-1 justify-center bg-bela-bg-primary mb-2 -mt-4' + (stickyTab ? ' pt-4' : '')}>
         {articleMenu && articleMenu}
         <Form.Item name={key + selectedKey} className={(stickyTab ? 'ck-top-64' : '') + " w-[800px] !my-2 "}>
           <CustomEditor

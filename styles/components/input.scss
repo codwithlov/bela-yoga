@@ -12,11 +12,11 @@
 
   &:hover,
   &:focus-within {
-    @apply border-sgt-primary-dark ring-1 ring-sgt-primary-dark ring-opacity-35 #{!important};
+    @apply border-bela-primary-dark ring-1 ring-bela-primary-dark ring-opacity-35 #{!important};
   }
 
   &:focus {
-    @apply ring-1 ring-sgt-primary-dark ring-opacity-35 #{!important};
+    @apply ring-1 ring-bela-primary-dark ring-opacity-35 #{!important};
   }
 }
 
@@ -25,11 +25,11 @@
   $sgt_input_slider-h: var(--input_slider-w) !important;
 
   .ant-slider-rail {
-    @apply bg-sgt-neutral-5 rounded-md h-1 #{!important};
+    @apply bg-bela-neutral-5 rounded-md h-1 #{!important};
   }
 
   .ant-slider-track {
-    @apply bg-gradient-to-r from-sgt-primary-1 to-sgt-primary-2;
+    @apply bg-gradient-to-r from-bela-primary-1 to-bela-primary-2;
   }
 
   .ant-slider-handle {
@@ -46,7 +46,7 @@
       inset: 0;
       top: 50% !important;
       left: 50% !important;
-      @apply bg-sgt-neutral-7 shadow-sgt-black-9 -translate-y-1/2 -translate-x-1/2 #{!important};
+      @apply bg-bela-neutral-7 shadow-bela-black-9 -translate-y-1/2 -translate-x-1/2 #{!important};
     }
 
     &:after,
@@ -56,13 +56,13 @@
       width: $sgt_input_slider-w;
       height: $sgt_input_slider-h;
       z-index: 12;
-      @apply inset-0 transition-all duration-300 bg-gradient-to-t from-sgt-primary-1 to-sgt-primary-2 #{!important};
+      @apply inset-0 transition-all duration-300 bg-gradient-to-t from-bela-primary-1 to-bela-primary-2 #{!important};
     }
   }
 }
 
 .placeholder-custom::placeholder {
-  @apply text-base font-normal text-sgt-gray-1;
+  @apply text-base font-normal text-bela-gray-1;
 }
 
 .error-margin-bottom .ant-form-item-explain-error {

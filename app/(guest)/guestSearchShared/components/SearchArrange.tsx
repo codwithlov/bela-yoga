@@ -41,14 +41,14 @@ const SearchArrange = (props: SearchArrangeNavBarParam) => {
     const [lowestFlightDateLoading, setLowestFlightDateIsLoading] = useState(true);
     const [lowestPriceLoading, setLowestPriceIsLoading] = useState(true);
     // Set default value of class active each sort button
-    const [activeSortDay, setActiveSortDay] = useState('bg-sgt-secondary-default bg-opacity-5');
+    const [activeSortDay, setActiveSortDay] = useState('bg-bela-secondary-default bg-opacity-5');
     const [activeSortFlightDate, setActiveSortFlightDate] = useState('');
     const [activeSortPrice, setActiveSortPrice] = useState('');
     const [param, setParam] = useState('');
     const [flightDateParam, setFlightDateParam] = useState('');
     const [priceParam, setPriceParam] = useState('');
 
-    const sortActiveClass = 'bg-sgt-secondary-default bg-opacity-5';
+    const sortActiveClass = 'bg-bela-secondary-default bg-opacity-5';
     const sortActiveString = search.sortActive ?? SORT_BY_DAY_NUMBER as string;
 
     useEffect(() => {
@@ -107,7 +107,7 @@ const SearchArrange = (props: SearchArrangeNavBarParam) => {
 
     useEffect(() => {
         if (!marketOtherInfoLoading) {
-            setActiveSortDay('bg-sgt-secondary-default bg-opacity-5');
+            setActiveSortDay('bg-bela-secondary-default bg-opacity-5');
             setLowestDayIsLoading(false)
         }
         // if (!lowestDateIsLoading) {
@@ -144,7 +144,7 @@ const SearchArrange = (props: SearchArrangeNavBarParam) => {
 
     return (
         <section id='search_arrange'>
-            <div className='search_content_tour_arrange text-sm font-semibold flex flex-col justify-around bg-white text-sgt-secondary-light py-2.5 lg:rounded-lg lg:shadow lg:flex-row'>
+            <div className='search_content_tour_arrange text-sm font-semibold flex flex-col justify-around bg-white text-bela-secondary-light py-2.5 lg:rounded-lg lg:shadow lg:flex-row'>
                 <div className={`py-3 px-4 border-b border-gray-100 lg:p-0 lg:border-none search_content_tour_arrange_item ${sortActiveString == SORT_BY_DAY_NUMBER ? sortActiveClass : ''}  `}
                     onClick={() => {
                         changePathSortBy('');
@@ -160,7 +160,7 @@ const SearchArrange = (props: SearchArrangeNavBarParam) => {
                             ?
                             SkeletonFetch()
                             :
-                            <div className='text-xs text-sgt-secondary-dark'>
+                            <div className='text-xs text-bela-secondary-dark'>
                                 {marketOtherInfo?.day_number} Ngày {marketOtherInfo?.night_number} Đêm
                             </div>
                     }
@@ -180,7 +180,7 @@ const SearchArrange = (props: SearchArrangeNavBarParam) => {
                             ?
                             SkeletonFetch()
                             :
-                            <div className='text-xs text-sgt-secondary-dark' >
+                            <div className='text-xs text-bela-secondary-dark' >
                                 {
                                     marketOtherInfo?.flight_date ? dayjs(marketOtherInfo?.flight_date).format(formatDateVI) : '00/00/0000'
                                 }
@@ -202,7 +202,7 @@ const SearchArrange = (props: SearchArrangeNavBarParam) => {
                             ?
                             SkeletonFetch()
                             :
-                            <div className='text-xs text-sgt-secondary-dark'>
+                            <div className='text-xs text-bela-secondary-dark'>
                                 {
                                     marketOtherInfo?.price_adl != marketOtherInfo?.price_adl_off
                                         ?

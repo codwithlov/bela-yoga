@@ -55,8 +55,8 @@ const SearchBarVerticalMobile = (props: SearchBarVerticalMobileParam) => {
         apiComponent,
         date,
         location,
-        borderColorInput = 'border-sgt-neutral-7',
-        bgInput = 'bg-sgt-neutral-6',
+        borderColorInput = 'border-bela-neutral-7',
+        bgInput = 'bg-bela-neutral-6',
         itemGap = 'gap-2',
         nationList,
         destinationList,
@@ -249,7 +249,7 @@ const SearchBarVerticalMobile = (props: SearchBarVerticalMobileParam) => {
                 className="flex flex-wrap justify-between items-center px-6 py-1.5"
             >
                 <div
-                    className="px-3 py-1 rounded-2xl border cursor-pointer border-sgt-secondary-1 hover:bg-sgt-neutral-6"
+                    className="px-3 py-1 rounded-2xl border cursor-pointer border-bela-secondary-1 hover:bg-bela-neutral-6"
                     data-slug={value}
                     dangerouslySetInnerHTML={{ __html: highlightLabel ?? '' }}>
                 </div>
@@ -413,7 +413,7 @@ const SearchBarVerticalMobile = (props: SearchBarVerticalMobileParam) => {
                         <div className='relative col-span-12' >
                             <div className={`${bgInput} ${borderColorInput} border flex justify-start items-center rounded-md`}
                                 onClick={() => setOpenLocationModal(true)}>
-                                <div className='bg-sgt-primary-1 ml-3'
+                                <div className='bg-bela-primary-1 ml-3'
                                     style={{
                                         mask: 'url("/assets/icons/location.svg")',
                                         maskSize: 'cover',
@@ -426,7 +426,7 @@ const SearchBarVerticalMobile = (props: SearchBarVerticalMobileParam) => {
                                     style={{
                                         backgroundColor: 'inherit'
                                     }}
-                                    className='w-full placeholder:text-opacity-85 focus-visible:outline-none rounded-md py-2.5 px-2.5 text-button text-sgt-neutral-4 disabled:bg-sgt-neutral-6'
+                                    className='w-full placeholder:text-opacity-85 focus-visible:outline-none rounded-md py-2.5 px-2.5 text-button text-bela-neutral-4 disabled:bg-bela-neutral-6'
                                     placeholder='Bạn muốn chơi ở đâu?'
                                     readOnly={true}
                                     value={locationName || ''}
@@ -437,7 +437,7 @@ const SearchBarVerticalMobile = (props: SearchBarVerticalMobileParam) => {
                         <div className='relative col-span-12'>
                             <div className={`${bgInput} ${borderColorInput} border flex justify-start items-center rounded-md`}
                                 onClick={() => setOpenCalendarModal(true)}>
-                                <div className='bg-sgt-primary-1 ml-3'
+                                <div className='bg-bela-primary-1 ml-3'
                                     style={{
                                         mask: 'url("/assets/icons/calendar-origin.svg")',
                                         maskSize: 'cover',
@@ -450,7 +450,7 @@ const SearchBarVerticalMobile = (props: SearchBarVerticalMobileParam) => {
                                     style={{
                                         backgroundColor: 'inherit'
                                     }}
-                                    className='w-full placeholder:text-opacity-85 focus-visible:outline-none rounded-md py-2.5 px-2.5 text-button text-sgt-neutral-4 disabled:bg-sgt-neutral-6'
+                                    className='w-full placeholder:text-opacity-85 focus-visible:outline-none rounded-md py-2.5 px-2.5 text-button text-bela-neutral-4 disabled:bg-bela-neutral-6'
                                     type="text"
                                     placeholder='Chọn ngày khởi hành'
                                     readOnly={true}
@@ -459,7 +459,7 @@ const SearchBarVerticalMobile = (props: SearchBarVerticalMobileParam) => {
                             </div>
                         </div>
                         <a href={`${searchPath}`}
-                            className='col-span-12 bg-gradient-to-t from-sgt-primary-1 to-sgt-primary-2 text-sgt-neutral-1 rounded-md text-button flex flex-row gap-1 justify-center items-center'>
+                            className='col-span-12 bg-gradient-to-t from-bela-primary-1 to-bela-primary-2 text-bela-neutral-1 rounded-md text-button flex flex-row gap-1 justify-center items-center'>
                             <Image src="/assets/icons/search.svg" alt="search-icon" width={24} height={24} />
                             <div className='py-2.5' id="search">Tìm sân</div>
                         </a>
@@ -476,10 +476,10 @@ const SearchBarVerticalMobile = (props: SearchBarVerticalMobileParam) => {
                     className="sgt_drawer"
                     placement='bottom'
                 >
-                    <div className='bg-sgt-neutral-7 px-3 py-2.5 flex flex-row justify-between items-center sticky left-0 top-0'>
-                        <div className='bg-white flex flex-1 justify-start items-center rounded-md border border-sgt-primary-1 relative'
+                    <div className='bg-bela-neutral-7 px-3 py-2.5 flex flex-row justify-between items-center sticky left-0 top-0'>
+                        <div className='bg-white flex flex-1 justify-start items-center rounded-md border border-bela-primary-1 relative'
                             onClick={() => setOpenLocationModal(true)}>
-                            <div className='bg-sgt-primary-1 ml-1.5'
+                            <div className='bg-bela-primary-1 ml-1.5'
                                 style={{
                                     mask: 'url("/assets/icons/location.svg")',
                                     maskSize: 'cover',
@@ -503,7 +503,7 @@ const SearchBarVerticalMobile = (props: SearchBarVerticalMobileParam) => {
                                             indicator={
                                                 <LoadingOutlined
 
-                                                    className="!text-sgt-primary-1"
+                                                    className="!text-bela-primary-1"
                                                     style={{
                                                         fontSize: 20
                                                     }}
@@ -516,7 +516,7 @@ const SearchBarVerticalMobile = (props: SearchBarVerticalMobileParam) => {
                             </div>
                         </div>
                         <button className='text-right ml-1.5' onClick={() => setOpenLocationModal(false)}>
-                            <div className='bg-sgt-neutral-1'
+                            <div className='bg-bela-neutral-1'
                                 style={{
                                     mask: 'url("/assets/icons/close.svg")',
                                     maskSize: 'cover',
@@ -557,9 +557,9 @@ const SearchBarVerticalMobile = (props: SearchBarVerticalMobileParam) => {
                     className="sgt_drawer"
                     placement='bottom'
                 >
-                    <div className='bg-sgt-primary-default px-3 py-2.5 flex flex-row justify-between items-center sticky left-0 top-0'>
+                    <div className='bg-bela-primary-default px-3 py-2.5 flex flex-row justify-between items-center sticky left-0 top-0'>
                         <div className='text-base font-medium'>Ngày khởi hành</div>
-                        <FontAwesomeIcon className='w-10 text-sgt-secondary-dark text-2xl text-right' icon={faClose} onClick={() => setOpenCalendarModal(false)}></FontAwesomeIcon>
+                        <FontAwesomeIcon className='w-10 text-bela-secondary-dark text-2xl text-right' icon={faClose} onClick={() => setOpenCalendarModal(false)}></FontAwesomeIcon>
                     </div>
                     <div className='pt-1 pb-4'>
                         <AntdCalendar

@@ -44,8 +44,8 @@ const PostSearchList = ({ keyword, setHasPosts }: { keyword: string; setHasPosts
         <>
             {
                 postList.length > 0 &&
-                <h2 className="flex flex-row justify-start items-start gap-2 text-sgt-secondary-1 font-bold max-sm:text-lg sm:text-xl md:text-h3 mb-5">
-                    Bài viết liên quan tới: <strong className='text-sgt-primary-1'>{keyword}</strong>
+                <h2 className="flex flex-row justify-start items-start gap-2 text-bela-secondary-1 font-bold max-sm:text-lg sm:text-xl md:text-h3 mb-5">
+                    Bài viết liên quan tới: <strong className='text-bela-primary-1'>{keyword}</strong>
                 </h2>
 
             }
@@ -53,7 +53,7 @@ const PostSearchList = ({ keyword, setHasPosts }: { keyword: string; setHasPosts
                 {postList.map((post, index) => (
                     <div
                         key={`post-${index}`}
-                        className='bg-white rounded-sgt-10 shadow-md w-full transition-opacity duration-700'
+                        className='bg-white rounded-bela-10 shadow-md w-full transition-opacity duration-700'
                     >
                         <HorizontalPostItem item={post} />
                     </div>

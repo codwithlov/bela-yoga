@@ -7,7 +7,7 @@ const defaulBio = `Với nhiều năm kinh nghiệm với vị trí content writ
 
 const AuthorInfo = ({ props }: { props: IAuthor }) => {
   return (
-    <div className='bg-sgt-neutral-7 rounded-sgt-10 p-4 pr-10 flex gap-6 mt-12 max-lg:mb-12'>
+    <div className='bg-bela-neutral-7 rounded-bela-10 p-4 pr-10 flex gap-6 mt-12 max-lg:mb-12'>
       <Avatar src={props?.image} className='w-14 h-14 lg:w-[4.5rem] lg:h-[4.5rem]' />
       <div className='flex-1'>
         <a href={props?.author_slug ? `/author/${props?.author_slug}` : '/#'}>

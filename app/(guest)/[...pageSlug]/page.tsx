@@ -11,7 +11,7 @@ import SearchFeaturedListings from '../guestSearchShared/components/SearchFeatur
 import SearchListingIntro from '../guestSearchShared/components/SearchListingIntro';
 import SearchSupport from '../guestSearchShared/components/SearchSupport';
 import SearchDetailOfDestination from '../guestSearchShared/components/SearchDetailOfDestination';
-import { redirect, RedirectType } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { STATUS_404 } from '@/constants/status';
 import { isEmpty } from '@/utils/helper';
 import { IArticle } from '@/interfaces/article';
@@ -57,6 +57,16 @@ const getDefaultData = async (slug: string, admin: any) => {
 }
 
 const buildSlugPath = (parts: string[]) => `/${parts.join('/')}`;
+
+const isStaticAssetLikeSlug = (slug: string) => {
+  const normalizedSlug = slug.toLowerCase();
+
+  if (normalizedSlug.startsWith('assets/') || normalizedSlug.startsWith('_next/')) {
+    return true;
+  }
+
+  return /\.(png|jpe?g|gif|webp|avif|svg|ico|css|js|mjs|map|txt|xml|json|pdf|woff2?|ttf|eot)$/i.test(normalizedSlug);
+};
 
 const getKeywordBadges = (keywords?: string | null) => (keywords || '')
   .split(',')
@@ -139,6 +149,11 @@ export async function generateMetadata(
   const resolvedSearchParams = await searchParams;
   const slug = pageSlug.join('/');
   const pathname = buildSlugPath(pageSlug);
+
+  if (isStaticAssetLikeSlug(slug)) {
+    return {};
+  }
+
   const resolvedRouteMetadata = await getResolvedRouteMetadata(pathname);
 
   if (resolvedRouteMetadata) {
@@ -161,6 +176,10 @@ const Search = async ({
   const resolvedSearchParams = (await searchParams) ?? {};
   let slug = pageSlug.join('/');
   const pathname = buildSlugPath(pageSlug);
+
+  if (isStaticAssetLikeSlug(slug)) {
+    notFound();
+  }
 
   let goodPriceTourList: any[] = [];
   let marketData: any[] = [];
@@ -200,15 +219,15 @@ const Search = async ({
             {(customPage?.sections || []).length ? (
               <div className='grid gap-6 lg:grid-cols-2'>
                 {(customPage?.sections || []).map((section) => (
-                  <article key={section.id} className='rounded-[1.5rem] border border-sgt-gray-2 bg-white p-6 shadow-sm'>
+                  <article key={section.id} className='rounded-[1.5rem] border border-bela-gray-2 bg-white p-6 shadow-sm'>
                     <div className='space-y-3'>
-                      <div className='text-xs font-semibold uppercase tracking-[0.18em] text-sgt-primary-1'>Section</div>
-                      <h2 className='text-2xl font-bold text-sgt-secondary-2'>{section.title}</h2>
-                      {section.summary ? <p className='text-sm leading-6 text-sgt-neutral-3'>{section.summary}</p> : null}
-                      <div className='prose max-w-none prose-p:text-sgt-neutral-3 prose-headings:text-sgt-secondary-2' dangerouslySetInnerHTML={{ __html: section.content }} />
+                      <div className='text-xs font-semibold uppercase tracking-[0.18em] text-bela-primary-1'>Section</div>
+                      <h2 className='text-2xl font-bold text-bela-secondary-2'>{section.title}</h2>
+                      {section.summary ? <p className='text-sm leading-6 text-bela-neutral-3'>{section.summary}</p> : null}
+                      <div className='prose max-w-none prose-p:text-bela-neutral-3 prose-headings:text-bela-secondary-2' dangerouslySetInnerHTML={{ __html: section.content }} />
                       {section.cta_label && section.cta_href ? (
                         <div>
-                          <Link href={section.cta_href} className='inline-flex rounded-full bg-sgt-primary-1 px-5 py-2 text-sm font-semibold text-white transition hover:bg-sgt-primary-2'>
+                          <Link href={section.cta_href} className='inline-flex rounded-full bg-bela-primary-1 px-5 py-2 text-sm font-semibold text-white transition hover:bg-bela-primary-2'>
                             {section.cta_label}
                           </Link>
                         </div>
@@ -220,17 +239,17 @@ const Search = async ({
             ) : null}
 
             {relatedPosts.length ? (
-              <div className='rounded-[1.5rem] border border-sgt-gray-2 bg-white p-6 shadow-sm'>
+              <div className='rounded-[1.5rem] border border-bela-gray-2 bg-white p-6 shadow-sm'>
                 <div className='mb-4'>
-                  <div className='text-xs font-semibold uppercase tracking-[0.18em] text-sgt-primary-1'>Related posts</div>
-                  <h2 className='mt-2 text-2xl font-bold text-sgt-secondary-2'>Bài viết liên quan</h2>
+                  <div className='text-xs font-semibold uppercase tracking-[0.18em] text-bela-primary-1'>Related posts</div>
+                  <h2 className='mt-2 text-2xl font-bold text-bela-secondary-2'>Bài viết liên quan</h2>
                 </div>
                 <div className='grid gap-4 lg:grid-cols-3'>
                   {relatedPosts.map((post) => (
-                    <Link key={post.id} href={post.canonical || `/bai-viet/${post.slug}`} className='rounded-2xl border border-sgt-gray-2 p-4 transition hover:-translate-y-0.5 hover:border-sgt-primary-1 hover:shadow-sm'>
-                      <div className='text-xs font-semibold uppercase tracking-[0.18em] text-sgt-primary-1'>{post.category}</div>
-                      <h3 className='mt-2 text-lg font-bold text-sgt-secondary-2'>{post.title}</h3>
-                      <p className='mt-2 text-sm leading-6 text-sgt-neutral-3'>{post.excerpt}</p>
+                    <Link key={post.id} href={post.canonical || `/bai-viet/${post.slug}`} className='rounded-2xl border border-bela-gray-2 p-4 transition hover:-translate-y-0.5 hover:border-bela-primary-1 hover:shadow-sm'>
+                      <div className='text-xs font-semibold uppercase tracking-[0.18em] text-bela-primary-1'>{post.category}</div>
+                      <h3 className='mt-2 text-lg font-bold text-bela-secondary-2'>{post.title}</h3>
+                      <p className='mt-2 text-sm leading-6 text-bela-neutral-3'>{post.excerpt}</p>
                     </Link>
                   ))}
                 </div>
@@ -290,6 +309,9 @@ const Search = async ({
       isNoCache: !!resolvedSearchParams?.admin,
     });
     if (!slugPermalink || slugPermalink == STATUS_404) {
+      if (isStaticAssetLikeSlug(slug)) {
+        notFound();
+      }
       redirect(GUEST_404);
     } else if (slugPermalink.entity_type === POST_SLUG) {
       return <PostPage slugPermalink={slugPermalink} admin={!!resolvedSearchParams?.admin} />
@@ -334,7 +356,7 @@ const Search = async ({
   })
 
   return (
-    <section id='search_page' className={`search_page bg-sgt-bg-primary relative`}>
+    <section id='search_page' className={`search_page bg-bela-bg-primary relative`}>
       {!isEmpty(questions) &&
         <SchemaScript
           id='faq-schema'

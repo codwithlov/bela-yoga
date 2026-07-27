@@ -8,16 +8,16 @@
             padding: 1.125rem;
 
             .form_item {
-                @apply rounded-sgt-10 h-[3.125rem] w-full bg-sgt-neutral-5 bg-opacity-50 relative flex flex-row justify-start items-center;
+                @apply rounded-bela-10 h-[3.125rem] w-full bg-bela-neutral-5 bg-opacity-50 relative flex flex-row justify-start items-center;
                 @apply max-sm:h-10;
             }
 
             .form_icon {
-                @apply bg-sgt-primary-1 ml-2.5 w-6 h-6;
+                @apply bg-bela-primary-1 ml-2.5 w-6 h-6;
             }
 
             .form_control {
-                @apply text-sub-1 text-sgt-neutral-1 placeholder:text-sgt-neutral-4;
+                @apply text-sub-1 text-bela-neutral-1 placeholder:text-bela-neutral-4;
                 @apply max-sm:text-button;
                 background: transparent;
                 border: none !important;
@@ -45,25 +45,25 @@
 
         .implementation_process_item {
             @apply relative z-50;
-            @apply rounded-sgt-10 flex-1 pt-14 pb-7 px-6 flex flex-col gap-2.5 items-center bg-sgt-neutral-7 text-center;
-            @apply text-sub-1 text-sgt-neutral-1;
+            @apply rounded-bela-10 flex-1 pt-14 pb-7 px-6 flex flex-col gap-2.5 items-center bg-bela-neutral-7 text-center;
+            @apply text-sub-1 text-bela-neutral-1;
             @apply transition-all duration-300;
             @apply border border-white;
 
             &:hover {
-                @apply border-sgt-primary-2 shadow-sgt-black-5 cursor-pointer;
+                @apply border-bela-primary-2 shadow-bela-black-5 cursor-pointer;
             }
         }
 
         .implementation_process_item_ordinal_number {
             width: 4.375rem;
             height: 4.375rem;
-            @apply rounded-full bg-sgt-primary-2 bg-opacity-30;
+            @apply rounded-full bg-bela-primary-2 bg-opacity-30;
             @apply flex justify-center items-center;
             @apply absolute top-0 -translate-y-1/2;
 
             >div {
-                @apply w-14 h-14 rounded-full bg-sgt-primary-2 flex flex-row justify-center items-center text-h3 text-sgt-secondary-1;
+                @apply w-14 h-14 rounded-full bg-bela-primary-2 flex flex-row justify-center items-center text-h3 text-bela-secondary-1;
             }
         }
 
@@ -99,7 +99,7 @@
                 @apply w-12 h-12;
 
                 >div {
-                    @apply w-9 h-9 text-sub-1 font-bold text-sgt-secondary-1;
+                    @apply w-9 h-9 text-sub-1 font-bold text-bela-secondary-1;
                 }
             }
 
@@ -133,7 +133,7 @@
 
             .title_item {
                 opacity: 0;
-                @apply bg-sgt-secondary-1 bg-opacity-70 absolute inset-0 transition-all duration-300;
+                @apply bg-bela-secondary-1 bg-opacity-70 absolute inset-0 transition-all duration-300;
             }
 
             &:hover {
@@ -150,10 +150,10 @@
             @apply flex flex-row justify-center items-center gap-5;
 
             .visa_check_button {
-                @apply py-5 px-24 text-sgt-secondary-1 text-h3 bg-sgt-neutral-7 border border-sgt-primary-2 rounded-sgt-10 transition-all duration-300;
+                @apply py-5 px-24 text-bela-secondary-1 text-h3 bg-bela-neutral-7 border border-bela-primary-2 rounded-bela-10 transition-all duration-300;
 
                 &:hover {
-                    @apply bg-sgt-primary-2;
+                    @apply bg-bela-primary-2;
                 }
             }
         }

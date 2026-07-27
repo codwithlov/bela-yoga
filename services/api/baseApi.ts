@@ -59,10 +59,10 @@ const baseQueryWithReauth: typeof baseQuery = async (args, api, extraOptions) =>
     await mutex.waitForUnlock()
     let result = await baseQuery(args, api, extraOptions);
     if (result.error && !isEmpty(result.error)) {
-        let error = result.error.data as any;
-        let errorStatus = error.data;
-        let errorMessage = error.message;
-        let errorStatusCode = result.error.status;
+        const error = (result.error as any)?.data as any;
+        const errorStatus = error?.data ?? error?.code ?? '';
+        const errorMessage = error?.message || (result.error as any)?.error || 'server_error';
+        const errorStatusCode = (result.error as any)?.status;
         if (errorStatusCode === 401) {
             if (errorStatus === ACCESS_TOKEN_EXPIRES || errorStatus === NOT_FOUND_TOKEN) {
                 // checking whether the mutex is locked
@@ -103,11 +103,11 @@ const baseQueryWithReauth: typeof baseQuery = async (args, api, extraOptions) =>
         }
         if (errorStatusCode === 403) {
             if (errorStatus === PERMISSION_DENIED) {
-                error.permissions
+                const permissions = Array.isArray(error?.permissions) ? error.permissions : [];
                 openNotification(
                     errorStatus.toLowerCase(),
                     'PERMISSION_DENIED',
-                    error.permissions
+                    permissions
                 );
             }
         }

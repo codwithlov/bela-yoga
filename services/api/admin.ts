@@ -1,5 +1,6 @@
 import {
     IAdminBookingRow,
+    IAdminPostCategory,
     IAdminMenuItemRow,
     IAdminMenuTargetOption,
     IAdminOrganizationRow,
@@ -33,7 +34,7 @@ const adminApi = baseApi.injectEndpoints({
         getAdminRoles: builder.query<{ data: { roles: IAdminRoleRow[] } }, void>({
             query: () => 'admin/roles',
         }),
-        getAdminPosts: builder.query<{ data: { posts: IAdminPostRow[] } }, void>({
+        getAdminPosts: builder.query<{ data: { posts: IAdminPostRow[]; categories: IAdminPostCategory[] } }, void>({
             query: () => 'admin/posts',
         }),
         getAdminStoreItems: builder.query<{ data: { store_items: IAdminStoreItemRow[] } }, void>({

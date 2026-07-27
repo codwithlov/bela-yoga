@@ -60,7 +60,7 @@ const Detail = async ({ params, searchParams }: TagDetailPageProps) => {
     const title = !responseJson?.isFeedback ? 'Bài viết liên quan tới ' + responseJson?.tag?.name : responseJson?.tag?.name;
     return (
         <>
-            <section id='tag_page' className='bg-sgt-neutral-6'>
+            <section id='tag_page' className='bg-bela-neutral-6'>
                 <div className='pb-6 max-sm:pb-4 pt-16 transition-all duration-300 max-sm:pt-10'>
                     <Title title={title} />
                 </div>

@@ -51,34 +51,34 @@ const SearchBarVertical = ({
                 </>
             }
             {windowSize?.width && <div id="search_bar_vertical_component"
-                className='bg-sgt-neutral-1 bg-opacity-70 rounded-2xl absolute top-32 w-[630px]'
+                className='bg-bela-neutral-1 bg-opacity-70 rounded-2xl absolute top-32 w-[630px]'
                 style={{ left: (left > 10 ? left : 10) }}
             >
                 <div className='p-4'>
-                    <span className='text-sgt-primary-2 text-2xl font-bold'>{slogan}</span>
+                    <span className='text-bela-primary-2 text-2xl font-bold'>{slogan}</span>
                 </div>
                 <section className='px-5 pt-2 pb-6 flex justify-center items-center'>
                     <Suspense>
                         <div className='width-primary m-auto text-lg font-normal max-sm:w-full'>
                             <div className='w-full grid grid-cols-12 gap-4'>
-                                <div className='relative col-span-12 h-10 bg-white  bg-opacity-50 text-sgt-neutral-5 flex flex-1 justify-start items-center rounded-md border-sgt-neutral-7'>
+                                <div className='relative col-span-12 h-10 bg-white  bg-opacity-50 text-bela-neutral-5 flex flex-1 justify-start items-center rounded-md border-bela-neutral-7'>
                                     <SearchBarInputLocation
-                                        inputClass='!text-sub-1 !text-sgt-neutral-5'
-                                        iconClass='bg-sgt-neutral-7'
+                                        inputClass='!text-sub-1 !text-bela-neutral-5'
+                                        iconClass='bg-bela-neutral-7'
                                         nationList={nationList}
                                         destinationList={destinationList}
                                         marketList={marketList}
                                         tagList={tagList}
                                     />
                                 </div>
-                                <div className='relative col-span-9 h-10 bg-white bg-opacity-50 text-sgt-neutral-5 flex justify-center items-center rounded-md border-sgt-neutral-7'>
+                                <div className='relative col-span-9 h-10 bg-white bg-opacity-50 text-bela-neutral-5 flex justify-center items-center rounded-md border-bela-neutral-7'>
                                     <SearchBarDate
-                                        inputClass='!text-sub-1 !text-sgt-neutral-5'
-                                        iconClass='bg-sgt-neutral-7'
+                                        inputClass='!text-sub-1 !text-bela-neutral-5'
+                                        iconClass='bg-bela-neutral-7'
                                     />
                                 </div>
                                 <SearchBarButton
-                                    btnClass='col-span-3 bg-sgt-primary-default text-sgt-secondary-dark rounded-md text-button text-sgt-neutral-1  bg-gradient-to-t from-sgt-primary-1 to-sgt-primary-2 transition-all duration-300 hover:shadow-sgt-primary flex flex-row justify-center items-center'
+                                    btnClass='col-span-3 bg-bela-primary-default text-bela-secondary-dark rounded-md text-button text-bela-neutral-1  bg-gradient-to-t from-bela-primary-1 to-bela-primary-2 transition-all duration-300 hover:shadow-bela-primary flex flex-row justify-center items-center'
                                     iconClass='text-base'
                                 />
                             </div>

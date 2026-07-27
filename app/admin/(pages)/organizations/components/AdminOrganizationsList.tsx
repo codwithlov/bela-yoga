@@ -36,8 +36,8 @@ const AdminOrganizationsList = () => {
                         title: 'Tổ chức',
                         render: (row) => (
                             <div>
-                                <div className='font-semibold text-sgt-secondary-2'>{row.name}</div>
-                                <div className='mt-1 text-xs text-sgt-neutral-3'>{row.slug}</div>
+                                <div className='font-semibold text-bela-secondary-2'>{row.name}</div>
+                                <div className='mt-1 text-xs text-bela-neutral-3'>{row.slug}</div>
                             </div>
                         ),
                     },
@@ -47,14 +47,14 @@ const AdminOrganizationsList = () => {
                         render: (row) => (
                             <div>
                                 <div>{row.manager_name || 'Chưa gán'}</div>
-                                <div className='mt-1 text-xs text-sgt-neutral-3'>{row.manager_email || '—'}</div>
+                                <div className='mt-1 text-xs text-bela-neutral-3'>{row.manager_email || '—'}</div>
                             </div>
                         ),
                     },
                     {
                         key: 'status',
                         title: 'Trạng thái',
-                        render: (row) => <span className='rounded-full bg-sgt-bg-primary px-3 py-1 text-xs font-semibold text-sgt-primary-1'>{row.status}</span>,
+                        render: (row) => <span className='rounded-full bg-bela-bg-primary px-3 py-1 text-xs font-semibold text-bela-primary-1'>{row.status}</span>,
                     },
                     {
                         key: 'counts',

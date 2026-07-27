@@ -161,14 +161,14 @@ const SearchDetailDestination = React.memo((props: SearchDetailDestinationParams
         <section id="search_detail_destination" className='pb-16 mb-1 max-sm:pb-10 max-sm:px-4'>
             <div className='grid grid-cols-12 gap-x-5'>
                 <div id="search_detail_destination_left_menu" className='col-span-12 md:col-span-3 relative z-50'>
-                    <div className='rounded-sgt-10 sticky top-28 max-sm:top-16'>
+                    <div className='rounded-bela-10 sticky top-28 max-sm:top-16'>
                         <div className='destination_left_menu_title flex max-sm:hidden'>Thông tin chi tiết</div>
-                        <div id='destination_mobile_menu' className='py-3 bg-sgt-bg-primary block md:hidden'>
-                            <div ref={detailMenuRef} className='flex flex-row justify-between items-center bg-sgt-neutral-7 px-3 rounded-md border border-sgt-primary-1'
+                        <div id='destination_mobile_menu' className='py-3 bg-bela-bg-primary block md:hidden'>
+                            <div ref={detailMenuRef} className='flex flex-row justify-between items-center bg-bela-neutral-7 px-3 rounded-md border border-bela-primary-1'
                                 onClick={openDetailMenu}
                             >
                                 <div className='destination_left_menu_title'>Thông tin chi tiết</div>
-                                <div className='bg-sgt-secondary-1 dropdown_icon'
+                                <div className='bg-bela-secondary-1 dropdown_icon'
                                     style={{
                                         mask: 'url("/assets/icons/chevron-down.svg")',
                                         maskSize: 'cover',

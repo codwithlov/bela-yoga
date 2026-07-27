@@ -23,7 +23,7 @@ function Footer({ footerMenus = [], accountMenus = [] }: { footerMenus?: Menu[];
 
     const FooterSocialMedia = () => {
         return <>
-            <span className='text-sgt-primary-2 text-sub-1 font-bold'>{footerConfig.connectTitle}</span>
+            <span className='text-bela-primary-2 text-sub-1 font-bold'>{footerConfig.connectTitle}</span>
             <div className='flex flex-row gap-2.5 justify-start pt-4 max-xs:gap-4'>
                 <a
                     href={facebookLink}
@@ -76,10 +76,10 @@ function Footer({ footerMenus = [], accountMenus = [] }: { footerMenus?: Menu[];
 
     const FooterHotline = () => {
         return <>
-            <span className='text-sgt-primary-2 text-sub-1 font-bold'>{templateSiteConfig.contact.footerHotlineTitle}</span>
+            <span className='text-bela-primary-2 text-sub-1 font-bold'>{templateSiteConfig.contact.footerHotlineTitle}</span>
             <div className='flex flex-row gap-2.5 justify-start pt-2'>
                 <a href={`tel:${PHONE.trim()}`}
-                    className='px-3 py-1.5 rounded-md text-h4 text-sgt-neutral-7'
+                    className='px-3 py-1.5 rounded-md text-h4 text-bela-neutral-7'
                     style={{ backgroundColor: "var(--template-color-primary-dark)" }}>
                     {PHONE}
                 </a>
@@ -96,14 +96,14 @@ function Footer({ footerMenus = [], accountMenus = [] }: { footerMenus?: Menu[];
     return (
         <>
 
-            <section id='__sgt_footer' className='bg-sgt-neutral-1'>
+            <section id='__sgt_footer' className='bg-bela-neutral-1'>
                 <div className='max-xl:w-full md:overflow-hidden 2xl:overflow-visible px-4 xl:py-16 width-primary m-auto text-sm pt-12 max-xs:pt-28 max-sm:pt-36 max-sm:mt-12 relative'>
                     {/* Email */}
                     <div className='email_form'>
                         <div className='hidden md:block w-full left-10 absolute top-1/2 -translate-y-1/2' style={{}}>
                             <Image
                                 src="/assets/icons/line-ripple.svg"
-                                alt="sgt-email"
+                                alt="bela-email"
                                 width={0}
                                 height={0}
                                 sizes='100vw'
@@ -112,7 +112,7 @@ function Footer({ footerMenus = [], accountMenus = [] }: { footerMenus?: Menu[];
                             <div className='w-10 absolute bottom-1/2 translate-x-1/2 translate-y-2' style={{ right: "-0.375rem" }}>
                                 <Image
                                     src="/assets/icons/plane-1.svg"
-                                    alt="sgt-email"
+                                    alt="bela-email"
                                     width={0}
                                     height={0}
                                     sizes='100vw'
@@ -127,7 +127,7 @@ function Footer({ footerMenus = [], accountMenus = [] }: { footerMenus?: Menu[];
                                     <div className='email_icon w-full absolute left-0 top-0 -translate-y-1/2 '>
                                         <Image
                                             src="/assets/icons/email.png"
-                                            alt="sgt-email"
+                                            alt="bela-email"
                                             width={0}
                                             height={0}
                                             sizes='100vw'
@@ -136,8 +136,8 @@ function Footer({ footerMenus = [], accountMenus = [] }: { footerMenus?: Menu[];
                                     </div>
                                 </div>
                                 <div>
-                                    <span className='max-xs:text-lg max-sm:text-h4 text-h3 text-sgt-neutral-1'>{footerConfig.newsletterTitle}</span>
-                                    <p className='text-body-2 text-sgt-neutral-2 pt-1 max-xs:pt-0'>{footerConfig.newsletterDescription}</p>
+                                    <span className='max-xs:text-lg max-sm:text-h4 text-h3 text-bela-neutral-1'>{footerConfig.newsletterTitle}</span>
+                                    <p className='text-body-2 text-bela-neutral-2 pt-1 max-xs:pt-0'>{footerConfig.newsletterDescription}</p>
                                 </div>
                             </div>
                             <FooterField />
@@ -157,8 +157,8 @@ function Footer({ footerMenus = [], accountMenus = [] }: { footerMenus?: Menu[];
                                     style={{ width: '220px', height: 'auto' }}
                                 />
                             </div>
-                            <h3 className='text-sgt-primary-2 text-base font-semibold'>{footerConfig.companyHeading}</h3>
-                            <div className='flex flex-col gap-1.5 text-sgt-primary-4 pt-4'>
+                            <h3 className='text-bela-primary-2 text-base font-semibold'>{footerConfig.companyHeading}</h3>
+                            <div className='flex flex-col gap-1.5 text-bela-primary-4 pt-4'>
                                 {footerConfig.paragraphs.map((paragraph) => (
                                     <div key={paragraph}>
                                         <span className='text-body-2'>{paragraph}</span>
@@ -169,7 +169,7 @@ function Footer({ footerMenus = [], accountMenus = [] }: { footerMenus?: Menu[];
                                     <span className='text-body-2'>{MAIL}</span>
                                 </a>
                             </div>
-                            <div className='text-sgt-primary-4 pt-8 max-sm:pt-5'>
+                            <div className='text-bela-primary-4 pt-8 max-sm:pt-5'>
                                 <div>
                                     <span className='text-body-1'>{footerConfig.focusLabel}: </span>
                                     <span className='text-body-2'>{templateSiteConfig.tagline}</span>
@@ -179,8 +179,8 @@ function Footer({ footerMenus = [], accountMenus = [] }: { footerMenus?: Menu[];
                         <div className='col-span-12 pt-4 lg:col-span-6 lg:pt-0 flex flex-row justify-end gap-24 max-xs:flex-col max-sm:justify-between max-sm:order-1 max-sm:gap-4' >
                             <div className='grid grid-cols-12 gap-y-16 max-sm:gap-y-6'>
                                 <div className='col-span-12'>
-                                    <h4 className='text-sgt-primary-2 text-sub-1 font-bold'>{footerConfig.aboutTitle}</h4>
-                                    <div className='flex flex-col gap-2.5 text-body-2 text-sgt-primary-4 pt-4'>
+                                    <h4 className='text-bela-primary-2 text-sub-1 font-bold'>{footerConfig.aboutTitle}</h4>
+                                    <div className='flex flex-col gap-2.5 text-body-2 text-bela-primary-4 pt-4'>
                                         {footerMenuItems.map((item) => (
                                             <a key={item.key} href={normalizeUrl(item.slug || item.url_to)} target='_blank'>{item.title}</a>
                                         ))}
@@ -196,8 +196,8 @@ function Footer({ footerMenus = [], accountMenus = [] }: { footerMenus?: Menu[];
                             </div>
                             <div className='grid grid-cols-12 gap-y-16 max-sm:gap-y-6'>
                                 <div className='col-span-12'>
-                                    <h4 className='text-sgt-primary-2 text-sub-1 font-bold'>{footerConfig.infoTitle}</h4>
-                                    <div className='flex flex-col gap-2.5 text-body-2 text-sgt-primary-4 pt-4'>
+                                    <h4 className='text-bela-primary-2 text-sub-1 font-bold'>{footerConfig.infoTitle}</h4>
+                                    <div className='flex flex-col gap-2.5 text-body-2 text-bela-primary-4 pt-4'>
                                         {accountMenuItems.map((item) => (
                                             <a key={item.key} href={normalizeUrl(item.slug || item.url_to)} target='_blank'>{item.title}</a>
                                         ))}
@@ -213,8 +213,8 @@ function Footer({ footerMenus = [], accountMenus = [] }: { footerMenus?: Menu[];
                         </div>
                     </div>
                 </div>
-                <div className='w-full mt-10 mb-5 max-sm:mt-6 max-sm:mb-3 border-b border-sgt-primary-4 border-opacity-50'></div>
-                <div className='text-cap-1 text-center text-sgt-primary-4 pb-7'>
+                <div className='w-full mt-10 mb-5 max-sm:mt-6 max-sm:mb-3 border-b border-bela-primary-4 border-opacity-50'></div>
+                <div className='text-cap-1 text-center text-bela-primary-4 pb-7'>
                     Copyright {templateSiteConfig.copyrightYear} © {templateSiteConfig.name}<span className='inline max-xs:hidden'> - {templateSiteConfig.tagline}</span>
                 </div>
                 {templateSiteConfig.features.showTrafficScript && <TrafficScriptComponent />}
