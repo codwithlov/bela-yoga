@@ -122,9 +122,7 @@ export async function getPublicPostBySlug(slug: string): Promise<IPublicTemplate
 }
 
 export async function getPublicMenus(location?: 'header' | 'footer' | 'account'): Promise<Menu[]> {
-    const preferTemplateMenus =
-        process.env.NODE_ENV === 'development'
-        || process.env.NEXT_PUBLIC_FORCE_TEMPLATE_MENU === 'true';
+    const preferTemplateMenus = process.env.NODE_ENV === 'development';
 
     if (preferTemplateMenus) {
         return toFallbackMenus(location);
@@ -133,11 +131,7 @@ export async function getPublicMenus(location?: 'header' | 'footer' | 'account')
     const response = await requestJson<{ data: Menu[] }>(`menus${objectToSearchParams({ location })}`);
     const menus = response?.data || [];
 
-    if (menus.length && !isLegacyDefaultMenu(menus, location)) {
-        return menus;
-    }
-
-    return toFallbackMenus(location);
+    return menus.length ? menus : toFallbackMenus(location);
 }
 
 export async function getPublicSections(page?: 'home' | 'venue_detail' | 'match_listing' | 'store'): Promise<IPublicTemplateSection[]> {

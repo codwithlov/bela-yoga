@@ -9,7 +9,8 @@ declare global {
     | undefined;
 }
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/vcb_admin_next";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/";
+const MONGODB_DB = process.env.MONGODB_DB || 'bela-yoga';
 
 export async function connectToDatabase() {
   if (!global.mongooseCache) {
@@ -23,7 +24,7 @@ export async function connectToDatabase() {
   if (!global.mongooseCache.promise) {
     global.mongooseCache.promise = mongoose.connect(MONGODB_URI, {
       bufferCommands: false,
-      dbName: process.env.MONGODB_DB || undefined,
+      dbName: MONGODB_DB,
     });
   }
 

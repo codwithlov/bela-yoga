@@ -296,78 +296,8 @@ async function withFallback<T>(loader: () => Promise<T>, fallback: T): Promise<T
 
 export async function ensureTemplateCmsSeed() {
   await connectToDatabase();
-  const fallbackCategoryName = 'Chưa phân loại';
-
-  await TemplateMenuItem.deleteMany({
-    templateId: { $in: [3105, 3106, 3107, 3108, 3109] },
-  });
-
-  const fallbackSlug = slugifyCategory(fallbackCategoryName);
-  const fallbackCategory = await TemplatePostCategory.findOne({ slug: fallbackSlug }).lean();
-  if (!fallbackCategory) {
-    const maxCategory: any = await TemplatePostCategory.findOne().sort({ templateId: -1 }).lean();
-    const nextCategoryId = Math.max(9200, Number(maxCategory?.templateId || 9200)) + 1;
-    const categoryCount = await TemplatePostCategory.countDocuments();
-
-    try {
-      await TemplatePostCategory.create({
-        templateId: nextCategoryId,
-        name: fallbackCategoryName,
-        slug: fallbackSlug,
-        sortOrder: categoryCount + 1,
-        status: 'active',
-      });
-    } catch (error: any) {
-      if (Number(error?.code) !== 11000) {
-        throw error;
-      }
-    }
-  }
-
-  const currentPostCategories = await TemplatePost.find({}, { category: 1, _id: 0 }).lean();
-  const categoryNames = Array.from(new Set(currentPostCategories.map((item: any) => String(item.category || '').trim()).filter(Boolean)));
-
-  if (categoryNames.length) {
-    const existing = await TemplatePostCategory.find({}, { name: 1 }).lean();
-    const existingNames = new Set(existing.map((item: any) => String(item.name || '').trim().toLowerCase()));
-
-    const nextCategories = categoryNames.filter((name) => !existingNames.has(name.toLowerCase()));
-    if (nextCategories.length) {
-      const maxDoc: any = await TemplatePostCategory.findOne().sort({ templateId: -1 }).lean();
-      let nextTemplateId = Math.max(9200, Number(maxDoc?.templateId || 9200));
-      try {
-        await TemplatePostCategory.insertMany(nextCategories.map((name, index) => {
-          nextTemplateId += 1;
-          return {
-            templateId: nextTemplateId,
-            name,
-            slug: slugifyCategory(name),
-            sortOrder: (existing.length + index + 1),
-            status: 'active',
-          };
-        }), { ordered: false });
-      } catch (error: any) {
-        if (Number(error?.code) !== 11000) {
-          throw error;
-        }
-      }
-    }
-  }
-
-  const categoryDocs = await TemplatePostCategory.find({}, { name: 1 }).lean();
-  const availableCategoryNames = new Set(categoryDocs.map((item: any) => String(item.name || '').trim().toLowerCase()).filter(Boolean));
-  const postDocs = await TemplatePost.find({}, { templateId: 1, category: 1 }).lean();
-  const invalidPostIds = postDocs
-    .filter((item: any) => !availableCategoryNames.has(String(item.category || '').trim().toLowerCase()))
-    .map((item: any) => item.templateId);
-
-  if (invalidPostIds.length) {
-    await TemplatePost.updateMany(
-      { templateId: { $in: invalidPostIds } },
-      { $set: { category: fallbackCategoryName } },
-    );
-  }
-
+  // Demo/template seed đã tắt hoàn toàn.
+  // Giữ function này để tương thích call-site cũ, nhưng không tự ghi dữ liệu.
 }
 
 export async function getAdminPostCategoriesFromStore() {
