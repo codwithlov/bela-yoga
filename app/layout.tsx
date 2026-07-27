@@ -13,6 +13,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import GoogleTagManagerScript from "@/components/script/GoogleTagManagerScript";
 import GoogleTagManagerNoScript from "@/components/script/GoogleTagManagerNoScript";
 import AntdCompatibility from "@/components/general/AntdCompatibility";
+import FirebaseAnalytics from "@/components/script/FirebaseAnalytics";
 import { templateSiteConfig } from "@/config/template/site";
 import { templateTheme } from "@/config/template/theme";
 
@@ -96,6 +97,7 @@ export default function RootLayout({
       </head>
       <body id="__sgt" suppressHydrationWarning>
         <AntdCompatibility />
+        <FirebaseAnalytics />
         <GoogleTagManagerNoScript />
         <main>
           <AntdRegistry>

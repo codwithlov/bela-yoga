@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,445678,e=>{"use strict";let t=e.i(271645).default.memo(()=>null);t.displayName="DropdownMenuCss",e.s(["default",0,t])},512784,e=>{e.n(e.i(445678))}]);

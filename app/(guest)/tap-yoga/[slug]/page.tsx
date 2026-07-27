@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { getPublicPostBySlug } from '@/services/api/discovery';
 import { getTextOnly } from '@/utils/htmlUtils';
 import PublicContentPage from '../../components/PublicContentPage';
+import { GUEST_ACTION } from '@/constants/route';
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -24,7 +25,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         description: post.meta_description || post.excerpt,
         keywords: post.keywords,
         alternates: {
-            canonical: post.canonical || `/bai-viet/${post.slug}`,
+            canonical: post.canonical || `${GUEST_ACTION}/${post.slug}`,
         },
         robots: {
             index: post.index,
@@ -59,8 +60,8 @@ export default async function PublicPostDetailPage({ params }: PageProps) {
                 post.placement,
                 post.published_at ? new Date(post.published_at).toLocaleDateString('vi-VN') : 'Draft',
             ].filter(Boolean)}
-            backHref='/bai-viet'
-            backLabel='Quay về thư viện bài viết'
+            backHref={GUEST_ACTION}
+            backLabel='Quay về danh sách buổi tập Yoga'
         />
     );
 }

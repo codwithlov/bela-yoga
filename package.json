@@ -35,6 +35,7 @@
     "ckeditor5": "^48.3.0",
     "dotenv-expand": "^11.0.6",
     "embla-carousel-react": "^8.1.3",
+    "firebase": "^12.16.0",
     "jose": "^6.1.0",
     "js-beautify": "^1.15.1",
     "jsdom": "^25.0.1",
@@ -91,6 +92,9 @@
     "sharp@0.34.5": true,
     "sharp@0.33.5": true,
     "unrs-resolver@1.12.2": true,
-    "puppeteer": false
+    "puppeteer": false,
+    "fsevents@2.3.3": false,
+    "@firebase/util@1.15.1": true,
+    "protobufjs@7.6.5": true
   }
 }

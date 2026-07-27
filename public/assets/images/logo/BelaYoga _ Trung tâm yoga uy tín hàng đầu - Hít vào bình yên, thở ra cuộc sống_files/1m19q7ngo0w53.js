@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,980126,e=>{"use strict";let t=e.i(271645).default.memo(()=>null);t.displayName="FooterCss",e.s(["default",0,t])},496426,e=>{e.n(e.i(980126))}]);

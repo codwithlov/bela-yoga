@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { GUEST_ABOUT_US, GUEST_POSTS, GUEST_STORE } from '@/constants/route';
+import { GUEST_ABOUT_US, GUEST_ACTION, GUEST_COURSES } from '@/constants/route';
 import { getPublicHomeData, getPublicPosts, getPublicSections, getPublicStoreItems } from '@/services/api/discovery';
 import { templateSiteConfig } from '@/config/template/site';
 
@@ -23,8 +23,8 @@ export default async function Home() {
                             <p className="max-w-2xl text-base leading-7 text-slate-200 md:text-lg">{homeConfig.description}</p>
                         </div>
                         <div className="flex flex-wrap gap-3">
-                            <Link href={GUEST_STORE} className="rounded-xl bg-gradient-to-r from-sgt-primary-1 to-sgt-primary-2 px-6 py-3 text-sm font-semibold text-white shadow-sgt-primary transition hover:-translate-y-0.5">{homeConfig.primaryCta}</Link>
-                            <Link href={GUEST_POSTS} className="rounded-xl border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/15">{homeConfig.secondaryCta}</Link>
+                            <Link href={GUEST_ACTION} className="rounded-xl bg-gradient-to-r from-sgt-primary-1 to-sgt-primary-2 px-6 py-3 text-sm font-semibold text-white shadow-sgt-primary transition hover:-translate-y-0.5">{homeConfig.primaryCta}</Link>
+                            <Link href={GUEST_COURSES} className="rounded-xl border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/15">{homeConfig.secondaryCta}</Link>
                         </div>
                     </div>
                     <div className="rounded-[2rem] border border-white/10 bg-white/95 p-6 text-sgt-neutral-1 shadow-2xl shadow-black/20 sv-accent-ring">
@@ -39,7 +39,7 @@ export default async function Home() {
                                 ))}
                             </div>
                             <div className="grid gap-3 sm:grid-cols-2">
-                                <Link href={GUEST_STORE} className="rounded-2xl border border-sgt-gray-2 px-4 py-4 transition hover:border-sgt-primary-2 hover:bg-sgt-primary-4"><div className="text-sm font-semibold text-sgt-secondary-2">Sản phẩm</div><div className="mt-1 text-xs text-sgt-neutral-3">Entity list/detail mẫu cho CMS.</div></Link>
+                                <Link href={GUEST_ACTION} className="rounded-2xl border border-sgt-gray-2 px-4 py-4 transition hover:border-sgt-primary-2 hover:bg-sgt-primary-4"><div className="text-sm font-semibold text-sgt-secondary-2">Tập Yoga</div><div className="mt-1 text-xs text-sgt-neutral-3">Khám phá các lớp tập phù hợp theo thể trạng và mục tiêu.</div></Link>
                                 <Link href={GUEST_ABOUT_US} className="rounded-2xl border border-sgt-gray-2 px-4 py-4 transition hover:border-sgt-primary-2 hover:bg-sgt-primary-4"><div className="text-sm font-semibold text-sgt-secondary-2">Giới thiệu</div><div className="mt-1 text-xs text-sgt-neutral-3">Thông tin nền của site mẫu.</div></Link>
                             </div>
                         </div>
@@ -49,22 +49,22 @@ export default async function Home() {
 
             <section className="width-primary mx-auto px-4 pb-10">
                 <div className="rounded-[2rem] border border-sgt-gray-2 bg-white/95 p-6 shadow-sm md:p-8">
-                    <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between"><div><div className="text-xs font-semibold uppercase tracking-[0.18em] text-sgt-primary-1">{homeConfig.productSection.eyebrow}</div><h2 className="mt-2 text-2xl font-bold text-sgt-secondary-2 md:text-3xl">{homeConfig.productSection.title}</h2><p className="mt-2 max-w-2xl text-sm leading-6 text-sgt-neutral-3">{homeConfig.productSection.description}</p></div><Link href={GUEST_STORE} className="text-sm font-semibold text-sgt-primary-1 transition hover:text-sgt-primary-2">{homeConfig.productSection.cta}</Link></div>
+                    <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between"><div><div className="text-xs font-semibold uppercase tracking-[0.18em] text-sgt-primary-1">{homeConfig.actionSection.eyebrow}</div><h2 className="mt-2 text-2xl font-bold text-sgt-secondary-2 md:text-3xl">{homeConfig.actionSection.title}</h2><p className="mt-2 max-w-2xl text-sm leading-6 text-sgt-neutral-3">{homeConfig.actionSection.description}</p></div><Link href={GUEST_ACTION} className="text-sm font-semibold text-sgt-primary-1 transition hover:text-sgt-primary-2">{homeConfig.actionSection.cta}</Link></div>
                     <div className="mt-6 grid gap-4 lg:grid-cols-3">
-                        {productsSample.length > 0 ? productsSample.map((product) => (
-                            <Link key={product.id} href={`${GUEST_STORE}/${product.id}`} className="rounded-[1.5rem] border border-sgt-gray-2 bg-sgt-bg-primary p-5 transition hover:-translate-y-1 hover:border-sgt-primary-2 hover:shadow-lg"><div className="text-xs font-semibold uppercase tracking-[0.18em] text-sgt-primary-1">{product.type}</div><h3 className="mt-3 text-xl font-bold text-sgt-secondary-2">{product.name}</h3><p className="mt-2 text-sm text-sgt-neutral-3">{product.description || 'Sản phẩm mẫu từ CMS.'}</p><div className="mt-4 text-sm font-semibold text-sgt-primary-1">{product.price ? `${Number(product.price).toLocaleString('vi-VN')}đ` : 'Liên hệ'}</div></Link>
-                        )) : <div className="rounded-[1.5rem] border border-dashed border-sgt-gray-2 bg-sgt-bg-primary p-5 text-sm text-sgt-neutral-3 lg:col-span-3">{homeConfig.productSection.empty}</div>}
+                        {postsSample.length > 0 ? postsSample.map((post) => (
+                            <Link key={post.id} href={`${GUEST_ACTION}/${post.slug}`} className="rounded-[1.5rem] border border-sgt-gray-2 bg-sgt-bg-primary p-5 transition hover:-translate-y-1 hover:border-sgt-primary-2 hover:shadow-lg"><div className="text-xs font-semibold uppercase tracking-[0.18em] text-sgt-primary-1">{post.category}</div><h3 className="mt-3 text-xl font-bold text-sgt-secondary-2">{post.title}</h3><p className="mt-2 text-sm text-sgt-neutral-3">{post.excerpt}</p><div className="mt-4 text-sm font-semibold text-sgt-primary-1">Xem chi tiết</div></Link>
+                        )) : <div className="rounded-[1.5rem] border border-dashed border-sgt-gray-2 bg-sgt-bg-primary p-5 text-sm text-sgt-neutral-3 lg:col-span-3">{homeConfig.actionSection.empty}</div>}
                     </div>
                 </div>
             </section>
 
             <section className="width-primary mx-auto px-4 pb-10">
                 <div className="rounded-[2rem] border border-sgt-gray-2 bg-white p-6 shadow-sm md:p-8">
-                    <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between"><div><div className="text-xs font-semibold uppercase tracking-[0.18em] text-sgt-primary-1">{homeConfig.postSection.eyebrow}</div><h2 className="mt-2 text-2xl font-bold text-sgt-secondary-2 md:text-3xl">{homeConfig.postSection.title}</h2><p className="mt-2 max-w-2xl text-sm leading-6 text-sgt-neutral-3">{homeConfig.postSection.description}</p></div><Link href={GUEST_POSTS} className="text-sm font-semibold text-sgt-primary-1 transition hover:text-sgt-primary-2">{homeConfig.postSection.cta}</Link></div>
+                    <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between"><div><div className="text-xs font-semibold uppercase tracking-[0.18em] text-sgt-primary-1">{homeConfig.courseSection.eyebrow}</div><h2 className="mt-2 text-2xl font-bold text-sgt-secondary-2 md:text-3xl">{homeConfig.courseSection.title}</h2><p className="mt-2 max-w-2xl text-sm leading-6 text-sgt-neutral-3">{homeConfig.courseSection.description}</p></div><Link href={GUEST_COURSES} className="text-sm font-semibold text-sgt-primary-1 transition hover:text-sgt-primary-2">{homeConfig.courseSection.cta}</Link></div>
                     <div className="mt-6 grid gap-4 lg:grid-cols-3">
-                        {postsSample.length > 0 ? postsSample.map((post) => (
-                            <Link key={post.id} href={`${GUEST_POSTS}/${post.slug}`} className="rounded-[1.5rem] border border-sgt-gray-2 bg-sgt-bg-primary p-5 transition hover:-translate-y-1 hover:border-sgt-primary-2 hover:shadow-lg"><div className="text-xs font-semibold uppercase tracking-[0.18em] text-sgt-primary-1">{post.category}</div><h3 className="mt-3 text-xl font-bold text-sgt-secondary-2">{post.title}</h3><p className="mt-3 text-sm leading-6 text-sgt-neutral-3">{post.excerpt}</p></Link>
-                        )) : <div className="rounded-[1.5rem] border border-dashed border-sgt-gray-2 bg-sgt-bg-primary p-5 text-sm text-sgt-neutral-3 lg:col-span-3">{homeConfig.postSection.empty}</div>}
+                        {productsSample.length > 0 ? productsSample.map((product) => (
+                            <Link key={product.id} href={`${GUEST_COURSES}/${product.id}`} className="rounded-[1.5rem] border border-sgt-gray-2 bg-sgt-bg-primary p-5 transition hover:-translate-y-1 hover:border-sgt-primary-2 hover:shadow-lg"><div className="text-xs font-semibold uppercase tracking-[0.18em] text-sgt-primary-1">{product.type}</div><h3 className="mt-3 text-xl font-bold text-sgt-secondary-2">{product.name}</h3><p className="mt-3 text-sm leading-6 text-sgt-neutral-3">{product.description || 'Khóa học được thiết kế khoa học và phù hợp nhiều trình độ.'}</p></Link>
+                        )) : <div className="rounded-[1.5rem] border border-dashed border-sgt-gray-2 bg-sgt-bg-primary p-5 text-sm text-sgt-neutral-3 lg:col-span-3">{homeConfig.courseSection.empty}</div>}
                     </div>
                 </div>
             </section>

@@ -5,8 +5,8 @@ import { Metadata } from 'next';
 export const metaOptions = {
   home: {
     page: '/',
-    title: "SPORTVERSE | Đặt sân và khám phá cộng đồng bóng đá",
-    description: "SPORTVERSE giúp người chơi đặt sân nhanh, theo dõi bài đăng trận đấu và khám phá hệ thống sân bóng nổi bật.",
+    title: "BelaYoga | Lớp Yoga & Hành trình sống khỏe mỗi ngày",
+    description: "BelaYoga giúp bạn tìm lớp tập phù hợp, theo dõi lịch buổi tập và xây dựng lối sống cân bằng thân - tâm - trí.",
     canonical: `${HOST_NAME}`,
     images: [
       '/assets/images/logo/merge-logo.png',
@@ -14,59 +14,59 @@ export const metaOptions = {
   },
   event: {
     page: 'su-kien',
-    title: 'Sự kiện cộng đồng | SPORTVERSE',
+    title: 'Sự kiện Yoga cộng đồng | BelaYoga',
     canonical: `${HOST_NAME}su-kien`,
     description:
-      'Cập nhật giải đấu, sự kiện cộng đồng và các hoạt động kết nối người chơi trên SPORTVERSE.',
+      'Cập nhật workshop, retreat và các sự kiện kết nối cộng đồng yêu Yoga tại BelaYoga.',
     images: [
       '/assets/images/visa/service_1.jpg',
     ],
   },
   contact: {
     page: 'lien-he',
-    title: 'Liên hệ | SPORTVERSE',
+    title: 'Liên hệ | BelaYoga',
     canonical: `${HOST_NAME}lien-he`,
     description:
-      'Liên hệ SPORTVERSE để được hỗ trợ booking sân, hợp tác vận hành và truyền thông cộng đồng thể thao.',
+      'Liên hệ BelaYoga để được tư vấn lớp học, lịch tập, chương trình cá nhân hóa và hợp tác cộng đồng.',
     images: [
       '/assets/images/visa/service_1.jpg',
     ],
   },
   aboutUs: {
     page: 've-chung-toi',
-    title: 'Về chúng tôi | SPORTVERSE',
+    title: 'Về chúng tôi | BelaYoga',
     canonical: `${HOST_NAME}ve-chung-toi`,
     description:
-      'SPORTVERSE là nền tảng kết nối người chơi, chủ sân và cộng đồng bóng đá bằng trải nghiệm booking hiện đại.',
+      'BelaYoga là không gian luyện tập và chữa lành, nơi bạn phát triển sức khỏe thể chất và sự an yên nội tâm bền vững.',
     images: [
       '/assets/images/about-us/banner.webp',
     ],
   },
   notFound: {
     page: 'notfound',
-    title: 'Không tìm thấy trang | SPORTVERSE',
+    title: 'Không tìm thấy trang | BelaYoga',
     canonical: `${HOST_NAME}not-found`,
     description:
-      'Trang bạn đang tìm kiếm không tồn tại. Hãy quay lại SPORTVERSE để tiếp tục đặt sân và khám phá cộng đồng bóng đá.',
+      'Trang bạn đang tìm kiếm không tồn tại. Hãy quay lại BelaYoga để tiếp tục hành trình tập luyện và chăm sóc bản thân.',
     images: [
       '/assets/images/404/404.png',
     ],
   },
   serverError: {
     page: 'server-error',
-    title: 'Lỗi kết nối | SPORTVERSE',
+    title: 'Lỗi kết nối | BelaYoga',
     canonical: `${HOST_NAME}server-error`,
     description:
-      'Lỗi kết nối. Vui lòng thử lại sau!',
+      'Kết nối đang tạm gián đoạn. Vui lòng thử lại sau để tiếp tục trải nghiệm tại BelaYoga.',
     images: [
       '/assets/images/500/500.png',
     ],
   },
   author: {
     page: 'author',
-    title: 'Tác giả cộng đồng | SPORTVERSE',
-    canonical: `${HOST_NAME}author/thaoyoko`,
-    description: 'Những chia sẻ chuyên môn, kinh nghiệm vận hành trận đấu và góc nhìn cộng đồng dành cho người chơi thể thao hiện đại.',
+    title: 'Huấn luyện viên & Chuyên gia | BelaYoga',
+    canonical: `${HOST_NAME}author/belayoga-team`,
+    description: 'Góc chia sẻ từ đội ngũ huấn luyện viên BelaYoga về kỹ thuật tập, hơi thở, phục hồi và lối sống lành mạnh.',
     images: [
       '/storage/images/retail/author/2025/01/1736158058_thao-yoko-saigontimestravel_26.jpg',
     ],
