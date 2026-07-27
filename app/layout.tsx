@@ -12,6 +12,7 @@ import Script from "next/script";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import GoogleTagManagerScript from "@/components/script/GoogleTagManagerScript";
 import GoogleTagManagerNoScript from "@/components/script/GoogleTagManagerNoScript";
+import AntdCompatibility from "@/components/general/AntdCompatibility";
 import { templateSiteConfig } from "@/config/template/site";
 import { templateTheme } from "@/config/template/theme";
 
@@ -94,6 +95,7 @@ export default function RootLayout({
         <GoogleTagManagerScript />
       </head>
       <body id="__sgt" suppressHydrationWarning>
+        <AntdCompatibility />
         <GoogleTagManagerNoScript />
         <main>
           <AntdRegistry>

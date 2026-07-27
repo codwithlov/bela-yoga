@@ -23,67 +23,67 @@
     --template-layout-max-width: 1222px;
     --template-radius-lg: 2rem;
 
-    --template-color-primary-light: #38d7ff;
-    --template-color-primary-default: #0088f0;
-    --template-color-primary-dark: #0067c8;
-    --template-color-primary-soft: #b8f4ff;
+    --template-color-primary-light: #f3e7d7;
+    --template-color-primary-default: #d2b48c;
+    --template-color-primary-dark: #b08968;
+    --template-color-primary-soft: #ead8c3;
 
-    --template-color-secondary-light: #123a59;
-    --template-color-secondary-default: #082033;
-    --template-color-secondary-dark: #04121f;
-    --template-color-secondary-muted: #1f5a7a;
-    --template-color-secondary-soft: #cdeffd;
+    --template-color-secondary-light: #8b6b4e;
+    --template-color-secondary-default: #6f533d;
+    --template-color-secondary-dark: #4f3a2a;
+    --template-color-secondary-muted: #9c7c5f;
+    --template-color-secondary-soft: #efe4d7;
 
-    --template-color-tertiary-default: #68e048;
-    --template-color-background-primary: #f2fbff;
-    --template-color-background-soft: #eafbff;
+    --template-color-tertiary-default: #c9a27e;
+    --template-color-background-primary: #fffdf9;
+    --template-color-background-soft: #f9f3eb;
 
-    --template-color-neutral-1: #0f172a;
-    --template-color-neutral-2: #334155;
-    --template-color-neutral-3: #64748b;
-    --template-color-neutral-4: #94a3b8;
-    --template-color-neutral-5: #e2e8f0;
-    --template-color-neutral-6: #f8fafc;
+    --template-color-neutral-1: #2f241d;
+    --template-color-neutral-2: #5a4638;
+    --template-color-neutral-3: #7a6556;
+    --template-color-neutral-4: #a39182;
+    --template-color-neutral-5: #e8ddd0;
+    --template-color-neutral-6: #faf6f1;
     --template-color-neutral-7: #ffffff;
 
-    --template-color-gray-1: #cbd5e1;
-    --template-color-gray-2: #e2e8f0;
-    --template-color-gray-3: #f1f5f9;
+    --template-color-gray-1: #d8ccbf;
+    --template-color-gray-2: #eee5dc;
+    --template-color-gray-3: #f7f2ec;
 
-    --template-color-primary-light-rgb: 56 215 255;
-    --template-color-primary-default-rgb: 0 136 240;
-    --template-color-primary-dark-rgb: 0 103 200;
-    --template-color-primary-soft-rgb: 184 244 255;
+    --template-color-primary-light-rgb: 243 231 215;
+    --template-color-primary-default-rgb: 210 180 140;
+    --template-color-primary-dark-rgb: 176 137 104;
+    --template-color-primary-soft-rgb: 234 216 195;
 
-    --template-color-secondary-light-rgb: 18 58 89;
-    --template-color-secondary-default-rgb: 8 32 51;
-    --template-color-secondary-dark-rgb: 4 18 31;
-    --template-color-secondary-muted-rgb: 31 90 122;
-    --template-color-secondary-soft-rgb: 205 239 253;
+    --template-color-secondary-light-rgb: 139 107 78;
+    --template-color-secondary-default-rgb: 111 83 61;
+    --template-color-secondary-dark-rgb: 79 58 42;
+    --template-color-secondary-muted-rgb: 156 124 95;
+    --template-color-secondary-soft-rgb: 239 228 215;
 
-    --template-color-tertiary-default-rgb: 104 224 72;
-    --template-color-background-primary-rgb: 242 251 255;
-    --template-color-background-soft-rgb: 234 251 255;
+    --template-color-tertiary-default-rgb: 201 162 126;
+    --template-color-background-primary-rgb: 255 253 249;
+    --template-color-background-soft-rgb: 249 243 235;
 
-    --template-color-neutral-1-rgb: 15 23 42;
-    --template-color-neutral-2-rgb: 51 65 85;
-    --template-color-neutral-3-rgb: 100 116 139;
-    --template-color-neutral-4-rgb: 148 163 184;
-    --template-color-neutral-5-rgb: 226 232 240;
-    --template-color-neutral-6-rgb: 248 250 252;
+    --template-color-neutral-1-rgb: 47 36 29;
+    --template-color-neutral-2-rgb: 90 70 56;
+    --template-color-neutral-3-rgb: 122 101 86;
+    --template-color-neutral-4-rgb: 163 145 130;
+    --template-color-neutral-5-rgb: 232 221 208;
+    --template-color-neutral-6-rgb: 250 246 241;
     --template-color-neutral-7-rgb: 255 255 255;
 
-    --template-color-gray-1-rgb: 203 213 225;
-    --template-color-gray-2-rgb: 226 232 240;
-    --template-color-gray-3-rgb: 241 245 249;
+    --template-color-gray-1-rgb: 216 204 191;
+    --template-color-gray-2-rgb: 238 229 220;
+    --template-color-gray-3-rgb: 247 242 236;
 
-    --color-primary-default-rgb: 0, 136, 240;
-    --color-primary-dark-rgb: 0, 103, 200;
-    --color-primary-light-rgb: 56, 215, 255;
+    --color-primary-default-rgb: 210, 180, 140;
+    --color-primary-dark-rgb: 176, 137, 104;
+    --color-primary-light-rgb: 243, 231, 215;
 
-    --color-secondary-default-rgb: 8, 32, 51;
-    --color-secondary-dark-rgb: 4, 18, 31;
-    --color-secondary-light: 18, 58, 89;
+    --color-secondary-default-rgb: 111, 83, 61;
+    --color-secondary-dark-rgb: 79, 58, 42;
+    --color-secondary-light: 139, 107, 78;
   }
 
   h1 {
@@ -121,25 +121,25 @@
   --color-primary-dark: var(--template-color-primary-dark);
   --color-primary-light: var(--template-color-primary-light);
 
-  --color-primary-default-rgb: 0, 136, 240;
-  --color-primary-dark-rgb: 0, 103, 200;
-  --color-primary-light-rgb: 56, 215, 255;
+  --color-primary-default-rgb: 210, 180, 140;
+  --color-primary-dark-rgb: 176, 137, 104;
+  --color-primary-light-rgb: 243, 231, 215;
 
   --color-secondary-default: var(--template-color-secondary-default);
   --color-secondary-dark: var(--template-color-secondary-dark);
   --color-secondary-light: var(--template-color-secondary-light);
 
-  --color-secondary-default-rgb: 8, 32, 51;
-  --color-secondary-dark-rgb: 4, 18, 31;
-  --color-secondary-light: 18, 58, 89;
+  --color-secondary-default-rgb: 111, 83, 61;
+  --color-secondary-dark-rgb: 79, 58, 42;
+  --color-secondary-light: 139, 107, 78;
 
   --color-tertiary-default: var(--template-color-tertiary-default);
-  --color-tertiary-default-rgb: 104, 224, 72;
+  --color-tertiary-default-rgb: 201, 162, 126;
 
   // New Colors
 
   --color-primary-1: var(--template-color-primary-dark);
-  --color-primary-1-rgb: 0, 103, 200;
+  --color-primary-1-rgb: 176, 137, 104;
 
   --color-neutral-7: var(--template-color-neutral-7);
   --color-neutral-7-rgb: 255, 255, 255;
@@ -271,7 +271,7 @@ body {
 .tiptap-editor-wrapper {
   .tiptap {
     min-height: 360px;
-    color: #082033;
+    color: var(--template-color-secondary-default);
     font-size: 14px;
     line-height: 1.75;
 
@@ -286,14 +286,14 @@ body {
     h1,
     h2,
     h3 {
-      color: #082033;
+      color: var(--template-color-secondary-dark);
       font-weight: 700;
       line-height: 1.3;
     }
 
     p.is-editor-empty:first-child::before {
       content: attr(data-placeholder);
-      color: #94a3b8;
+      color: var(--template-color-neutral-4);
       float: left;
       height: 0;
       pointer-events: none;
@@ -305,14 +305,14 @@ body {
     }
 
     blockquote {
-      border-left: 4px solid #cbd5e1;
+      border-left: 4px solid var(--template-color-neutral-5);
       margin: 1rem 0;
       padding-left: 1rem;
-      color: #475569;
+      color: var(--template-color-neutral-2);
     }
 
     a {
-      color: #0067c8;
+      color: var(--template-color-primary-dark);
       text-decoration: underline;
     }
 

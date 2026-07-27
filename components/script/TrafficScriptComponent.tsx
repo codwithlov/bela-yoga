@@ -2,6 +2,10 @@
 import Script from 'next/script';
 
 const TrafficScriptComponent: React.FC = () => {
+    if (process.env.NODE_ENV !== 'production') {
+        return null;
+    }
+
     return (
         <>
             <Script
