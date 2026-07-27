@@ -63,4 +63,6 @@ export const GUEST_SEARCH: string = '/search';
 export const GUEST_404: string = '/not-found';
 export const GUEST_500: string = '/server-error';
 export const GUEST_TAGS: string = '/tags';
+export const GUEST_ACTION: string = '/tap-yoga';
+export const GUEST_COURSES: string = '/khoa-hoc';
 

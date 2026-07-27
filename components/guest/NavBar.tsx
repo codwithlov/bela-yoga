@@ -37,8 +37,8 @@ const NavBar: React.FC<NavBarParams> = React.memo(({ menuList }) => {
   const brandName = templateSiteConfig.name;
   const staticMobileRoutes = [
     templateSiteConfig.routes.home,
-    templateSiteConfig.routes.products,
-    templateSiteConfig.routes.posts,
+    templateSiteConfig.routes.action,
+    templateSiteConfig.routes.courses,
     templateSiteConfig.routes.about,
   ];
 
