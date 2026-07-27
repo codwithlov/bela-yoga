@@ -21,12 +21,13 @@ import { TemplateStoreItem } from '@/models/TemplateStoreItem';
 import type { Menu } from '@/interfaces/menu';
 import type { IPublicStoreItem } from '@/interfaces/discovery';
 import type { IAdminMenuCustomPage, IAdminMenuTargetOption } from '@/interfaces/admin';
+import { GUEST_ACTION } from '@/constants/route';
 
 const getDefaultPostDescription = (item: Pick<AdminTemplatePost, 'title' | 'excerpt' | 'category'>) => (
-  `<p>${item.excerpt}</p><h2>${item.category}</h2><p>${item.title} hiện đang dùng body mẫu trong template CMS. Đội dự án có thể thay phần này bằng nội dung dài, media và block chuyên biệt.</p>`
+  `<p>${item.excerpt}</p><h2>${item.category}</h2><p>${item.title} hiện đang dùng nội dung mẫu của BelaYoga CMS. Đội ngũ nội dung có thể thay bằng bài viết chi tiết, hình ảnh buổi tập và các khối CTA phù hợp.</p>`
 );
 
-const getDefaultCanonical = (slug: string) => `/bai-viet/${slug}`;
+const getDefaultCanonical = (slug: string) => `${GUEST_ACTION}/${slug}`;
 const getDefaultPageCanonical = (slug: string) => `/${slug}`;
 const normalizeMenuPath = (path: string) => {
   if (!path) return '/';
@@ -37,14 +38,14 @@ const legacySampleMenuPaths = ['/san', '/san-bong', '/tran-dau', '/highlight', '
 const stripTags = (value: string) => (value || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 
 const createDefaultCustomPage = (title: string, path: string): AdminTemplateCustomPage => ({
-  eyebrow: 'Custom page',
-  summary: `${title} là trang nội dung custom được quản trị trực tiếp từ menu. Đội vận hành có thể dùng trang này như một landing page mini theo kiểu WordPress.`,
-  content: `<p>${title} là custom page được điều khiển từ menu. Bạn có thể dùng editor để viết nội dung dài, chèn ảnh, CTA và khối giới thiệu.</p><h2>Quản trị giống mini WordPress</h2><p>Page này hỗ trợ nội dung chính, danh sách section và khối bài viết liên quan để đội nội dung dựng landing page nhanh hơn.</p>`,
+  eyebrow: 'BelaYoga page',
+  summary: `${title} là trang nội dung được quản trị trực tiếp từ menu. Bạn có thể dùng trang này để làm landing page cho lớp học, workshop hoặc chương trình ưu đãi của BelaYoga.`,
+  content: `<p>${title} là trang custom được điều khiển từ menu. Bạn có thể dùng editor để viết nội dung dài, chèn ảnh, CTA và khối giới thiệu.</p><h2>Quản trị nội dung linh hoạt</h2><p>Trang này hỗ trợ nội dung chính, danh sách section và khối bài viết liên quan để đội ngũ nội dung triển khai landing page nhanh hơn.</p>`,
   sections: [
     {
       id: 1,
       title: `Điểm nổi bật của ${title}`,
-      summary: 'Khối section đầu tiên để mô tả giá trị chính của page.',
+      summary: 'Khối section đầu tiên để mô tả thông điệp và giá trị chính của trang.',
       content: `<p>Section này có thể dùng cho thông điệp chính, lợi ích hoặc mô tả dịch vụ liên quan đến ${title}.</p>`,
       cta_label: 'Xem thêm',
       cta_href: '/gioi-thieu',
@@ -52,9 +53,9 @@ const createDefaultCustomPage = (title: string, path: string): AdminTemplateCust
     },
   ],
   related_post_ids: demoAdminPosts.filter((item) => item.status === 'published').slice(0, 2).map((item) => item.id),
-  keywords: `${title}, custom page, sportverse cms`,
+  keywords: `${title}, custom page, belayoga cms`,
   meta_title: title,
-  meta_description: `${title} là trang custom được quản trị từ menu với nội dung, section và bài viết liên quan.`,
+  meta_description: `${title} là trang custom của BelaYoga, được quản trị từ menu với nội dung, section và bài viết liên quan.`,
 });
 
 const normalizeCustomPageSection = (item: Partial<AdminTemplateCustomPageSection> | undefined, index: number): AdminTemplateCustomPageSection => ({
@@ -652,7 +653,7 @@ export async function getAdminMenuTargetOptionsFromStore(): Promise<{ post_optio
     post_options: posts.map((item) => ({
       id: item.id,
       title: item.title,
-      path: item.canonical || `/bai-viet/${item.slug}`,
+      path: item.canonical || getDefaultCanonical(item.slug),
       type: 'post',
       status: item.status,
     })),

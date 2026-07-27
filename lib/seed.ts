@@ -1,64 +1,7 @@
-import bankTemplate from "@/data-template/bank.json";
 import { connectToDatabase } from "@/lib/db";
 import { ensureTemplateCmsSeed } from "@/lib/template-cms-repository";
-import { Bank } from "@/models/Bank";
 import { User } from "@/models/User";
 import { hashSync } from "bcryptjs";
-
-type BankTemplateRecord = {
-  id: string;
-  name: string;
-  bin: number;
-  code: string;
-  short_name: string;
-  logo_url: string | null;
-  icon_url: string | null;
-  lookup_supported: 0 | 1;
-  swift_code: string | null;
-};
-
-function normalizeBankRecord(bank: BankTemplateRecord) {
-  return {
-    bankId: bank.id,
-    name: bank.name,
-    bin: bank.bin,
-    code: bank.code,
-    shortName: bank.short_name,
-    logoUrl: bank.logo_url || undefined,
-    iconUrl: bank.icon_url || undefined,
-    lookupSupported: bank.lookup_supported === 1,
-    swiftCode: bank.swift_code || undefined,
-  };
-}
-
-async function syncBankTemplate() {
-  const templateBanks = (bankTemplate.data || []) as BankTemplateRecord[];
-
-  if (templateBanks.length === 0) {
-    return;
-  }
-
-  const collection = Bank.collection;
-  const indexes = await collection.indexes();
-  if (indexes.some((index) => index.name === "bin_1" && index.unique)) {
-    await collection.dropIndex("bin_1");
-  }
-
-  await Bank.bulkWrite(
-    templateBanks.map((bank) => ({
-      updateOne: {
-        filter: {
-          $or: [{ bankId: bank.id }, { code: bank.code }],
-        },
-        update: {
-          $set: normalizeBankRecord(bank),
-        },
-        upsert: true,
-      },
-    })),
-    { ordered: false },
-  );
-}
 
 export async function ensureSeedData() {
   await connectToDatabase();
@@ -74,6 +17,5 @@ export async function ensureSeedData() {
     });
   }
 
-  await syncBankTemplate();
   await ensureTemplateCmsSeed();
 }
