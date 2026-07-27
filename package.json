@@ -1,14 +1,14 @@
 {
-  "name": "ldp-cms-nextjs-full",
+  "name": "bela-yoga",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node scripts/next-with-env-port.cjs dev",
     "build": "next build",
     "safe-build": "./scripts/safe-build.sh",
     "siteMap": "node schedule/generateSitemaps.js",
     "get-google-review": "node scraping/getGoogleReview.js",
-    "start": "next start -p 3002",
+    "start": "node scripts/next-with-env-port.cjs start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {

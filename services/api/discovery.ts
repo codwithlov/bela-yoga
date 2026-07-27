@@ -3,6 +3,7 @@ import { API_PATH, BASE_URL, FETCH_API_REVALIDATE, FETCH_API_TIMEOUT_MS } from '
 import { IPublicHighlightCard, IPublicHomePayload, IPublicMatchCard, IPublicStoreItem, IPublicTemplatePost, IPublicTemplateSection } from '@/interfaces/discovery';
 import { Menu } from '@/interfaces/menu';
 import { appendDemoHighlights, appendDemoMatches, appendDemoStoreItems, withDemoHomeFallback } from './publicDemoData';
+import { templateSiteConfig } from '@/config/template/site';
 
 const buildApiUrl = (path: string) => `${BASE_URL}${API_PATH}${path}`;
 
@@ -20,6 +21,22 @@ const objectToSearchParams = (params?: Record<string, string | number | undefine
 
     const query = searchParams.toString();
     return query ? `?${query}` : '';
+};
+
+const toFallbackMenus = (location?: 'header' | 'footer' | 'account'): Menu[] => {
+    const source = location === 'footer'
+        ? templateSiteConfig.navigation.footer
+        : location === 'account'
+            ? templateSiteConfig.navigation.account
+            : templateSiteConfig.navigation.primary;
+
+    return source.map((item) => ({
+        key: item.key,
+        title: item.title,
+        url_to: item.url_to,
+        slug: (item as { slug?: string }).slug,
+        children: [],
+    }));
 };
 
 async function requestJson<T>(path: string): Promise<T | null> {
@@ -48,6 +65,25 @@ async function requestJson<T>(path: string): Promise<T | null> {
         clearTimeout(timeoutId);
     }
 }
+
+const normalizeTitle = (value?: string) => (value || '').trim().toLowerCase();
+
+const isLegacyDefaultMenu = (menus: Menu[], location?: 'header' | 'footer' | 'account') => {
+    if (!menus.length) {
+        return false;
+    }
+
+    const titles = menus.map((item) => normalizeTitle(item.title));
+
+    if (location === 'account') {
+        return titles.includes('sản phẩm') && titles.includes('bài viết');
+    }
+
+    return titles.includes('trang chủ')
+        && titles.includes('sản phẩm')
+        && titles.includes('bài viết')
+        && titles.includes('giới thiệu');
+};
 
 export async function getPublicHomeData(): Promise<IPublicHomePayload | null> {
     const response = await requestJson<{ data: IPublicHomePayload }>('home');
@@ -80,8 +116,22 @@ export async function getPublicPostBySlug(slug: string): Promise<IPublicTemplate
 }
 
 export async function getPublicMenus(location?: 'header' | 'footer' | 'account'): Promise<Menu[]> {
+    const preferTemplateMenus =
+        process.env.NODE_ENV === 'development'
+        || process.env.NEXT_PUBLIC_FORCE_TEMPLATE_MENU === 'true';
+
+    if (preferTemplateMenus) {
+        return toFallbackMenus(location);
+    }
+
     const response = await requestJson<{ data: Menu[] }>(`menus${objectToSearchParams({ location })}`);
-    return response?.data || [];
+    const menus = response?.data || [];
+
+    if (menus.length && !isLegacyDefaultMenu(menus, location)) {
+        return menus;
+    }
+
+    return toFallbackMenus(location);
 }
 
 export async function getPublicSections(page?: 'home' | 'venue_detail' | 'match_listing' | 'store'): Promise<IPublicTemplateSection[]> {

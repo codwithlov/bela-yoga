@@ -1,4 +1,4 @@
-import { GUEST_ABOUT_US, GUEST_HOME, GUEST_POSTS, GUEST_STORE } from '@/constants/route';
+import { GUEST_ABOUT_US, GUEST_HOME, GUEST_ACTION, GUEST_COURSES } from '@/constants/route';
 
 export type TemplateMenuItem = {
   key: number;
@@ -25,13 +25,13 @@ export const templateSiteConfig = {
     appleTouchIcon: '/assets/images/logo/logo-icon.png',
   },
   contact: {
-    phone: '0900 000 000',
+    phone: '0377 964 426',
     email: 'hello@belayoga.vn',
     hotlineLabel: 'Hotline tư vấn',
     footerHotlineTitle: 'Hỗ trợ 24/7',
   },
   social: {
-    facebook: 'https://example.com',
+    facebook: 'https://facebook.com/deim_hagn',
     youtube: 'https://example.com',
     tiktok: 'https://example.com',
     zalo: 'https://example.com',
@@ -40,26 +40,26 @@ export const templateSiteConfig = {
   },
   routes: {
     home: GUEST_HOME,
-    products: GUEST_STORE,
-    posts: GUEST_POSTS,
+    action: GUEST_ACTION,
+    courses: GUEST_COURSES,
     about: GUEST_ABOUT_US,
   },
   navigation: {
     primary: [
       { key: 1, title: 'Trang chủ', url_to: GUEST_HOME, slug: GUEST_HOME },
-      { key: 2, title: 'Sản phẩm', url_to: GUEST_STORE, slug: GUEST_STORE },
-      { key: 3, title: 'Bài viết', url_to: GUEST_POSTS, slug: GUEST_POSTS },
+      { key: 2, title: 'Tập Yoga', url_to: GUEST_ACTION, slug: GUEST_ACTION },
+      { key: 3, title: 'Khóa học', url_to: GUEST_COURSES, slug: GUEST_COURSES },
       { key: 4, title: 'Giới thiệu', url_to: GUEST_ABOUT_US, slug: GUEST_ABOUT_US },
     ] satisfies TemplateMenuItem[],
     footer: [
       { key: 1, title: 'Trang chủ', url_to: GUEST_HOME },
-      { key: 2, title: 'Sản phẩm', url_to: GUEST_STORE },
-      { key: 3, title: 'Bài viết', url_to: GUEST_POSTS },
+      { key: 2, title: 'Tập Yoga', url_to: GUEST_ACTION },
+      { key: 3, title: 'Khóa học', url_to: GUEST_COURSES },
       { key: 4, title: 'Giới thiệu', url_to: GUEST_ABOUT_US },
     ] satisfies TemplateMenuItem[],
     account: [
-      { key: 5, title: 'Sản phẩm', url_to: GUEST_STORE },
-      { key: 6, title: 'Bài viết', url_to: GUEST_POSTS },
+      { key: 5, title: 'Tập Yoga', url_to: GUEST_ACTION },
+      { key: 6, title: 'Khóa học', url_to: GUEST_COURSES },
       { key: 7, title: 'Giới thiệu', url_to: GUEST_ABOUT_US },
     ] satisfies TemplateMenuItem[],
   },
