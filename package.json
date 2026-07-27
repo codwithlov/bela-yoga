@@ -8,7 +8,7 @@
     "safe-build": "./scripts/safe-build.sh",
     "siteMap": "node schedule/generateSitemaps.js",
     "get-google-review": "node scraping/getGoogleReview.js",
-    "start": "next start",
+    "start": "next start -p 3002",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
