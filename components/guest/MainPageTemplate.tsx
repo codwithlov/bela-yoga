@@ -6,9 +6,15 @@ type MainPageTemplateProps = {
     title: string;
     description: string;
     highlights: string[];
+    infoCards?: {
+        label: string;
+        value: string;
+        description: string;
+    }[];
+    showQuickPaths?: boolean;
 };
 
-export default function MainPageTemplate({ eyebrow, title, description, highlights }: MainPageTemplateProps) {
+export default function MainPageTemplate({ eyebrow, title, description, highlights, infoCards, showQuickPaths = false }: MainPageTemplateProps) {
     return (
         <SVPageFrame
             eyebrow={eyebrow}
@@ -27,7 +33,7 @@ export default function MainPageTemplate({ eyebrow, title, description, highligh
                     variant: 'secondary',
                 },
             ]}
-            infoCards={[
+            infoCards={infoCards || [
                 {
                     label: 'Mục tiêu',
                     value: 'CMS → LDP → Content',
@@ -45,12 +51,13 @@ export default function MainPageTemplate({ eyebrow, title, description, highligh
                 },
             ]}
         >
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                {[
-                    {
-                        href: GUEST_STORE,
-                        title: 'Sản phẩm',
-                        description: 'Danh sách sản phẩm/dịch vụ mẫu và chi tiết sản phẩm.',
+            {showQuickPaths && (
+                <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                    {[
+                        {
+                            href: GUEST_STORE,
+                            title: 'Sản phẩm',
+                            description: 'Danh sách sản phẩm/dịch vụ mẫu và chi tiết sản phẩm.',
                     },
                     {
                         href: GUEST_POSTS,
@@ -73,7 +80,7 @@ export default function MainPageTemplate({ eyebrow, title, description, highligh
                         <p className="mt-3 text-sm leading-6 text-bela-neutral-3">{item.description}</p>
                     </a>
                 ))}
-            </div>
+            </div>)}
         </SVPageFrame>
     );
 }

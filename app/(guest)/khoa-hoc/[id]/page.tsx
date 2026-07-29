@@ -59,18 +59,18 @@ export default async function ProductDetailPage({ params }: PageProps) {
             <section className="width-primary mx-auto px-4 pb-20">
                 <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
                     <div className="rounded-[2rem] border border-bela-gray-2 bg-white p-6 shadow-sm md:p-8">
-                        <div className="text-xs font-semibold uppercase tracking-[0.18em] text-bela-primary-1">Thông tin sản phẩm</div>
+                        <div className="text-xs font-semibold uppercase tracking-[0.18em] text-bela-primary-1">Thông tin Khóa học</div>
                         <h2 className="mt-3 text-2xl font-bold text-bela-secondary-2">Mô tả</h2>
                         <p className="mt-3 text-sm leading-7 text-bela-neutral-3">
-                            {product.description || 'Nội dung chi tiết sẽ được quản trị từ CMS trong các bước mở rộng tiếp theo.'}
+                            {product.description || 'Nội dung chi tiết'}
                         </p>
                         <div className="mt-6 grid gap-3 md:grid-cols-2">
                             <div className="rounded-2xl border border-bela-gray-2 bg-bela-bg-primary p-4">
-                                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-bela-primary-1">Tồn kho</div>
+                                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-bela-primary-1">Còn trống</div>
                                 <div className="mt-2 text-xl font-bold text-bela-secondary-2">{product.stock_quantity ?? 'Không giới hạn'}</div>
                             </div>
                             <div className="rounded-2xl border border-bela-gray-2 bg-bela-bg-primary p-4">
-                                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-bela-primary-1">Addon</div>
+                                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-bela-primary-1">Phụ kiện</div>
                                 <div className="mt-2 text-xl font-bold text-bela-secondary-2">{product.is_addon ? 'Có' : 'Không'}</div>
                             </div>
                         </div>

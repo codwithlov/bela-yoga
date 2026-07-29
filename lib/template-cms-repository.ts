@@ -414,7 +414,7 @@ export async function getAdminPostsFromStore() {
 export async function getPublicPostsFromStore(limit?: number) {
   const items = await withFallback(async () => {
     await ensureTemplateCmsSeed();
-    const docs = await TemplatePost.find({ status: 'published' }).sort({ featured: -1, publishedAt: -1, updatedAt: -1 }).lean();
+    const docs = await TemplatePost.find({ status: { $in: ['published', 'done'] } }).sort({ featured: -1, publishedAt: -1, updatedAt: -1 }).lean();
     return docs.map(serializePost);
   }, [] as AdminTemplatePost[]);
 
@@ -424,7 +424,7 @@ export async function getPublicPostsFromStore(limit?: number) {
 export async function getPublicPostBySlugFromStore(slug: string) {
   const items = await withFallback(async () => {
     await ensureTemplateCmsSeed();
-    const doc = await TemplatePost.findOne({ slug, status: 'published' }).lean();
+    const doc = await TemplatePost.findOne({ slug, status: { $in: ['published', 'done'] } }).lean();
     return doc ? serializePost(doc) : null;
   }, null as AdminTemplatePost | null);
 
@@ -749,7 +749,7 @@ export async function getAdminMenuTargetOptionsFromStore(): Promise<{ post_optio
 export async function getPublicPostByIdFromStore(templateId: number) {
   return withFallback(async () => {
     await ensureTemplateCmsSeed();
-    const doc = await TemplatePost.findOne({ templateId, status: 'published' }).lean();
+    const doc = await TemplatePost.findOne({ templateId, status: { $in: ['published', 'done'] } }).lean();
     return doc ? serializePost(doc) : null;
   }, null as AdminTemplatePost | null);
 }
@@ -762,7 +762,7 @@ export async function getPublicPostsByIdsFromStore(templateIds: number[]) {
 
   return withFallback(async () => {
     await ensureTemplateCmsSeed();
-    const docs = await TemplatePost.find({ templateId: { $in: ids }, status: 'published' }).lean();
+    const docs = await TemplatePost.find({ templateId: { $in: ids }, status: { $in: ['published', 'done'] } }).lean();
     const mapped = docs.map(serializePost);
     return ids.map((id) => mapped.find((item) => item.id === id)).filter(Boolean) as AdminTemplatePost[];
   }, [] as AdminTemplatePost[]);

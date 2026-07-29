@@ -6,6 +6,24 @@ import { getFirstImageUrl, getTextOnly } from '@/utils/htmlUtils';
 import { DEFAULT_THUMBNAIL } from '@/constants/ui';
 import { GUEST_ACTION } from '@/constants/route';
 
+const tapYogaInfoCards = [
+    {
+        label: 'Mục tiêu tập luyện',
+        value: 'Khỏe thân · An tâm · Bền sức',
+        description: 'Mỗi buổi tập hướng đến sự cân bằng thân - tâm - trí, phù hợp cho cả người mới và học viên đã có nền tảng.',
+    },
+    {
+        label: 'Nội dung chính',
+        value: 'Thở · Giãn cơ · Sức mạnh lõi',
+        description: 'Chuỗi bài được thiết kế khoa học để cải thiện linh hoạt, tăng kiểm soát cơ thể và giảm căng thẳng hàng ngày.',
+    },
+    {
+        label: 'Lộ trình gợi ý',
+        value: '2-4 buổi/tuần',
+        description: 'Duy trì lịch tập đều giúp bạn thấy rõ cải thiện về giấc ngủ, năng lượng và trạng thái tinh thần sau 4-8 tuần.',
+    },
+];
+
 export default async function PublicPostsPage() {
     const posts = await getPublicPosts(24);
 
@@ -15,10 +33,12 @@ export default async function PublicPostsPage() {
                 eyebrow="Tập Yoga"
                 title="Lịch buổi tập Yoga tại BelaYoga"
                 description="Mỗi buổi tập đều có nội dung riêng theo mục tiêu: thở sâu, giãn cơ, tăng sức mạnh lõi và thư giãn tinh thần. Chọn buổi phù hợp để xem chi tiết."
+                infoCards={tapYogaInfoCards}
                 highlights={[
-                    'Card hiển thị hình ảnh, tiêu đề và mô tả ngắn của từng buổi tập.',
-                    'Nhấn vào card để vào trang chi tiết buổi tập tương ứng.',
-                    'Nội dung được đồng bộ tự động từ dữ liệu public posts.',
+                    'Mỗi buổi tập là một hành trình quay về với chính mình.',
+                    'Hướng dẫn chi tiết từ huấn luyện viên giàu kinh nghiệm.',
+                    'Các buổi tập được thiết kế khoa học, phù hợp cho mọi trình độ.',
+                    'Để bạn tìm lại sự cân bằng thân - tâm - trí sau một ngày dài bận rộn.',
                 ]}
             />
 

@@ -434,6 +434,40 @@ function getAdminOverview() {
     };
 }
 
+const normalizeCourseText = (value?: string | null) => String(value || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+const isActionPost = (post: { category?: string }) => normalizeCourseText(post.category) === 'tap yoga';
+
+const isCoursePost = (post: { category?: string }) => normalizeCourseText(post.category) === 'khoa hoc';
+
+const normalizePostStatus = (value: unknown, fallback: 'draft' | 'review' | 'published' = 'draft'): 'draft' | 'review' | 'published' => {
+    const normalized = String(value || '').trim().toLowerCase();
+
+    if (!normalized) {
+        return fallback;
+    }
+
+    if (['published', 'done', 'active', 'public'].includes(normalized)) {
+        return 'published';
+    }
+
+    if (['review', 'pending'].includes(normalized)) {
+        return 'review';
+    }
+
+    if (['draft', 'inactive', 'hidden'].includes(normalized)) {
+        return 'draft';
+    }
+
+    return fallback;
+};
+
 async function handleGet(request: NextRequest, path: string[]) {
     const [segment, second, third] = path;
     const searchParams = request.nextUrl.searchParams;
@@ -454,6 +488,20 @@ async function handleGet(request: NextRequest, path: string[]) {
 
         const limit = Number(searchParams.get('limit') || 0) || undefined;
         return ok(await getPublicPostsFromStore(limit));
+    }
+
+    if (segment === 'actions') {
+        const limit = Number(searchParams.get('limit') || 0) || undefined;
+        const posts = await getPublicPostsFromStore();
+        const actions = posts.filter((post) => isActionPost(post));
+        return ok(limit ? actions.slice(0, limit) : actions);
+    }
+
+    if (segment === 'courses') {
+        const limit = Number(searchParams.get('limit') || 0) || undefined;
+        const posts = await getPublicPostsFromStore();
+        const courses = posts.filter((post) => isCoursePost(post));
+        return ok(limit ? courses.slice(0, limit) : courses);
     }
 
     if (segment === 'menus') {
@@ -558,6 +606,7 @@ async function handlePost(request: NextRequest, path: string[]) {
 
         if (second === 'posts') {
             const slug = String(body.slug || '');
+            const status = normalizePostStatus(body.status, 'draft');
             const created = await createAdminPost({
                 title: String(body.title || ''),
                 slug,
@@ -565,7 +614,7 @@ async function handlePost(request: NextRequest, path: string[]) {
                 excerpt: String(body.excerpt || ''),
                 description: String(body.description || body.excerpt || ''),
                 author_name: String(body.author_name || 'SV Super Admin'),
-                status: body.status || 'draft',
+                status,
                 published_at: body.published_at || null,
                 featured: Boolean(body.featured),
                 placement: body.placement || 'news_feed',
@@ -696,7 +745,10 @@ async function handlePatch(request: NextRequest, path: string[]) {
     const body = await request.json().catch(() => ({}));
 
     if (second === 'posts' && third) {
+        const currentPosts = await getAdminPostsFromStore();
+        const currentPost = currentPosts.find((item) => item.id === Number(third));
         const slug = String(body.slug || '');
+        const status = normalizePostStatus(body.status, (currentPost?.status as 'draft' | 'review' | 'published' | undefined) || 'draft');
         const updated = await updateAdminPost(Number(third), {
             title: String(body.title || ''),
             slug,
@@ -704,7 +756,7 @@ async function handlePatch(request: NextRequest, path: string[]) {
             excerpt: String(body.excerpt || ''),
             description: String(body.description || body.excerpt || ''),
             author_name: String(body.author_name || 'SV Super Admin'),
-            status: body.status || 'draft',
+            status,
             published_at: body.published_at || null,
             featured: Boolean(body.featured),
             placement: body.placement || 'news_feed',

@@ -4,21 +4,39 @@ import { GUEST_ABOUT_US, GUEST_ACTION, GUEST_COURSES } from "@/constants/route";
 import {
   getPublicHomeData,
   getPublicPosts,
-  getPublicSections,
-  getPublicStoreItems,
 } from "@/services/api/discovery";
 import { templateSiteConfig } from "@/config/template/site";
 import { getFirstImageUrl } from "@/utils/htmlUtils";
 import { DEFAULT_THUMBNAIL } from "@/constants/ui";
 
+const normalizeCategory = (value?: string) =>
+  (value || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9\s-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
 export default async function Home() {
-  const [publicHomeSample, productsSample, postsSample, homeSectionsSample] =
+  const [publicHomeSample, publicPostsSample] =
     await Promise.all([
       getPublicHomeData(),
-      getPublicStoreItems(3),
-      getPublicPosts(3),
-      getPublicSections("home"),
+      getPublicPosts(64),
     ]);
+
+  const actionPostsSample = publicPostsSample
+    .filter((post) => normalizeCategory(post.category) === "tap yoga")
+    .slice(0, 3);
+
+  const publicCourses = publicPostsSample
+    .filter((post) => normalizeCategory(post.category) === "khoa hoc")
+    .slice(0, 3);
+
+  const studioPostsSample = publicPostsSample
+    .filter((post) => normalizeCategory(post.category) === "phong tap")
+    .slice(0, 4);
+
   const homeConfig = templateSiteConfig.home;
 
   return (
@@ -124,8 +142,8 @@ export default async function Home() {
             </Link>
           </div>
           <div className="mt-6 grid gap-4 lg:grid-cols-3">
-            {postsSample.length > 0 ? (
-              postsSample.map((post) => (
+            {actionPostsSample.length > 0 ? (
+              actionPostsSample.map((post) => (
                 <Link
                   key={post.id}
                   href={`${GUEST_ACTION}/${post.slug}`}
@@ -186,18 +204,19 @@ export default async function Home() {
               {homeConfig.courseSection.cta}
             </Link>
           </div>
+
           <div className="mt-6 grid gap-4 lg:grid-cols-3">
-            {productsSample.length > 0 ? (
-              productsSample.map((product) => (
+            {publicCourses.length > 0 ? (
+              publicCourses.map((course) => (
                 <Link
-                  key={product.id}
-                  href={`${GUEST_COURSES}/${product.id}`}
+                  key={course.id}
+                  href={`${GUEST_ACTION}/${course.slug}`}
                   className="overflow-hidden rounded-[1.5rem] border border-bela-gray-2 bg-bela-bg-primary transition hover:-translate-y-1 hover:border-bela-primary-2 hover:shadow-lg"
                 >
                   <div className="relative h-44 w-full">
                     <Image
-                      src={DEFAULT_THUMBNAIL}
-                      alt={product.name}
+                      src={getFirstImageUrl(course.description) || DEFAULT_THUMBNAIL}
+                      alt={course.title}
                       fill
                       className="object-cover"
                       unoptimized
@@ -205,13 +224,13 @@ export default async function Home() {
                   </div>
                   <div className="p-5">
                   <div className="text-xs font-semibold uppercase tracking-[0.18em] text-bela-primary-1">
-                    {product.type}
+                    {course.category || 'Khóa học'}
                   </div>
                   <h3 className="mt-3 text-xl font-bold text-bela-secondary-2">
-                    {product.name}
+                    {course.title}
                   </h3>
                   <p className="mt-3 text-sm leading-6 text-bela-neutral-3">
-                    {product.description ||
+                    {course.excerpt ||
                       "Khóa học được thiết kế khoa học và phù hợp nhiều trình độ."}
                   </p>
                   </div>
@@ -238,22 +257,34 @@ export default async function Home() {
             {homeConfig.cmsSection.description}
           </p>
           <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {homeSectionsSample.length > 0 ? (
-              homeSectionsSample.map((section) => (
-                <div
-                  key={section.id}
-                  className="rounded-2xl border border-bela-gray-2 bg-bela-bg-primary p-5"
+            {studioPostsSample.length > 0 ? (
+              studioPostsSample.map((post) => (
+                <Link
+                  key={post.id}
+                  href={`${GUEST_ACTION}/${post.slug}`}
+                  className="overflow-hidden rounded-2xl border border-bela-gray-2 bg-bela-bg-primary transition hover:-translate-y-1 hover:border-bela-primary-2 hover:shadow-lg"
                 >
-                  <div className="text-xs font-semibold uppercase tracking-[0.18em] text-bela-primary-1">
-                    {section.type}
+                  <div className="relative h-40 w-full">
+                    <Image
+                      src={getFirstImageUrl(post.description) || DEFAULT_THUMBNAIL}
+                      alt={post.title}
+                      fill
+                      className="object-cover"
+                      unoptimized
+                    />
                   </div>
-                  <h3 className="mt-3 text-lg font-bold text-bela-secondary-2">
-                    {section.name}
-                  </h3>
-                  <p className="mt-2 text-sm leading-6 text-bela-neutral-3">
-                    {section.summary}
-                  </p>
-                </div>
+                  <div className="p-5">
+                    <div className="text-xs font-semibold uppercase tracking-[0.18em] text-bela-primary-1">
+                      {post.category || 'Phòng tập'}
+                    </div>
+                    <h3 className="mt-3 text-lg font-bold text-bela-secondary-2">
+                      {post.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-6 text-bela-neutral-3">
+                      {post.excerpt}
+                    </p>
+                  </div>
+                </Link>
               ))
             ) : (
               <div className="rounded-[1.5rem] border border-dashed border-bela-gray-2 bg-bela-bg-primary p-5 text-sm text-bela-neutral-3 md:col-span-2 xl:col-span-4">
@@ -264,8 +295,8 @@ export default async function Home() {
           <div className="mt-6 text-xs text-bela-neutral-3">
             API bootstrap: products{" "}
             {publicHomeSample?.summary.store_items_count ??
-              productsSample.length}
-            , posts {postsSample.length}.
+              0}
+            , posts {actionPostsSample.length}.
           </div>
         </div>
       </section>

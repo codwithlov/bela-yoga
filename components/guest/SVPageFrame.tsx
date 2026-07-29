@@ -78,12 +78,12 @@ export default function SVPageFrame({
                     </div>
 
                     <div className="rounded-[2rem] border border-bela-gray-2 bg-white p-6 shadow-sm md:p-8">
-                        <div className="text-xs font-semibold uppercase tracking-[0.2em] text-bela-primary-1">SPORTVERSE snapshot</div>
+                        <div className="text-xs font-semibold uppercase tracking-[0.2em] text-bela-primary-1">Tập luyện cùng Bela Yoga</div>
                         <h2 className="mt-3 text-2xl font-bold text-bela-secondary-2 md:text-3xl">
-                            Khung nội dung public gọn, rõ và đúng ngữ cảnh booking sân.
+                            Đồng hành cùng bạn trên hành trình sống khỏe, an yên
                         </h2>
                         <p className="mt-3 text-sm leading-6 text-bela-neutral-3">
-                            Các page cơ bản được làm lại theo phong cách SPORTVERSE để thống nhất trải nghiệm giữa landing page, booking, trận đấu và cộng đồng.
+                            Bela Yoga cùng bạn xây dựng lối sống cân bằng, cải thiện sức khỏe thể chất và tinh thần thông qua các buổi tập yoga chất lượng cao, phù hợp cho mọi trình độ.
                         </p>
 
                         <div className="mt-6 grid gap-3">

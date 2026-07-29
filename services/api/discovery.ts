@@ -1,8 +1,8 @@
 import { baseApi } from './baseApi';
 import { API_PATH, BASE_URL, FETCH_API_REVALIDATE, FETCH_API_TIMEOUT_MS } from '@/constants/api';
-import { IPublicHighlightCard, IPublicHomePayload, IPublicMatchCard, IPublicStoreItem, IPublicTemplatePost, IPublicTemplateSection } from '@/interfaces/discovery';
+import { IPublicHighlightCard, IPublicHomePayload, IPublicStoreItem, IPublicTemplatePost, IPublicTemplateSection } from '@/interfaces/discovery';
 import { Menu } from '@/interfaces/menu';
-import { appendDemoHighlights, appendDemoMatches, appendDemoStoreItems, withDemoHomeFallback } from './publicDemoData';
+import { appendDemoHighlights, appendDemoStoreItems, withDemoHomeFallback } from './publicDemoData';
 import { templateSiteConfig } from '@/config/template/site';
 
 const buildApiUrl = (path: string) => `${BASE_URL}${API_PATH}${path}`;
@@ -96,9 +96,15 @@ export async function getPublicHomeData(): Promise<IPublicHomePayload | null> {
     return withDemoHomeFallback(response?.data || null);
 }
 
-export async function getPublicMatches(limit = 12): Promise<IPublicMatchCard[]> {
-    const response = await requestJson<{ data: IPublicMatchCard[] }>(`matches${objectToSearchParams({ limit })}`);
-    return appendDemoMatches(response?.data || [], limit);
+export async function getPublicActions(limit = 12): Promise<IPublicTemplatePost[]> {
+    const safeLimit = Math.max(1, Number(limit || 12));
+    const fetchLimit = Math.min(200, Math.max(24, safeLimit * 6));
+
+    const response = await requestJson<{ data: IPublicTemplatePost[] }>(`posts${objectToSearchParams({ limit: fetchLimit })}`);
+    const posts = response?.data || [];
+    const actions = posts.filter(isActionPost);
+
+    return actions.slice(0, safeLimit);
 }
 
 export async function getPublicHighlights(limit = 12): Promise<IPublicHighlightCard[]> {
@@ -139,16 +145,39 @@ export async function getPublicSections(page?: 'home' | 'venue_detail' | 'match_
     return response?.data || [];
 }
 
+const normalizeForCompare = (value?: string) => (value || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+const isActionPost = (post: IPublicTemplatePost) => normalizeForCompare(post.category) === 'tap yoga';
+
+const isCoursePost = (post: IPublicTemplatePost) => normalizeForCompare(post.category) === 'khoa hoc';
+
+export async function getPublicCourses(limit = 12): Promise<IPublicTemplatePost[]> {
+    const safeLimit = Math.max(1, Number(limit || 12));
+    const fetchLimit = Math.min(200, Math.max(24, safeLimit * 6));
+
+    const response = await requestJson<{ data: IPublicTemplatePost[] }>(`posts${objectToSearchParams({ limit: fetchLimit })}`);
+    const posts = response?.data || [];
+    const courses = posts.filter(isCoursePost);
+
+    return courses.slice(0, safeLimit);
+}
+
 const discoveryApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getPublicHome: builder.query<{ data: IPublicHomePayload }, void>({
             query: () => 'home',
         }),
-        getPublicMatches: builder.query<{ data: IPublicMatchCard[] }, { limit?: number } | void>({
-            query: (params) => `matches${objectToSearchParams({ limit: params?.limit })}`,
+        getPublicAction: builder.query<{ data: IPublicTemplatePost[] }, { limit?: number } | void>({
+            query: (params) => `actions${objectToSearchParams({ limit: params?.limit })}`,
         }),
-        getPublicHighlights: builder.query<{ data: IPublicHighlightCard[] }, { limit?: number } | void>({
-            query: (params) => `highlights${objectToSearchParams({ limit: params?.limit })}`,
+        getPublicCourses: builder.query<{ data: IPublicTemplatePost[] }, { limit?: number } | void>({
+            query: (params) => `courses${objectToSearchParams({ limit: params?.limit })}`,
         }),
         getPublicStoreItems: builder.query<{ data: IPublicStoreItem[] }, { limit?: number } | void>({
             query: (params) => `store-items${objectToSearchParams({ limit: params?.limit })}`,
@@ -158,7 +187,7 @@ const discoveryApi = baseApi.injectEndpoints({
 
 export const {
     useGetPublicHomeQuery,
-    useGetPublicMatchesQuery,
-    useGetPublicHighlightsQuery,
+    useGetPublicActionQuery,
+    useGetPublicCoursesQuery,
     useGetPublicStoreItemsQuery,
 } = discoveryApi;
