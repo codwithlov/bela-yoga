@@ -7,7 +7,7 @@ dotenv.config();
 process.env.NODE_ENV === 'development' ?
   dotenv.config({ path: '.env.development' }) :
   dotenv.config({ path: '.env.production' })
-const baseUrl = process.env.NEXT_PUBLIC_WEB_URL;
+const baseUrl = String(process.env.NEXT_PUBLIC_WEB_URL || '').replace(/\/+$/, '');
 const apiPath = process.env.NEXT_PUBLIC_BASE_URL + process.env.NEXT_PUBLIC_API_PATH;
 
 const fetchSlugUrls = async () => {
@@ -64,18 +64,66 @@ const generateSitemaps = async (urls, type) => {
   console.log(type + " sitemap generated!");
 };
 
-// Schedule sitemap generation every 30 minutes
-cron.schedule("*/30 * * * *", async () => {
-  // cron.schedule("* * * * *", async () => {
+const generateSitemapIndex = (types) => {
+  const validTypes = (types || []).filter(Boolean);
+  if (!validTypes.length) return;
+
+  const publicDir = path.resolve("public");
+  if (!fs.existsSync(publicDir)) {
+    fs.mkdirSync(publicDir, { recursive: true });
+  }
+
+  const now = new Date().toISOString();
+  const indexXml = `<?xml version="1.0" encoding="UTF-8"?>\n<?xml-stylesheet type="text/xsl" href="sitemap.xsl"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${validTypes
+    .map((type) => `  <sitemap>\n    <loc>${baseUrl}/${type}-sitemap.xml</loc>\n    <lastmod>${now}</lastmod>\n  </sitemap>`)
+    .join("\n")}\n</sitemapindex>`;
+
+  fs.writeFileSync(path.resolve(publicDir, 'sitemap_index.xml'), indexXml.trim());
+  console.log('sitemap index generated!');
+};
+
+const regenerateAllSitemaps = async () => {
   try {
     console.log("Regenerating sitemaps...");
     const { productUrls, productCatUrls, postUrls, postCatUrls, pageUrls } = await fetchSlugUrls();
-    await generateSitemaps(productUrls, "product");
-    await generateSitemaps(productCatUrls, "product_cat");
-    await generateSitemaps(postUrls, "post");
-    await generateSitemaps(postCatUrls, "category");
-    await generateSitemaps(pageUrls, "page");
+    const generatedTypes = [];
+
+    if ((productUrls || []).length) {
+      await generateSitemaps(productUrls, "product");
+      generatedTypes.push('product');
+    }
+
+    if ((productCatUrls || []).length) {
+      await generateSitemaps(productCatUrls, "product_cat");
+      generatedTypes.push('product_cat');
+    }
+
+    if ((postUrls || []).length) {
+      await generateSitemaps(postUrls, "post");
+      generatedTypes.push('post');
+    }
+
+    if ((postCatUrls || []).length) {
+      await generateSitemaps(postCatUrls, "category");
+      generatedTypes.push('category');
+    }
+
+    if ((pageUrls || []).length) {
+      await generateSitemaps(pageUrls, "page");
+      generatedTypes.push('page');
+    }
+
+    generateSitemapIndex(generatedTypes);
   } catch (error) {
     console.error("Error Regenerating sitemaps", error);
   }
+};
+
+// Run once immediately
+regenerateAllSitemaps();
+
+// Schedule sitemap generation every 30 minutes
+cron.schedule("*/30 * * * *", async () => {
+  // cron.schedule("* * * * *", async () => {
+  await regenerateAllSitemaps();
 });

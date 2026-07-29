@@ -21,7 +21,7 @@ export const templateSiteConfig = {
   },
   assets: {
     logo: '/assets/images/logo/belayoga-logo-web.png',
-    favicon: '/assets/images/logo/logo-icon.png',
+    favicon: '/assets/icons/favicon.png',
     appleTouchIcon: '/assets/images/logo/logo-icon.png',
   },
   contact: {

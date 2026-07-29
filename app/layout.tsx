@@ -22,6 +22,15 @@ import { templateTheme } from "@/config/template/theme";
 export const metadata: Metadata = {
   title: templateSiteConfig.metadata.title,
   description: templateSiteConfig.metadata.description,
+  icons: {
+    icon: [
+      { url: templateSiteConfig.assets.favicon, type: 'image/png', sizes: '32x32' },
+    ],
+    shortcut: [templateSiteConfig.assets.favicon],
+    apple: [
+      { url: templateSiteConfig.assets.appleTouchIcon, sizes: '180x180' },
+    ],
+  },
 };
 
 export default function RootLayout({
@@ -36,7 +45,8 @@ export default function RootLayout({
       <head>
         {/* <link rel="preconnect" href="https://cdn.saigontimestravel.com" />
         <link rel="dns-prefetch" href="https://cdn.saigontimestravel.com" /> */}
-        <link rel='icon' sizes="32x32" href={templateSiteConfig.assets.favicon} />
+        <link rel='icon' type="image/png" sizes="32x32" href={templateSiteConfig.assets.favicon} />
+        <link rel="shortcut icon" href={templateSiteConfig.assets.favicon} />
         <link rel="apple-touch-icon" sizes="180x180" href={templateSiteConfig.assets.appleTouchIcon} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content={templateTheme.colors.secondaryDark} />
