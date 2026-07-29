@@ -1,0 +1,26 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="720" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFDF9"/>
+      <stop offset="1" stop-color="#F9F3EB"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="286" y1="172" x2="922" y2="548" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D2B48C"/>
+      <stop offset="1" stop-color="#B08968"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="720" fill="url(#bg)"/>
+
+  <circle cx="170" cy="120" r="80" fill="#F3E7D7"/>
+  <circle cx="1060" cy="610" r="120" fill="#EEE5DC"/>
+
+  <g opacity="0.8">
+    <path d="M600 208C628 248 668 276 714 292C668 308 628 336 600 376C572 336 532 308 486 292C532 276 572 248 600 208Z" fill="#C9A27E"/>
+    <circle cx="600" cy="292" r="16" fill="#6F533D"/>
+  </g>
+
+  <text x="600" y="420" text-anchor="middle" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="220" font-weight="800" fill="url(#accent)">404</text>
+  <text x="600" y="500" text-anchor="middle" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="44" font-weight="700" fill="#4F3A2A">Trang không tồn tại</text>
+  <text x="600" y="552" text-anchor="middle" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="30" font-weight="500" fill="#7A6556">BelaYoga • Hít vào bình yên, thở ra cuộc sống</text>
+</svg>

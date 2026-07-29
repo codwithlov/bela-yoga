@@ -49,7 +49,7 @@ export const metaOptions = {
     description:
       'Trang bạn đang tìm kiếm không tồn tại. Hãy quay lại BelaYoga để tiếp tục hành trình tập luyện và chăm sóc bản thân.',
     images: [
-      '/assets/images/404/404.png',
+      '/assets/images/404/404.svg',
     ],
   },
   serverError: {

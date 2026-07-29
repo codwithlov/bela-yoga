@@ -11,9 +11,9 @@ export async function generateMetadata() {
 const NotFoundPage = () => {
     return (
         <div className='bg-bela-primary-4 max-md:-mb-12 max-md:pb-12'>
-            <div className="relative flex flex-col items-center w-full h-screen bg-cover bg-center bg-[url('/assets/images/404/background-404.png')] pt-20 lg:pt-9">
+            <div className="relative flex flex-col items-center w-full h-screen bg-[radial-gradient(circle_at_top,_rgb(var(--template-color-primary-light-rgb)/0.28),_transparent_52%),linear-gradient(180deg,var(--template-color-background-primary-soft)_0%,var(--template-color-background-primary)_100%)] pt-20 lg:pt-9">
                 <Image
-                    src="/assets/images/404/404.png"
+                    src="/assets/images/404/404.svg"
                     alt="404 Not Found"
                     width={0}
                     height={0}
