@@ -247,10 +247,27 @@ export const getFirstImageUrl = (html: string) => {
     const doc = getDoc(html);
     const images = Array.from(doc.querySelectorAll('img'));
 
-    for (let img of images) {
-        const width = img.width;
+    const getSrc = (img: Element) => (img.getAttribute('src') || '').trim();
+
+    // Ưu tiên ảnh có width đủ lớn nếu có thông tin kích thước.
+    for (const img of images) {
+        const src = getSrc(img);
+        if (!src) continue;
+
+        const widthAttr = Number(img.getAttribute('width') || 0);
+        const naturalWidth = (img as HTMLImageElement).width || 0;
+        const width = Math.max(widthAttr, naturalWidth);
+
         if (width > 50) {
-            return img.getAttribute('src') || '';
+            return src;
+        }
+    }
+
+    // Fallback: nhiều bài viết không khai báo width, lấy ảnh đầu tiên hợp lệ.
+    for (const img of images) {
+        const src = getSrc(img);
+        if (src) {
+            return src;
         }
     }
 

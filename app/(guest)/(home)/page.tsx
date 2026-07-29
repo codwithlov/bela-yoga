@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { GUEST_ABOUT_US, GUEST_ACTION, GUEST_COURSES } from "@/constants/route";
 import {
   getPublicHomeData,
@@ -7,6 +8,8 @@ import {
   getPublicStoreItems,
 } from "@/services/api/discovery";
 import { templateSiteConfig } from "@/config/template/site";
+import { getFirstImageUrl } from "@/utils/htmlUtils";
+import { DEFAULT_THUMBNAIL } from "@/constants/ui";
 
 export default async function Home() {
   const [publicHomeSample, productsSample, postsSample, homeSectionsSample] =
@@ -126,8 +129,18 @@ export default async function Home() {
                 <Link
                   key={post.id}
                   href={`${GUEST_ACTION}/${post.slug}`}
-                  className="rounded-[1.5rem] border border-bela-gray-2 bg-bela-bg-primary p-5 transition hover:-translate-y-1 hover:border-bela-primary-2 hover:shadow-lg"
+                  className="overflow-hidden rounded-[1.5rem] border border-bela-gray-2 bg-bela-bg-primary transition hover:-translate-y-1 hover:border-bela-primary-2 hover:shadow-lg"
                 >
+                  <div className="relative h-44 w-full">
+                    <Image
+                      src={getFirstImageUrl(post.description) || DEFAULT_THUMBNAIL}
+                      alt={post.title}
+                      fill
+                      className="object-cover"
+                      unoptimized
+                    />
+                  </div>
+                  <div className="p-5">
                   <div className="text-xs font-semibold uppercase tracking-[0.18em] text-bela-primary-1">
                     {post.category}
                   </div>
@@ -139,6 +152,7 @@ export default async function Home() {
                   </p>
                   <div className="mt-4 text-sm font-semibold text-bela-primary-1">
                     Xem chi tiết
+                  </div>
                   </div>
                 </Link>
               ))
@@ -178,8 +192,18 @@ export default async function Home() {
                 <Link
                   key={product.id}
                   href={`${GUEST_COURSES}/${product.id}`}
-                  className="rounded-[1.5rem] border border-bela-gray-2 bg-bela-bg-primary p-5 transition hover:-translate-y-1 hover:border-bela-primary-2 hover:shadow-lg"
+                  className="overflow-hidden rounded-[1.5rem] border border-bela-gray-2 bg-bela-bg-primary transition hover:-translate-y-1 hover:border-bela-primary-2 hover:shadow-lg"
                 >
+                  <div className="relative h-44 w-full">
+                    <Image
+                      src={DEFAULT_THUMBNAIL}
+                      alt={product.name}
+                      fill
+                      className="object-cover"
+                      unoptimized
+                    />
+                  </div>
+                  <div className="p-5">
                   <div className="text-xs font-semibold uppercase tracking-[0.18em] text-bela-primary-1">
                     {product.type}
                   </div>
@@ -190,6 +214,7 @@ export default async function Home() {
                     {product.description ||
                       "Khóa học được thiết kế khoa học và phù hợp nhiều trình độ."}
                   </p>
+                  </div>
                 </Link>
               ))
             ) : (
