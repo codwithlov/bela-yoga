@@ -115,6 +115,10 @@ export const responseMessages: { [key: string]: string } = {
     email_not_found: 'Email không tồn tại',
     email_existed: 'Email đã tồn tại',
     phone_existed: 'Số điện thoại đã tồn tại',
+    invalid_email: 'Email không hợp lệ',
+    invalid_phone_number: 'Số điện thoại không hợp lệ',
+    password_required: 'Mật khẩu phải có tối thiểu 6 ký tự',
+    password_confirm_not_match: 'Mật khẩu xác nhận không khớp',
     sending_reset_password_email: 'Email thay đổi mật khẩu đang được gửi, vui lòng kiểm tra mail của bạn',
     unauthorized: 'Chưa đăng nhập',
 
@@ -127,6 +131,7 @@ export const responseMessages: { [key: string]: string } = {
     booking_unsuccessfully: 'Đặt tour không thành công vui lòng thử lại sau',
     not_enough_seats: 'Không còn đủ chỗ trống!',
     support_request_success: 'Yêu cầu tư vấn thành công, chúng tôi sẽ liên hệ bạn trong thời gian ngắn',
+    support_request_received: 'Đăng ký thành công, chúng tôi sẽ liên hệ bạn trong thời gian ngắn',
     //error name
     name: 'Tên',
     phone: 'Số điện thoại',

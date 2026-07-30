@@ -5,6 +5,7 @@ type UserDocument = {
   username: string;
   fullName?: string;
   phone?: string;
+  avatar?: string;
   role: UserRole;
   passwordHash: string;
   createdAt: Date;
@@ -24,6 +25,10 @@ const userSchema = new Schema<UserDocument>(
       trim: true,
     },
     phone: {
+      type: String,
+      trim: true,
+    },
+    avatar: {
       type: String,
       trim: true,
     },

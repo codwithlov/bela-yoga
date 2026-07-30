@@ -172,6 +172,24 @@ export interface IAdminSectionRow {
     summary: string;
 }
 
+export interface IAdminCustomerRow {
+    id: string;
+    name: string | null;
+    address: string | null;
+    contact: string;
+    phone: string | null;
+    email: string | null;
+    contact_type: 'phone' | 'email';
+    source: string;
+    status: 'new' | 'contacted' | 'closed';
+    request_count: number;
+    first_request_at: string;
+    last_request_at: string;
+    ip_address: string | null;
+    user_agent: string | null;
+    note: string | null;
+}
+
 export interface IAdminOverviewPayload {
     scope: {
         workspace_organization: {

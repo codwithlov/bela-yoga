@@ -18,12 +18,13 @@ const FooterField = () => {
     };
 
     const handleSubmit = async () => {
-        if (!field) {
+        const contact = field.trim();
+        if (!contact) {
             return;
         }
         const postData = {
             url: 'support-request',
-            data: { phone: field.replace(/\s+/g, ''), source: 'Footer' },
+            data: { contact: contact.replace(/\s+/g, ''), source: 'Footer' },
         };
         await handleApiResponse(
             postApi(postData),
@@ -50,9 +51,15 @@ const FooterField = () => {
             < div className='col-span-12 lg:col-span-6 flex flex-row flex-wrap justify-center items-center gap-3' >
                 <input
                     className='email_input'
-                    placeholder='Nhập số điện thoại của bạn'
+                    placeholder='Nhập số điện thoại hoặc email của bạn'
                     value={field}
                     onChange={handleFieldChange}
+                    onKeyDown={(event) => {
+                        if (event.key === 'Enter') {
+                            event.preventDefault();
+                            handleSubmit();
+                        }
+                    }}
                 />
                 <button
                     onClick={handleSubmit}

@@ -119,7 +119,7 @@ const LoginRegisterForm: React.FC<Params> = ({ closeModal, afterLogin, fromAdmin
     const handleOnSubmit = async (data: any) => {
         if (showforgetPassword) {
             const postData = {
-                url: 'user/forgotPassword',
+                url: fromAdmin ? 'user/forgotPassword' : 'customer/forgotPassword',
                 data: { email: data.email },
             };
             await handleApiResponse(
@@ -136,7 +136,7 @@ const LoginRegisterForm: React.FC<Params> = ({ closeModal, afterLogin, fromAdmin
             );
         } else {
             const postData = {
-                url: 'user/' + modalType,
+                url: (fromAdmin ? 'user/' : 'customer/') + modalType,
                 data: data,
             };
             await handleApiResponse(
@@ -224,16 +224,16 @@ const LoginRegisterForm: React.FC<Params> = ({ closeModal, afterLogin, fromAdmin
                     </div>
                 }
                 <p className='text-3xl font-semibold leading-[none] text-center text-bela-primary-1 mb-4'>
-                    {showforgetPassword ? 'Quên mật khẩu' : modalType === 'login' ? 'Đăng nhập' : 'Đăng ký'}
+                    {showforgetPassword ? 'Quên mật khẩu' : modalType === 'login' ? 'Đăng nhập' : 'Đăng ký tài khoản'}
                 </p>
                 {isLogin &&
                     <>
                         <p className='text-sm font-medium leading-[1.3125rem] text-bela-neutral-4 text-center'>
-                            Chào mừng bạn đến với SPORTVERSE
+                            Chào mừng bạn đến với Bela Yoga
                             <br />
-                            Đăng nhập để theo dõi lịch sân, bài đăng trận đấu
+                            Đăng nhập để theo dõi lớp học, lịch tập
                             <br />
-                            và cập nhật cộng đồng mới nhất.
+                            và nhận cập nhật mới nhất.
                         </p>
                         {hasSocialLogin &&
                             <>
@@ -297,13 +297,11 @@ const LoginRegisterForm: React.FC<Params> = ({ closeModal, afterLogin, fromAdmin
                             onFinish={handleOnSubmit}
                             validateMessages={validateMessages}
                         >
-                            <EmailInput />
                             <LoginInput
-                                placeholder="Nhập số điện thoại"
+                                placeholder="Nhập email hoặc số điện thoại"
                                 iconUrl="/assets/icons/phone.svg"
-                                maxLength={12}
-                                name='phone'
-                                required={false}
+                                maxLength={128}
+                                name='contact'
                             />
                             <LoginInput
                                 placeholder="Họ và tên"

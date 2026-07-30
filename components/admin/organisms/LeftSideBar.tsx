@@ -1,7 +1,7 @@
 'use client';
 
-import { ADMIN_MARKET, ADMIN_MENU, ADMIN_OVERVIEW, ADMIN_PAGE, ADMIN_POST, ADMIN_POST_CATEGORY, ADMIN_ROLE, ADMIN_SECTION, ADMIN_USER } from "@/constants/route";
-import { faBars, faDashboard, faFileLines, faLayerGroup, faListCheck, faNewspaper, faStore, faTags, faUser } from "@fortawesome/free-solid-svg-icons";
+import { ADMIN_MARKET, ADMIN_MENU, ADMIN_OVERVIEW, ADMIN_PAGE, ADMIN_POST, ADMIN_POST_CATEGORY, ADMIN_ROLE, ADMIN_SECTION, ADMIN_SUPPORT_REQUEST, ADMIN_USER } from "@/constants/route";
+import { faAddressBook, faBars, faDashboard, faFileLines, faLayerGroup, faListCheck, faNewspaper, faStore, faTags, faUser } from "@fortawesome/free-solid-svg-icons";
 import { getUserInfo as getStoredUserInfo } from "@/utils/authenticate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Menu, MenuProps } from "antd";
@@ -45,6 +45,7 @@ const LeftSideBar = () => {
         { code: 'MARKET_VIEW', icon: <FontAwesomeIcon icon={faStore} />, label: 'Sản phẩm', path: ADMIN_MARKET },
         { code: 'POST_VIEW', icon: <FontAwesomeIcon icon={faNewspaper} />, label: 'Bài viết', path: ADMIN_POST },
         { code: 'POST_VIEW', icon: <FontAwesomeIcon icon={faTags} />, label: 'Danh mục bài viết', path: ADMIN_POST_CATEGORY },
+        { code: 'USER_VIEW', icon: <FontAwesomeIcon icon={faAddressBook} />, label: 'Khách hàng', path: ADMIN_SUPPORT_REQUEST },
         { code: 'USER_VIEW', icon: <FontAwesomeIcon icon={faUser} />, label: 'Quản lý người dùng', path: ADMIN_USER },
         { code: 'ROLE_VIEW', icon: <FontAwesomeIcon icon={faListCheck} />, label: 'Quản lý vai trò', path: ADMIN_ROLE },
         { code: 'MENU_VIEW', icon: <FontAwesomeIcon icon={faBars} />, label: 'Menu', path: ADMIN_MENU },

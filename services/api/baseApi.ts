@@ -1,7 +1,7 @@
 import { API_PATH, BASE_URL } from '@/constants/api';
 import { getAccessToken, getTokenData, refreshToken, removeTokens } from '@/utils/authenticate';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ADMIN_LOGIN } from '@/constants/route';
+import { ADMIN_LOGIN, GUEST_HOME } from '@/constants/route';
 import { isEmpty } from '@/utils/helper';
 import { responseMessages } from '@/constants/ui';
 import { Mutex } from 'async-mutex'
@@ -25,9 +25,11 @@ const openNotification = (message: string, errorType?: string, permissions?: str
                 window.location.href = firstHref;
             })
         } else {
+            const currentPath = typeof window !== 'undefined' ? window.location.pathname || '' : '';
+            const isAdminPath = currentPath.startsWith('/admin');
             removeTokens();
             counterOpenNotify--;
-            window.location.href = ADMIN_LOGIN;
+            window.location.href = isAdminPath ? ADMIN_LOGIN : GUEST_HOME;
         }
 
     }
@@ -59,6 +61,10 @@ const baseQueryWithReauth: typeof baseQuery = async (args, api, extraOptions) =>
     await mutex.waitForUnlock()
     let result = await baseQuery(args, api, extraOptions);
     if (result.error && !isEmpty(result.error)) {
+        const requestUrl = typeof args === 'string' ? args : String((args as any)?.url || '');
+        const isAuthFormRequest = /(^|\/)(user|customer)\/(login|register)$/.test(requestUrl)
+            || /(^|\/)social\/login$/.test(requestUrl)
+            || /(^|\/)updateSocialEmail$/.test(requestUrl);
         const error = (result.error as any)?.data as any;
         const errorStatus = error?.data ?? error?.code ?? '';
         const errorMessage = error?.message || (result.error as any)?.error || 'server_error';
@@ -98,7 +104,9 @@ const baseQueryWithReauth: typeof baseQuery = async (args, api, extraOptions) =>
                 || errorStatus === ACCOUNT_NOT_FOUND
                 || errorStatus === ACCOUNT_NOT_ACTIVE
             ) {
-                openNotification(errorMessage);
+                if (!isAuthFormRequest) {
+                    openNotification(errorMessage);
+                }
             }
         }
         if (errorStatusCode === 403) {

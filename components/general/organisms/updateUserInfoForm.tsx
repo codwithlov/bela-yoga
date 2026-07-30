@@ -6,13 +6,14 @@ import Image from 'next/image';
 import { validateMessages } from '@/utils/validateRule';
 import { usePostDataMutation } from '@/services/api/common';
 import { responseMessages } from '@/constants/ui';
-import { getUserInfo } from '@/utils/authenticate';
+import { getUserInfo, setUserInfo } from '@/utils/authenticate';
 
 interface Props {
     closeModal: any;
+    fromAdmin?: boolean;
 }
 
-const UpdateUserInfoForm: React.FC<Props> = ({ closeModal }) => {
+const UpdateUserInfoForm: React.FC<Props> = ({ closeModal, fromAdmin }) => {
     const [form] = Form.useForm();
     const userInfo = getUserInfo();
     const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
@@ -58,17 +59,33 @@ const UpdateUserInfoForm: React.FC<Props> = ({ closeModal }) => {
 
     const handleSubmit = async (values: any) => {
         const formData = new FormData();
-        formData.append('fullName', values.fullName);
+        formData.append('full_name', values.full_name);
+        if (values.email) {
+            formData.append('email', String(values.email).trim());
+        }
+        if (values.phone) {
+            formData.append('phone', String(values.phone).trim());
+        }
         if (file) {
             formData.append('file', file);
         }
         const postData = {
-            url: 'updateUserInfo',
+            url: fromAdmin ? 'updateUserInfo' : 'customer/update-profile',
             data: formData,
             isFormData: true,
         }
         const payload = await storeUpdateApi(postData).unwrap();
         if (payload?.success) {
+            if (userInfo) {
+                setUserInfo({
+                    ...userInfo,
+                    full_name: payload?.data?.full_name || values.full_name,
+                    name: payload?.data?.full_name || values.full_name,
+                    email: payload?.data?.email ?? values.email ?? userInfo.email,
+                    phone: payload?.data?.phone ?? values.phone ?? userInfo.phone,
+                    avatar: payload?.data?.avatar || userInfo.avatar,
+                });
+            }
             messageApi.open({
                 type: 'success',
                 content: responseMessages.update_success,
@@ -86,6 +103,8 @@ const UpdateUserInfoForm: React.FC<Props> = ({ closeModal }) => {
         if (userInfo) {
             setAvatarUrl(userInfo.avatar);
             form.setFieldValue('full_name', userInfo.full_name)
+            form.setFieldValue('email', userInfo.email)
+            form.setFieldValue('phone', userInfo.phone)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -98,7 +117,7 @@ const UpdateUserInfoForm: React.FC<Props> = ({ closeModal }) => {
             onFinish={handleSubmit}
             validateMessages={validateMessages}
         >
-            <Form.Item label="Tải Lên Ảnh Đại Diện" name="avatar">
+            <Form.Item label="Tải Lên Ảnh Đại Diện">
                 <Upload.Dragger
                     name="avatar"
                     beforeUpload={beforeUpload}
@@ -130,6 +149,29 @@ const UpdateUserInfoForm: React.FC<Props> = ({ closeModal }) => {
 
             <Form.Item label="Họ và Tên" name="full_name" rules={[{ required: true }]}>
                 <Input placeholder="Nhập họ và tên của bạn" />
+            </Form.Item>
+
+            <Form.Item label="Email" name="email" rules={[{ type: 'email', required: false }]}> 
+                <Input placeholder="Nhập email (tuỳ chọn)" />
+            </Form.Item>
+
+            <Form.Item
+                label="Số điện thoại"
+                name="phone"
+                rules={[
+                    {
+                        validator: (_, value) => {
+                            const phone = String(value || '').replace(/\D+/g, '');
+                            if (!phone) return Promise.resolve();
+                            if (phone.length < 9 || phone.length > 15) {
+                                return Promise.reject(new Error('Số điện thoại không hợp lệ'));
+                            }
+                            return Promise.resolve();
+                        },
+                    },
+                ]}
+            >
+                <Input placeholder="Nhập số điện thoại (tuỳ chọn)" />
             </Form.Item>
 
             <Form.Item>

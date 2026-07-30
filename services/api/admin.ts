@@ -1,5 +1,6 @@
 import {
     IAdminBookingRow,
+    IAdminCustomerRow,
     IAdminPostCategory,
     IAdminMenuItemRow,
     IAdminMenuTargetOption,
@@ -46,6 +47,9 @@ const adminApi = baseApi.injectEndpoints({
         getAdminSections: builder.query<{ data: { sections: IAdminSectionRow[] } }, void>({
             query: () => 'admin/sections',
         }),
+        getAdminCustomers: builder.query<{ data: { customers: IAdminCustomerRow[] } }, void>({
+            query: () => 'admin/customers',
+        }),
     }),
 });
 
@@ -60,4 +64,5 @@ export const {
     useGetAdminStoreItemsQuery,
     useGetAdminMenusQuery,
     useGetAdminSectionsQuery,
+    useGetAdminCustomersQuery,
 } = adminApi;

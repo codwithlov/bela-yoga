@@ -14,7 +14,7 @@ import { Loading } from '@/components/guest/Loading';
 import { ADMIN_LOGIN } from '@/constants/route';
 import useIsLogin from '@/hooks/useIsLogin';
 import dynamic from 'next/dynamic';
-import LoginRegisterForm from './LoginRegisterForm';
+import CustomerAuthForm from './CustomerAuthForm';
 import UpdateUserInfoForm from './updateUserInfoForm';
 import { getAdminPathFromPermissions } from '../../../utils/adminNavigation';
 
@@ -103,18 +103,14 @@ const NavBarUserSection: React.FC<NavBarUserSectionParams> = ({ fromAdmin, isMob
         },
       ]
       : []),
-    ...(userInfo?.role === ADMIN_ROLE_NAME
-      ? [
-        {
-          key: 2,
-          label: (
-            <div className={optionClassName} onClick={() => setOpenUpdateModal(true)}>
-              Cập nhật
-            </div>
-          ),
-        },
-      ]
-      : []),
+    {
+      key: 2,
+      label: (
+        <div className={optionClassName} onClick={() => setOpenUpdateModal(true)}>
+          Cập nhật
+        </div>
+      ),
+    },
     {
       key: 3,
       label: (
@@ -228,7 +224,7 @@ const NavBarUserSection: React.FC<NavBarUserSectionParams> = ({ fromAdmin, isMob
               onCancel={() => setModalType('')}
               {...getUpdateDrawerProps()}
             >
-              <LoginRegisterForm
+              <CustomerAuthForm
                 closeModal={() => setModalType('')}
                 afterLogin={verifyAuth}
                 modalType={modalType}
@@ -266,7 +262,7 @@ const NavBarUserSection: React.FC<NavBarUserSectionParams> = ({ fromAdmin, isMob
               onCancel={() => setOpenUpdateModal(false)}
               {...getUpdateDrawerProps()}
             >
-              <UpdateUserInfoForm closeModal={() => setOpenUpdateModal(false)} />
+              <UpdateUserInfoForm closeModal={() => setOpenUpdateModal(false)} fromAdmin={fromAdmin} />
             </Modal>
           }
         </>

@@ -30,7 +30,8 @@ import {
 } from '@/lib/template-cms-repository';
 import { getDemoHomePayload, getDemoOrganizationAvailability, getDemoOrganizationBySlug, getDemoOrganizations, demoHighlights, demoMatches, demoStoreItems } from '@/services/api/publicDemoData';
 import { User } from '@/models/User';
-import { hashSync } from 'bcryptjs';
+import { Customer } from '@/models/Customer';
+import { compareSync, hashSync } from 'bcryptjs';
 import { jwtVerify, SignJWT } from 'jose';
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidateTag } from 'next/cache';
@@ -89,6 +90,17 @@ const ok = (data: unknown, message = 'success') => json({ success: true, message
 const fail = (message: string, status = 400, data: unknown = null) => json({ success: false, message, data }, status);
 const isDuplicateKeyError = (error: any) => Number(error?.code) === 11000;
 
+const normalizePhone = (value: unknown) => String(value || '').replace(/\D+/g, '').trim();
+const normalizeEmail = (value: unknown) => String(value || '').trim().toLowerCase();
+const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+const customerStatuses = ['new', 'contacted', 'closed'] as const;
+type CustomerStatus = typeof customerStatuses[number];
+
+const normalizeCustomerStatus = (value: unknown, fallback: CustomerStatus = 'new'): CustomerStatus => {
+    const normalized = String(value || '').trim().toLowerCase();
+    return (customerStatuses as readonly string[]).includes(normalized) ? (normalized as CustomerStatus) : fallback;
+};
+
 const revalidatePublicCache = () => {
     try {
         revalidateTag('all', 'max');
@@ -131,27 +143,17 @@ async function verifyPublicToken(token: string) {
 async function ensureSportverseUser(account: typeof demoAccounts[number]) {
     await connectToDatabase();
 
-    const existing = await User.findOne({ username: account.email });
-    if (existing) {
-        return existing;
-    }
-
-    return User.create({
-        username: account.email,
-        fullName: account.name,
-        phone: '0900000000',
-        role: account.role === 'admin' ? 'ADMIN' : 'USER',
-        passwordHash: hashSync(account.password, 10),
-    });
+    return User.findOne({ username: account.email });
 }
 
-function toLdpUserInfo(account: typeof demoAccounts[number], id: string) {
+function toLdpUserInfo(account: typeof demoAccounts[number], id: string, profile?: { fullName?: string | null; avatar?: string | null }) {
     return {
         id,
-        full_name: account.name,
-        name: account.name,
+        full_name: profile?.fullName || account.name,
+        name: profile?.fullName || account.name,
         email: account.email,
         role: account.role,
+        avatar: profile?.avatar || '',
         is_super_admin: account.isSuperAdmin,
         organization_id: account.isSuperAdmin ? null : 9001,
         organization_name: account.isSuperAdmin ? null : 'SV Arena Quận 7',
@@ -159,28 +161,296 @@ function toLdpUserInfo(account: typeof demoAccounts[number], id: string) {
     };
 }
 
-async function login(request: NextRequest) {
+async function requireAuthenticatedUser(request: NextRequest) {
+    const payload = await verifyPublicToken(normalizeBearerToken(request));
+    if (!payload || payload.type !== 'access' || (!payload.email && !payload.username)) {
+        return null;
+    }
+    return payload;
+}
+
+function toLdpUserInfoFromDbUser(user: any) {
+    const isAdmin = String(user?.role || '').toUpperCase() === 'ADMIN';
+    const username = String(user?.username || '').trim().toLowerCase();
+    const isUsernameEmail = isValidEmail(username);
+    const normalizedPhone = normalizePhone(user?.phone || '');
+    const fallbackPhone = !isUsernameEmail ? normalizePhone(username) : '';
+    const phone = normalizedPhone || fallbackPhone;
+    return {
+        id: String(user?._id || ''),
+        full_name: user?.fullName || username || '',
+        name: user?.fullName || username || '',
+        email: isUsernameEmail ? username : '',
+        phone: phone || '',
+        role: isAdmin ? 'admin' : 'guest',
+        avatar: user?.avatar || '',
+        is_super_admin: false,
+        organization_id: null,
+        organization_name: null,
+        permissionCodes: isAdmin ? permissionCodes : [],
+    };
+}
+
+function toLdpUserInfoFromCustomer(customer: any) {
+    const accountEmail = normalizeEmail(customer?.accountEmail || customer?.email || '');
+    const accountPhone = normalizePhone(customer?.accountPhone || customer?.phone || '');
+    return {
+        id: String(customer?._id || ''),
+        full_name: customer?.name || accountEmail || accountPhone || '',
+        name: customer?.name || accountEmail || accountPhone || '',
+        email: accountEmail,
+        phone: accountPhone,
+        role: 'guest',
+        avatar: customer?.avatar || '',
+        is_super_admin: false,
+        organization_id: null,
+        organization_name: null,
+        permissionCodes: [],
+    };
+}
+
+const normalizeNameKey = (value: unknown) => String(value || '').trim().toLowerCase();
+
+async function createCustomerLeadFromRequest(
+    request: NextRequest,
+    body: any,
+    options?: { source?: string; defaultNote?: string; responseMessage?: string },
+) {
+    const inputPhone = normalizePhone(body.phone);
+    const inputEmail = normalizeEmail(body.email);
+    const rawContact = String(body.contact || body.phone || body.email || '').trim();
+    const contactFromField = String(body.contact || '').trim().toLowerCase();
+
+    const normalizedPhone = inputPhone || normalizePhone(rawContact);
+    const normalizedEmail = inputEmail || normalizeEmail(rawContact);
+    const hasEmailLikeContact = rawContact.toLowerCase().includes('@') || contactFromField.includes('@') || Boolean(inputEmail);
+
+    const name = String(body.name || body.full_name || '').trim() || null;
+    const address = String(body.address || '').trim() || null;
+    const note = String(body.note || '').trim() || options?.defaultNote || null;
+    const source = String(body.source || options?.source || 'Website').trim() || String(options?.source || 'Website');
+
+    if (!rawContact) {
+        return fail('fill_required_infomation', 422, 'CONTACT_REQUIRED');
+    }
+
+    const isEmail = hasEmailLikeContact;
+    if (isEmail && !isValidEmail(normalizedEmail)) {
+        return fail('invalid_email', 422, 'INVALID_EMAIL');
+    }
+
+    if (!isEmail && (normalizedPhone.length < 9 || normalizedPhone.length > 15)) {
+        return fail('invalid_phone_number', 422, 'INVALID_PHONE_NUMBER');
+    }
+
+    const contactType: 'phone' | 'email' = isEmail ? 'email' : 'phone';
+    const phone = !isEmail ? normalizedPhone : null;
+
+    try {
+        await connectToDatabase();
+
+        const now = new Date();
+        const ipAddress = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'local';
+        const userAgent = request.headers.get('user-agent') || undefined;
+
+        const nameKey = normalizeNameKey(name);
+        const linkedDoc = await Customer.findOne({
+            $or: [
+                ...(normalizedEmail ? [{ email: normalizedEmail }, { accountEmail: normalizedEmail }] : []),
+                ...(normalizedPhone ? [{ phone: normalizedPhone }, { accountPhone: normalizedPhone }] : []),
+                ...(nameKey ? [{ source, name: new RegExp(`^${nameKey.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') }] : []),
+            ],
+        }).lean();
+
+        const doc = await Customer.findOneAndUpdate(
+            linkedDoc ? { _id: (linkedDoc as any)._id } : {
+                source,
+                ...(normalizedEmail ? { email: normalizedEmail } : {}),
+                ...(normalizedPhone ? { phone: normalizedPhone } : {}),
+            },
+            {
+                $set: {
+                    source,
+                    email: normalizedEmail || null,
+                    phone,
+                    accountEmail: normalizedEmail || (linkedDoc as any)?.accountEmail || null,
+                    accountPhone: normalizedPhone || (linkedDoc as any)?.accountPhone || null,
+                    name,
+                    address,
+                    note,
+                    contactType,
+                    rawValue: rawContact,
+                    status: 'new',
+                    lastRequestAt: now,
+                    ipAddress,
+                    userAgent,
+                },
+                $setOnInsert: {
+                    firstRequestAt: now,
+                },
+                $inc: {
+                    requestCount: 1,
+                },
+            },
+            {
+                upsert: true,
+                new: true,
+            },
+        ).lean();
+
+        return ok({
+            id: String((doc as any)?._id || ''),
+            phone: contactType === 'phone' ? normalizedPhone : null,
+            email: contactType === 'email' ? normalizedEmail : null,
+            name,
+            address,
+            note,
+            contact_type: contactType,
+            source,
+            request_count: Number((doc as any)?.requestCount || 1),
+        }, options?.responseMessage || 'support_request_received');
+    } catch (error: any) {
+        if (isDuplicateKeyError(error)) {
+            return fail('server_error', 500, 'DUPLICATE_KEY');
+        }
+
+        return fail('server_error', 500, error?.message || 'SERVER_ERROR');
+    }
+}
+
+async function login(request: NextRequest, audience: 'internal' | 'customer' = 'customer') {
     const body = await request.json().catch(() => ({}));
-    const email = String(body.email || body.username || body.account || '').trim().toLowerCase();
+    const rawAccount = String(body.email || body.username || body.account || '').trim();
+    const email = normalizeEmail(rawAccount);
+    const isEmailAccount = rawAccount.includes('@');
+    const normalizedPhone = isEmailAccount ? '' : normalizePhone(rawAccount);
     const password = String(body.password || '');
+
+    if (audience === 'customer') {
+        try {
+            await connectToDatabase();
+            const customer = await Customer.findOne({
+                $or: isEmailAccount
+                    ? [{ accountEmail: email }, { email }]
+                    : [{ accountPhone: normalizedPhone }, { phone: normalizedPhone }],
+            });
+
+            if (!customer?.passwordHash || !compareSync(password, String(customer.passwordHash || ''))) {
+                return fail('email_or_password_not_correct', 401, 'ACCOUNT_NOT_FOUND');
+            }
+
+            const username = isEmailAccount
+                ? normalizeEmail(customer.accountEmail || customer.email || email)
+                : normalizePhone(customer.accountPhone || customer.phone || normalizedPhone);
+            const emailClaim = isValidEmail(username) ? username : normalizeEmail(customer.accountEmail || customer.email || '');
+            const sessionId = crypto.randomUUID();
+            const sessionToken = await createSessionToken({
+                id: String(customer._id),
+                username,
+                role: 'USER',
+            }, sessionId);
+            const accessToken = await createPublicToken({ sub: String(customer._id), email: emailClaim || '', username, role: 'guest', sid: sessionId, type: 'access' }, ACCESS_TOKEN_TTL_SECONDS);
+            const refreshToken = await createPublicToken({ sub: String(customer._id), email: emailClaim || '', username, role: 'guest', sid: sessionId, type: 'refresh' }, REFRESH_TOKEN_TTL_SECONDS);
+
+            const response = ok({
+                access_token: accessToken,
+                refresh_token: refreshToken,
+                expires_at: futureIso(ACCESS_TOKEN_TTL_SECONDS),
+                user_info: toLdpUserInfoFromCustomer(customer),
+            }, 'success');
+
+            response.cookies.set(SESSION_COOKIE_NAME, sessionToken, sessionCookieOptions());
+            response.cookies.set(CSRF_COOKIE_NAME, crypto.randomUUID(), csrfCookieOptions());
+            return response;
+        } catch {
+            return fail('email_or_password_not_correct', 401, 'ACCOUNT_NOT_FOUND');
+        }
+    }
+
+    try {
+        await connectToDatabase();
+
+        const dbUser = await User.findOne({
+            $or: [
+                { username: email },
+                ...(!isEmailAccount && normalizedPhone ? [{ phone: normalizedPhone }] : []),
+            ],
+        });
+
+        if (dbUser?.passwordHash && compareSync(password, dbUser.passwordHash)) {
+            const isAdmin = String(dbUser.role || '').toUpperCase() === 'ADMIN';
+
+            if (audience === 'internal' && !isAdmin) {
+                return fail('email_or_password_not_correct', 401, 'ACCOUNT_NOT_FOUND');
+            }
+
+            const role = isAdmin ? 'admin' : 'guest';
+            let sessionId = crypto.randomUUID();
+
+            if (isAdmin) {
+                const session = await createDbSession({
+                    userId: String(dbUser._id),
+                    ipAddress: request.headers.get('x-forwarded-for') || 'local',
+                    userAgent: request.headers.get('user-agent') || undefined,
+                });
+                sessionId = session.id;
+            }
+
+            const username = String(dbUser.username || email || normalizedPhone || '').trim();
+            const emailClaim = isValidEmail(username) ? username : '';
+
+            const sessionToken = await createSessionToken({
+                id: String(dbUser._id),
+                username,
+                role: isAdmin ? 'ADMIN' : 'USER',
+            }, sessionId);
+            const accessToken = await createPublicToken({ sub: String(dbUser._id), email: emailClaim, username, role, sid: sessionId, type: 'access' }, ACCESS_TOKEN_TTL_SECONDS);
+            const refreshToken = await createPublicToken({ sub: String(dbUser._id), email: emailClaim, username, role, sid: sessionId, type: 'refresh' }, REFRESH_TOKEN_TTL_SECONDS);
+
+            const response = ok({
+                access_token: accessToken,
+                refresh_token: refreshToken,
+                expires_at: futureIso(ACCESS_TOKEN_TTL_SECONDS),
+                user_info: toLdpUserInfoFromDbUser(dbUser),
+            }, 'success');
+
+            response.cookies.set(SESSION_COOKIE_NAME, sessionToken, sessionCookieOptions());
+            response.cookies.set(CSRF_COOKIE_NAME, crypto.randomUUID(), csrfCookieOptions());
+            return response;
+        }
+    } catch {
+        // Fall back to demo account auth.
+    }
+
     const account = demoAccounts.find((item) => item.email === email && item.password === password);
 
     if (!account) {
         return fail('email_or_password_not_correct', 401, 'ACCOUNT_NOT_FOUND');
     }
 
+    if (audience === 'internal' && account.role !== 'admin') {
+        return fail('email_or_password_not_correct', 401, 'ACCOUNT_NOT_FOUND');
+    }
+
     let userId = `demo:${account.email}`;
     let sessionId = crypto.randomUUID();
+    let profile: { fullName?: string | null; avatar?: string | null } | undefined;
 
     try {
         const user = await ensureSportverseUser(account);
-        const session = await createDbSession({
-            userId: String(user._id),
-            ipAddress: request.headers.get('x-forwarded-for') || 'local',
-            userAgent: request.headers.get('user-agent') || undefined,
-        });
-        userId = String(user._id);
-        sessionId = session.id;
+        if (user) {
+            profile = {
+                fullName: user.fullName || account.name,
+                avatar: user.avatar || '',
+            };
+            const session = await createDbSession({
+                userId: String(user._id),
+                ipAddress: request.headers.get('x-forwarded-for') || 'local',
+                userAgent: request.headers.get('user-agent') || undefined,
+            });
+            userId = String(user._id);
+            sessionId = session.id;
+        }
     } catch {
         // MongoDB-backed CMS sessions are optional for the LDP-compatible API.
         // When MongoDB is not running, the app still works with signed JWT tokens.
@@ -191,14 +461,14 @@ async function login(request: NextRequest) {
         username: account.email,
         role: account.role === 'admin' ? 'ADMIN' : 'USER',
     }, sessionId);
-    const accessToken = await createPublicToken({ sub: userId, email: account.email, role: account.role, sid: sessionId, type: 'access' }, ACCESS_TOKEN_TTL_SECONDS);
-    const refreshToken = await createPublicToken({ sub: userId, email: account.email, role: account.role, sid: sessionId, type: 'refresh' }, REFRESH_TOKEN_TTL_SECONDS);
+    const accessToken = await createPublicToken({ sub: userId, email: account.email, username: account.email, role: account.role, sid: sessionId, type: 'access' }, ACCESS_TOKEN_TTL_SECONDS);
+    const refreshToken = await createPublicToken({ sub: userId, email: account.email, username: account.email, role: account.role, sid: sessionId, type: 'refresh' }, REFRESH_TOKEN_TTL_SECONDS);
 
     const response = ok({
         access_token: accessToken,
         refresh_token: refreshToken,
         expires_at: futureIso(ACCESS_TOKEN_TTL_SECONDS),
-        user_info: toLdpUserInfo(account, userId),
+        user_info: toLdpUserInfo(account, userId, profile),
     }, 'success');
 
     response.cookies.set(SESSION_COOKIE_NAME, sessionToken, sessionCookieOptions());
@@ -211,25 +481,74 @@ async function refreshToken(request: NextRequest) {
     const refreshTokenValue = String(body.refresh_token || '').replace(/^"(.*)"$/, '$1');
     const payload = await verifyPublicToken(refreshTokenValue);
 
-    if (!payload || payload.type !== 'refresh' || !payload.email) {
+    if (!payload || payload.type !== 'refresh' || (!payload.email && !payload.username)) {
         return fail('not_found_token', 401, 'NOT_FOUND_TOKEN');
     }
 
-    const payloadEmail = String(payload.email || '');
-    const account = demoAccounts.find((item) => item.email === payloadEmail);
-    if (!account) {
-        return fail('not_found_token', 401, 'ACCOUNT_NOT_FOUND');
+    if (payload.role === 'guest') {
+        try {
+            await connectToDatabase();
+            const customer = await Customer.findById(String(payload.sub || '')).lean();
+            if (!customer) {
+                return fail('not_found_token', 401, 'ACCOUNT_NOT_FOUND');
+            }
+
+            const accountEmail = normalizeEmail((customer as any).accountEmail || (customer as any).email || payload.email || '');
+            const accountPhone = normalizePhone((customer as any).accountPhone || (customer as any).phone || payload.username || '');
+            const username = accountEmail || accountPhone;
+
+            const accessToken = await createPublicToken({ sub: payload.sub, email: accountEmail || '', username, role: 'guest', sid: payload.sid, type: 'access' }, ACCESS_TOKEN_TTL_SECONDS);
+            const nextRefreshToken = await createPublicToken({ sub: payload.sub, email: accountEmail || '', username, role: 'guest', sid: payload.sid, type: 'refresh' }, REFRESH_TOKEN_TTL_SECONDS);
+
+            return ok({
+                access_token: accessToken,
+                refresh_token: nextRefreshToken,
+                expires_at: futureIso(ACCESS_TOKEN_TTL_SECONDS),
+                user_info: toLdpUserInfoFromCustomer(customer),
+            }, 'success');
+        } catch {
+            return fail('not_found_token', 401, 'ACCOUNT_NOT_FOUND');
+        }
     }
 
-    const accessToken = await createPublicToken({ sub: payload.sub, email: account.email, role: account.role, sid: payload.sid, type: 'access' }, ACCESS_TOKEN_TTL_SECONDS);
-    const nextRefreshToken = await createPublicToken({ sub: payload.sub, email: account.email, role: account.role, sid: payload.sid, type: 'refresh' }, REFRESH_TOKEN_TTL_SECONDS);
+    const payloadEmail = normalizeEmail(payload.email || payload.username || '');
+    const account = demoAccounts.find((item) => item.email === payloadEmail);
 
-    return ok({
-        access_token: accessToken,
-        refresh_token: nextRefreshToken,
-        expires_at: futureIso(ACCESS_TOKEN_TTL_SECONDS),
-        user_info: toLdpUserInfo(account, String(payload.sub || '')),
-    }, 'success');
+    if (account) {
+        const accessToken = await createPublicToken({ sub: payload.sub, email: account.email, username: account.email, role: account.role, sid: payload.sid, type: 'access' }, ACCESS_TOKEN_TTL_SECONDS);
+        const nextRefreshToken = await createPublicToken({ sub: payload.sub, email: account.email, username: account.email, role: account.role, sid: payload.sid, type: 'refresh' }, REFRESH_TOKEN_TTL_SECONDS);
+
+        return ok({
+            access_token: accessToken,
+            refresh_token: nextRefreshToken,
+            expires_at: futureIso(ACCESS_TOKEN_TTL_SECONDS),
+            user_info: toLdpUserInfo(account, String(payload.sub || '')),
+        }, 'success');
+    }
+
+    try {
+        await connectToDatabase();
+        const dbUser = await User.findById(String(payload.sub || '')).lean();
+        if (!dbUser) {
+            return fail('not_found_token', 401, 'ACCOUNT_NOT_FOUND');
+        }
+
+        const username = String((dbUser as any).username || payload.username || payload.email || '').trim();
+        const emailClaim = isValidEmail(username) ? username : '';
+        const role = String((dbUser as any).role || '').toUpperCase() === 'ADMIN' ? 'admin' : 'guest';
+
+        const accessToken = await createPublicToken({ sub: payload.sub, email: emailClaim, username, role, sid: payload.sid, type: 'access' }, ACCESS_TOKEN_TTL_SECONDS);
+        const nextRefreshToken = await createPublicToken({ sub: payload.sub, email: emailClaim, username, role, sid: payload.sid, type: 'refresh' }, REFRESH_TOKEN_TTL_SECONDS);
+
+        return ok({
+            access_token: accessToken,
+            refresh_token: nextRefreshToken,
+            expires_at: futureIso(ACCESS_TOKEN_TTL_SECONDS),
+            user_info: toLdpUserInfoFromDbUser(dbUser),
+        }, 'success');
+    } catch {
+        return fail('not_found_token', 401, 'ACCOUNT_NOT_FOUND');
+    }
 }
 
 async function requireSportverseAdmin(request: NextRequest) {
@@ -377,6 +696,67 @@ async function getAdminMenus() {
 async function getAdminSections() {
     const bundle = await getAdminMenuBundleFromStore();
     return { sections: bundle.sections };
+}
+
+async function getAdminCustomers() {
+    await connectToDatabase();
+    const docs = await Customer.find().sort({ lastRequestAt: -1, updatedAt: -1 }).lean();
+
+    const grouped = new Map<string, any>();
+    for (const raw of docs as any[]) {
+        const emailKey = normalizeEmail(raw.accountEmail || raw.email || '');
+        const phoneKey = normalizePhone(raw.accountPhone || raw.phone || '');
+        const nameKey = normalizeNameKey(raw.name || '');
+        const sourceKey = String(raw.source || 'Footer').trim().toLowerCase();
+        const key = emailKey
+            ? `email:${emailKey}`
+            : phoneKey
+                ? `phone:${phoneKey}`
+                : nameKey
+                    ? `name:${nameKey}:${sourceKey}`
+                    : `id:${String(raw._id)}`;
+
+        if (!grouped.has(key)) {
+            grouped.set(key, { ...raw });
+            continue;
+        }
+
+        const prev = grouped.get(key);
+        prev.requestCount = Number(prev.requestCount || 1) + Number(raw.requestCount || 1);
+        prev.firstRequestAt = new Date(Math.min(new Date(prev.firstRequestAt || Date.now()).getTime(), new Date(raw.firstRequestAt || Date.now()).getTime()));
+        prev.lastRequestAt = new Date(Math.max(new Date(prev.lastRequestAt || 0).getTime(), new Date(raw.lastRequestAt || 0).getTime()));
+        prev.updatedAt = new Date(Math.max(new Date(prev.updatedAt || 0).getTime(), new Date(raw.updatedAt || 0).getTime()));
+        prev.email = prev.email || raw.email || raw.accountEmail || null;
+        prev.accountEmail = prev.accountEmail || raw.accountEmail || raw.email || null;
+        prev.phone = prev.phone || raw.phone || raw.accountPhone || null;
+        prev.accountPhone = prev.accountPhone || raw.accountPhone || raw.phone || null;
+        prev.name = prev.name || raw.name || null;
+        prev.address = prev.address || raw.address || null;
+        prev.avatar = prev.avatar || raw.avatar || null;
+        prev.note = prev.note || raw.note || null;
+    }
+
+    const mergedDocs = Array.from(grouped.values()).sort((a, b) => new Date(b.lastRequestAt || 0).getTime() - new Date(a.lastRequestAt || 0).getTime());
+
+    return {
+        customers: mergedDocs.map((doc: any) => ({
+            id: String(doc._id),
+            name: doc.name ? String(doc.name) : null,
+            address: doc.address ? String(doc.address) : null,
+            contact: String(doc.accountEmail || doc.email || doc.accountPhone || doc.phone || doc.rawValue || ''),
+            phone: doc.phone ? String(doc.phone || '') : (doc.accountPhone ? String(doc.accountPhone || '') : null),
+            email: doc.email ? String(doc.email || '') : (doc.accountEmail ? String(doc.accountEmail || '') : null),
+            contact_type: (doc.accountEmail || doc.email ? 'email' : 'phone') as 'phone' | 'email',
+            source: String(doc.source || 'Footer'),
+            status: normalizeCustomerStatus(doc.status, 'new'),
+            request_count: Number(doc.requestCount || 1),
+            first_request_at: doc.firstRequestAt ? new Date(doc.firstRequestAt).toISOString() : nowIso(),
+            last_request_at: doc.lastRequestAt ? new Date(doc.lastRequestAt).toISOString() : nowIso(),
+            ip_address: doc.ipAddress ? String(doc.ipAddress) : null,
+            user_agent: doc.userAgent ? String(doc.userAgent) : null,
+            note: doc.note ? String(doc.note) : null,
+        })),
+    };
 }
 
 async function getPublicHomePayload() {
@@ -567,6 +947,7 @@ async function handleGet(request: NextRequest, path: string[]) {
         if (second === 'store-items') return ok({ store_items: await getAdminStoreItems() });
         if (second === 'menus') return ok(await getAdminMenus());
         if (second === 'sections') return ok(await getAdminSections());
+        if (second === 'customers') return ok(await getAdminCustomers());
     }
 
     return fail('not_found', 404);
@@ -575,11 +956,309 @@ async function handleGet(request: NextRequest, path: string[]) {
 async function handlePost(request: NextRequest, path: string[]) {
     const [segment, second, third] = path;
 
-    if (segment === 'user' && second === 'login') return login(request);
-    if (segment === 'user' && second === 'register') return login(request);
+    if ((segment === 'updateUserInfo' && !second) || (segment === 'customer' && second === 'update-profile')) {
+        const authUser = await requireAuthenticatedUser(request);
+        if (!authUser) {
+            return fail('missing_token', 401, 'MISSING_TOKEN');
+        }
+
+        const contentType = request.headers.get('content-type') || '';
+        const isFormData = contentType.includes('multipart/form-data');
+
+        const body = isFormData
+            ? Object.fromEntries((await request.formData()).entries())
+            : await request.json().catch(() => ({}));
+
+        const fullName = String((body as any).full_name || (body as any).fullName || '').trim();
+        const inputEmail = normalizeEmail((body as any).email || '');
+        const inputPhone = normalizePhone((body as any).phone || '');
+        if (!fullName) {
+            return fail('fill_required_infomation', 422, 'FULL_NAME_REQUIRED');
+        }
+
+        if (inputEmail && !isValidEmail(inputEmail)) {
+            return fail('invalid_email', 422, 'INVALID_EMAIL');
+        }
+
+        if (inputPhone && (inputPhone.length < 9 || inputPhone.length > 15)) {
+            return fail('invalid_phone_number', 422, 'INVALID_PHONE_NUMBER');
+        }
+
+        await connectToDatabase();
+
+        const currentUsername = String(authUser.username || authUser.email || '').trim().toLowerCase();
+        const authSub = String(authUser.sub || '').trim();
+        const isLikelyObjectId = /^[a-f0-9]{24}$/i.test(authSub);
+
+        if (String(authUser.role || '').toLowerCase() === 'guest') {
+            let targetCustomer: any = null;
+
+            if (isLikelyObjectId) {
+                targetCustomer = await Customer.findById(authSub);
+            }
+            if (!targetCustomer && currentUsername) {
+                targetCustomer = await Customer.findOne({
+                    $or: [
+                        { accountEmail: currentUsername },
+                        { email: currentUsername },
+                        { accountPhone: normalizePhone(currentUsername) },
+                        { phone: normalizePhone(currentUsername) },
+                    ],
+                });
+            }
+
+            if (!targetCustomer) {
+                return fail('record_not_found', 404, 'ACCOUNT_NOT_FOUND');
+            }
+
+            const nextEmail = inputEmail || normalizeEmail(targetCustomer.accountEmail || targetCustomer.email || '');
+            const nextPhone = inputPhone || normalizePhone(targetCustomer.accountPhone || targetCustomer.phone || '');
+            if (!nextEmail && !nextPhone) {
+                return fail('fill_required_infomation', 422, 'CONTACT_REQUIRED');
+            }
+
+            const duplicateCustomer = await Customer.findOne({
+                _id: { $ne: targetCustomer._id },
+                $or: [
+                    ...(nextEmail ? [{ accountEmail: nextEmail }, { email: nextEmail }] : []),
+                    ...(nextPhone ? [{ accountPhone: nextPhone }, { phone: nextPhone }] : []),
+                ],
+            });
+
+            let duplicateAvatar = '';
+            if (duplicateCustomer) {
+                duplicateAvatar = String(duplicateCustomer.avatar || '');
+                await Customer.findByIdAndDelete(duplicateCustomer._id);
+            }
+
+            const updatePayload: Record<string, any> = {
+                name: fullName,
+                email: nextEmail || null,
+                phone: nextPhone || null,
+                accountEmail: nextEmail || null,
+                accountPhone: nextPhone || null,
+                contactType: nextEmail ? 'email' : 'phone',
+                rawValue: nextEmail || nextPhone,
+                lastRequestAt: new Date(),
+            };
+
+            const file = (body as any).file;
+            if (file && typeof file === 'object' && typeof file.arrayBuffer === 'function') {
+                const buffer = Buffer.from(await file.arrayBuffer());
+                const mime = String((file as any).type || 'image/jpeg');
+                updatePayload.avatar = `data:${mime};base64,${buffer.toString('base64')}`;
+            } else if (duplicateAvatar && !targetCustomer.avatar) {
+                updatePayload.avatar = duplicateAvatar;
+            }
+
+            const updatedCustomer: any = await Customer.findOneAndUpdate(
+                { _id: targetCustomer._id },
+                { $set: updatePayload },
+                { new: true },
+            ).lean();
+
+            if (!updatedCustomer) {
+                return fail('record_not_found', 404, 'ACCOUNT_NOT_FOUND');
+            }
+
+            return ok({
+                full_name: updatedCustomer.name || fullName,
+                avatar: updatedCustomer.avatar || '',
+                email: normalizeEmail(updatedCustomer.accountEmail || updatedCustomer.email || ''),
+                phone: normalizePhone(updatedCustomer.accountPhone || updatedCustomer.phone || ''),
+            }, 'update_success');
+        }
+
+        let targetUser: any = null;
+        if (isLikelyObjectId) {
+            targetUser = await User.findById(authSub);
+        }
+        if (!targetUser && currentUsername) {
+            targetUser = await User.findOne({ username: currentUsername });
+        }
+
+        if (!targetUser) {
+            return fail('record_not_found', 404, 'ACCOUNT_NOT_FOUND');
+        }
+
+        const nextUsername = inputEmail || inputPhone || String(targetUser.username || '').trim().toLowerCase();
+        if (!nextUsername) {
+            return fail('fill_required_infomation', 422, 'CONTACT_REQUIRED');
+        }
+
+        if (nextUsername !== String(targetUser.username || '').trim().toLowerCase()) {
+            const existedUser = await User.findOne({ username: nextUsername, _id: { $ne: targetUser._id } }).lean();
+            if (existedUser) {
+                return fail(inputEmail ? 'email_existed' : 'phone_existed', 422, 'CONTACT_EXISTS');
+            }
+        }
+
+        const updatePayload: Record<string, any> = {
+            fullName,
+            username: nextUsername,
+            phone: inputPhone || (!isValidEmail(nextUsername) ? normalizePhone(nextUsername) : null),
+        };
+
+        const file = (body as any).file;
+        if (file && typeof file === 'object' && typeof file.arrayBuffer === 'function') {
+            const buffer = Buffer.from(await file.arrayBuffer());
+            const mime = String((file as any).type || 'image/jpeg');
+            updatePayload.avatar = `data:${mime};base64,${buffer.toString('base64')}`;
+        }
+
+        const updatedUser: any = await User.findOneAndUpdate(
+            { _id: targetUser._id },
+            { $set: updatePayload },
+            { new: true },
+        ).lean();
+
+        if (!updatedUser) {
+            return fail('record_not_found', 404, 'ACCOUNT_NOT_FOUND');
+        }
+
+        return ok({
+            full_name: updatedUser.fullName || fullName,
+            avatar: updatedUser.avatar || '',
+            email: isValidEmail(String(updatedUser.username || '')) ? String(updatedUser.username || '') : '',
+            phone: isValidEmail(String(updatedUser.username || '')) ? String(updatedUser.phone || '') : String(updatedUser.username || ''),
+        }, 'update_success');
+    }
+
+    if (segment === 'user' && second === 'login') return login(request, 'internal');
+    if (segment === 'user' && second === 'register') {
+        return fail('permission_denied', 403, 'INTERNAL_PATH_ONLY');
+    }
     if (segment === 'user' && second === 'refresh-token') return refreshToken(request);
     if (segment === 'user' && second === 'forgotPassword') return ok({ accepted: true }, 'success');
     if (segment === 'user' && second === 'logout') return ok({ revoked: true }, 'success');
+
+    if (segment === 'customer' && second === 'login') return login(request, 'customer');
+    if (segment === 'customer' && second === 'register') {
+        const body = await request.json().catch(() => ({}));
+        const rawContact = String(body.contact || body.phone || body.email || '').trim();
+        const inputPhone = normalizePhone(body.phone);
+        const inputEmail = normalizeEmail(body.email);
+        const contactFromField = String(body.contact || '').trim().toLowerCase();
+
+        const normalizedPhone = inputPhone || normalizePhone(rawContact);
+        const normalizedEmail = inputEmail || normalizeEmail(rawContact);
+        const hasEmailLikeContact = rawContact.toLowerCase().includes('@') || contactFromField.includes('@') || Boolean(inputEmail);
+
+        if (!rawContact) {
+            return fail('fill_required_infomation', 422, 'CONTACT_REQUIRED');
+        }
+
+        const isEmail = hasEmailLikeContact;
+        if (isEmail && !isValidEmail(normalizedEmail)) {
+            return fail('invalid_email', 422, 'INVALID_EMAIL');
+        }
+
+        if (!isEmail && (normalizedPhone.length < 9 || normalizedPhone.length > 15)) {
+            return fail('invalid_phone_number', 422, 'INVALID_PHONE_NUMBER');
+        }
+
+        const password = String(body.password || '').trim();
+        const passwordConfirmation = String(body.password_confirmation || '').trim();
+        if (!password || password.length < 6) {
+            return fail('password_required', 422, 'PASSWORD_REQUIRED');
+        }
+        if (password !== passwordConfirmation) {
+            return fail('password_confirm_not_match', 422, 'PASSWORD_CONFIRM_NOT_MATCH');
+        }
+
+        const username = isEmail ? normalizedEmail : normalizedPhone;
+        const source = String(body.source || 'Guest Register').trim() || 'Guest Register';
+        const fullName = String(body.full_name || body.name || '').trim() || username;
+        const note = String(body.note || '').trim() || 'Đăng ký tài khoản khách hàng';
+
+        try {
+            await connectToDatabase();
+
+            const existingCustomer: any = await Customer.findOne({
+                $or: [
+                    ...(normalizedEmail ? [{ accountEmail: normalizedEmail }, { email: normalizedEmail }] : []),
+                    ...(normalizedPhone ? [{ accountPhone: normalizedPhone }, { phone: normalizedPhone }] : []),
+                ],
+            }).lean();
+
+            if (existingCustomer?.passwordHash) {
+                return fail(isEmail ? 'email_existed' : 'phone_existed', 422, 'ACCOUNT_EXISTS');
+            }
+
+            const now = new Date();
+            const ipAddress = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'local';
+            const userAgent = request.headers.get('user-agent') || undefined;
+
+            const createdCustomer: any = await Customer.findOneAndUpdate(
+                existingCustomer ? { _id: (existingCustomer as any)._id } : {
+                    source,
+                    ...(normalizedEmail ? { email: normalizedEmail } : {}),
+                    ...(normalizedPhone ? { phone: normalizedPhone } : {}),
+                },
+                {
+                    $set: {
+                        source,
+                        email: normalizedEmail || null,
+                        phone: normalizedPhone || null,
+                        accountEmail: normalizedEmail || null,
+                        accountPhone: normalizedPhone || null,
+                        passwordHash: hashSync(password, 10),
+                        name: fullName,
+                        note,
+                        contactType: isEmail ? 'email' : 'phone',
+                        rawValue: rawContact,
+                        status: 'new',
+                        lastRequestAt: now,
+                        ipAddress,
+                        userAgent,
+                    },
+                    $setOnInsert: {
+                        firstRequestAt: now,
+                    },
+                    $inc: {
+                        requestCount: 1,
+                    },
+                },
+                {
+                    upsert: true,
+                    new: true,
+                },
+            ).lean();
+
+            if (!createdCustomer?.passwordHash) {
+                return fail('server_error', 500, 'CUSTOMER_PASSWORD_NOT_SAVED');
+            }
+
+            const sessionId = crypto.randomUUID();
+            const sessionToken = await createSessionToken({
+                id: String(createdCustomer._id),
+                username: username,
+                role: 'USER',
+            }, sessionId);
+
+            const accessToken = await createPublicToken({ sub: String(createdCustomer._id), email: normalizedEmail || '', username, role: 'guest', sid: sessionId, type: 'access' }, ACCESS_TOKEN_TTL_SECONDS);
+            const refreshToken = await createPublicToken({ sub: String(createdCustomer._id), email: normalizedEmail || '', username, role: 'guest', sid: sessionId, type: 'refresh' }, REFRESH_TOKEN_TTL_SECONDS);
+
+            const response = ok({
+                access_token: accessToken,
+                refresh_token: refreshToken,
+                expires_at: futureIso(ACCESS_TOKEN_TTL_SECONDS),
+                user_info: toLdpUserInfoFromCustomer(createdCustomer),
+            }, 'register_successfully');
+
+            response.cookies.set(SESSION_COOKIE_NAME, sessionToken, sessionCookieOptions());
+            response.cookies.set(CSRF_COOKIE_NAME, crypto.randomUUID(), csrfCookieOptions());
+            return response;
+        } catch (error: any) {
+            if (isDuplicateKeyError(error)) {
+                return fail(isEmail ? 'email_existed' : 'phone_existed', 422, 'ACCOUNT_EXISTS');
+            }
+
+            return fail('server_error', 500, error?.message || 'SERVER_ERROR');
+        }
+    }
+    if (segment === 'customer' && second === 'forgotPassword') return ok({ accepted: true }, 'success');
+    if (segment === 'customer' && second === 'logout') return ok({ revoked: true }, 'success');
 
     if (segment === 'bookings' && !second) {
         const body = await request.json().catch(() => ({}));
@@ -594,6 +1273,14 @@ async function handlePost(request: NextRequest, path: string[]) {
 
     if (segment === 'bookings' && third === 'cancel') {
         return ok({ id: Number(second), status: 'cancelled', cancelled_at: nowIso() }, 'success');
+    }
+
+    if (segment === 'support-request' && !second) {
+        const body = await request.json().catch(() => ({}));
+        return createCustomerLeadFromRequest(request, body, {
+            source: 'Footer',
+            responseMessage: 'success',
+        });
     }
 
     if (segment === 'admin') {
@@ -834,6 +1521,83 @@ async function handlePatch(request: NextRequest, path: string[]) {
         }
     }
 
+    if (second === 'customers' && third) {
+        const status = normalizeCustomerStatus(body.status, 'new');
+        const note = body.note === undefined || body.note === null ? null : String(body.note).trim();
+        const name = body.name === undefined || body.name === null ? null : String(body.name).trim() || null;
+        const address = body.address === undefined || body.address === null ? null : String(body.address).trim() || null;
+        const contactRaw = String(body.contact || '').trim();
+        const inputEmail = normalizeEmail(body.email || '');
+        const inputPhone = normalizePhone(body.phone || '');
+        const contactEmail = normalizeEmail(contactRaw);
+        const contactPhone = normalizePhone(contactRaw);
+        const contactLooksLikeEmail = contactRaw.includes('@');
+
+        await connectToDatabase();
+
+        const currentDoc: any = await Customer.findById(third).lean();
+        if (!currentDoc) {
+            return fail('record_not_found', 404);
+        }
+
+        const nextEmail = inputEmail || (contactLooksLikeEmail ? contactEmail : '') || normalizeEmail(currentDoc.accountEmail || currentDoc.email || '');
+        const nextPhone = inputPhone || (!contactLooksLikeEmail ? contactPhone : '') || normalizePhone(currentDoc.accountPhone || currentDoc.phone || '');
+
+        if (nextEmail && !isValidEmail(nextEmail)) {
+            return fail('invalid_email', 422, 'INVALID_EMAIL');
+        }
+
+        if (nextPhone && (nextPhone.length < 9 || nextPhone.length > 15)) {
+            return fail('invalid_phone_number', 422, 'INVALID_PHONE_NUMBER');
+        }
+
+        if (!nextEmail && !nextPhone) {
+            return fail('fill_required_infomation', 422, 'CONTACT_REQUIRED');
+        }
+
+        let updated: any = null;
+        try {
+            updated = await Customer.findByIdAndUpdate(
+                third,
+                {
+                    $set: {
+                        status,
+                        note,
+                        name,
+                        address,
+                        email: nextEmail || null,
+                        phone: nextPhone || null,
+                        accountEmail: nextEmail || null,
+                        accountPhone: nextPhone || null,
+                        contactType: nextEmail ? 'email' : 'phone',
+                        rawValue: nextEmail || nextPhone,
+                    },
+                },
+                { new: true },
+            ).lean();
+        } catch (error: any) {
+            if (isDuplicateKeyError(error)) {
+                return fail(nextEmail ? 'email_existed' : 'phone_existed', 422, 'CONTACT_EXISTS');
+            }
+            return fail('server_error', 500, error?.message || 'SERVER_ERROR');
+        }
+
+        if (!updated) {
+            return fail('record_not_found', 404);
+        }
+
+        return ok({
+            id: String((updated as any)._id),
+            name: (updated as any).name ? String((updated as any).name) : null,
+            address: (updated as any).address ? String((updated as any).address) : null,
+            email: (updated as any).accountEmail ? String((updated as any).accountEmail) : null,
+            phone: (updated as any).accountPhone ? String((updated as any).accountPhone) : null,
+            contact: String((updated as any).accountEmail || (updated as any).accountPhone || ''),
+            status: normalizeCustomerStatus((updated as any).status, 'new'),
+            note: (updated as any).note ? String((updated as any).note) : null,
+        }, 'success');
+    }
+
     if ((second === 'menus' && third === 'sections' && fourth) || (second === 'sections' && third)) {
         const sectionId = Number(second === 'sections' ? third : fourth);
         const updatedSection = await updateAdminSection(sectionId, {
@@ -930,6 +1694,12 @@ export async function DELETE(request: NextRequest, context: { params: Promise<{ 
                 revalidatePublicCache();
             }
             return deleted ? ok(deleted, 'success') : fail('record_not_found', 404);
+        }
+
+        if (second === 'customers' && third) {
+            await connectToDatabase();
+            const deleted = await Customer.findByIdAndDelete(third).lean();
+            return deleted ? ok({ id: String((deleted as any)._id), deleted: true }, 'delete_success') : fail('record_not_found', 404);
         }
 
         if ((second === 'menus' && third === 'sections' && fourth) || (second === 'sections' && third)) {

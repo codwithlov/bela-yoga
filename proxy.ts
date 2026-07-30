@@ -71,7 +71,7 @@ async function hasValidAdminToken(request: NextRequest) {
 export async function proxy(request: NextRequest) {
     const pathname = request.nextUrl.pathname;
 
-    if (pathname === '/login' || pathname.startsWith('/admin')) {
+    if (pathname === '/login' || pathname.startsWith('/admin') || pathname.startsWith('/user')) {
         return attachCsrfCookie(request, NextResponse.next());
     }
 
