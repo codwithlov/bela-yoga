@@ -1,0 +1,74 @@
+name: Deploy to Self-hosted Server
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: bela-yoga-production
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, linux]
+    timeout-minutes: 30
+    env:
+      CI: true
+      NODE_ENV: production
+      PM2_APP_NAME: bela-yoga
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci --no-audit --no-fund
+          else
+            npm install --no-audit --no-fund
+          fi
+
+      - name: Write runtime env file (optional)
+        if: ${{ secrets.PROD_ENV_FILE != '' }}
+        run: |
+          printf '%s' "${{ secrets.PROD_ENV_FILE }}" > .env
+
+      - name: Build application
+        run: npm run build
+
+      - name: Start or reload PM2 app
+        run: npx pm2 startOrReload ecosystem.config.cjs --env production --update-env
+
+      - name: Save PM2 process list
+        run: npx pm2 save
+
+      - name: Verify PM2 process is online
+        run: |
+          npx pm2 status "$PM2_APP_NAME"
+          npx pm2 jlist | node -e "
+            const fs = require('fs');
+            const apps = JSON.parse(fs.readFileSync(0, 'utf8'));
+            const app = apps.find((item) => item.name === process.env.PM2_APP_NAME);
+            if (!app) {
+              throw new Error(`PM2 app ${process.env.PM2_APP_NAME} not found`);
+            }
+            if (app.pm2_env.status !== 'online') {
+              throw new Error(`PM2 app ${process.env.PM2_APP_NAME} is ${app.pm2_env.status}`);
+            }
+            console.log(`PM2 app ${process.env.PM2_APP_NAME} is online`);
+          "
