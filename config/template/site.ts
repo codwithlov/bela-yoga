@@ -26,16 +26,16 @@ export const templateSiteConfig = {
   },
   contact: {
     phone: '0377 964 426',
-    email: 'hello@belayoga.vn',
+    email: 'belayoga4u@gmail.com',
     hotlineLabel: 'Hotline tư vấn',
     footerHotlineTitle: 'Hỗ trợ 24/7',
   },
   social: {
-    facebook: 'https://facebook.com/deim_hagn',
+    facebook: 'https://facebook.com/belayoga',
     youtube: 'https://example.com',
     tiktok: 'https://example.com',
     zalo: 'https://example.com',
-    messenger: 'https://example.com',
+    messenger: 'https://m.me/belayoga',
     bct: 'https://example.com',
   },
   routes: {

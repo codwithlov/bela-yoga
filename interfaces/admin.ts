@@ -58,14 +58,16 @@ export interface IAdminVenueRow {
 }
 
 export interface IAdminUserRow {
-    id: number;
+    id: number | string;
     name: string;
     email: string;
+    username?: string;
     organization_name: string | null;
     role_name: string | null;
     role_code: string | null;
     is_super_admin: boolean;
     permission_codes_count: number;
+    is_editable?: boolean;
 }
 
 export interface IAdminRoleRow {

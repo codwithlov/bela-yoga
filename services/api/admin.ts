@@ -15,6 +15,22 @@ import {
 } from '@/interfaces/admin';
 import { baseApi } from './baseApi';
 
+type CreateAdminUserPayload = {
+    username: string;
+    fullName?: string;
+    phone?: string;
+    role: 'ADMIN' | 'USER';
+    password: string;
+};
+
+type UpdateAdminUserPayload = {
+    userId: string;
+    role?: 'ADMIN' | 'USER';
+    fullName?: string;
+    phone?: string;
+    password?: string;
+};
+
 const adminApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getAdminOverview: builder.query<{ data: IAdminOverviewPayload }, void>({
@@ -31,6 +47,20 @@ const adminApi = baseApi.injectEndpoints({
         }),
         getAdminUsers: builder.query<{ data: { users: IAdminUserRow[] } }, void>({
             query: () => 'admin/users',
+        }),
+        createAdminUser: builder.mutation<{ data: IAdminUserRow }, CreateAdminUserPayload>({
+            query: (payload) => ({
+                url: 'admin/users',
+                method: 'POST',
+                body: payload,
+            }),
+        }),
+        updateAdminUser: builder.mutation<{ data: IAdminUserRow }, UpdateAdminUserPayload>({
+            query: ({ userId, ...payload }) => ({
+                url: `admin/users/${userId}`,
+                method: 'PATCH',
+                body: payload,
+            }),
         }),
         getAdminRoles: builder.query<{ data: { roles: IAdminRoleRow[] } }, void>({
             query: () => 'admin/roles',
@@ -59,6 +89,8 @@ export const {
     useGetAdminVenuesQuery,
     useGetAdminBookingsQuery,
     useGetAdminUsersQuery,
+    useCreateAdminUserMutation,
+    useUpdateAdminUserMutation,
     useGetAdminRolesQuery,
     useGetAdminPostsQuery,
     useGetAdminStoreItemsQuery,

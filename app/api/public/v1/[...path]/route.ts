@@ -33,6 +33,7 @@ import { User } from '@/models/User';
 import { Customer } from '@/models/Customer';
 import { compareSync, hashSync } from 'bcryptjs';
 import { jwtVerify, SignJWT } from 'jose';
+import { createUserSchema, updateUserSchema } from '@/lib/validators';
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidateTag } from 'next/cache';
 
@@ -625,20 +626,66 @@ function getAdminBookings() {
     }));
 }
 
-function getAdminUsers() {
+function getDemoAdminUsers() {
     return demoAccounts.map((account, index) => ({
         id: index + 1,
         name: account.name,
         email: account.email,
+        username: account.email,
         organization_name: account.isSuperAdmin ? null : 'SV Arena Quận 7',
         role_name: account.isSuperAdmin ? 'Super Admin' : account.role === 'admin' ? 'Organization Operator' : 'Member',
         role_code: account.isSuperAdmin ? 'super_admin' : account.role === 'admin' ? 'organization_admin' : 'member',
         is_super_admin: account.isSuperAdmin,
         permission_codes_count: account.role === 'admin' ? permissionCodes.length : 0,
+        is_editable: false,
     }));
 }
 
-function getAdminRoles() {
+function mapDbUserToAdminRow(user: any) {
+    const username = String(user?.username || '').trim();
+    const isAdmin = String(user?.role || '').toUpperCase() === 'ADMIN';
+    const isSuperAdmin = normalizeEmail(username) === normalizeEmail(process.env.ADMIN_USERNAME || 'superadmin@gmail.com');
+
+    return {
+        id: String(user?._id || ''),
+        name: String(user?.fullName || username || 'Người dùng'),
+        email: username,
+        username,
+        organization_name: isSuperAdmin ? null : 'SV Arena Quận 7',
+        role_name: isSuperAdmin ? 'Super Admin' : isAdmin ? 'Organization Operator' : 'Member',
+        role_code: isSuperAdmin ? 'super_admin' : isAdmin ? 'organization_admin' : 'member',
+        is_super_admin: isSuperAdmin,
+        permission_codes_count: isAdmin ? permissionCodes.length : 0,
+        is_editable: true,
+    };
+}
+
+async function getAdminUsers() {
+    const demoRows = getDemoAdminUsers();
+
+    try {
+        await connectToDatabase();
+        const dbUsers = await User.find().sort({ createdAt: -1 }).lean();
+        const dbRows = dbUsers.map(mapDbUserToAdminRow);
+
+        if (dbRows.length === 0) {
+            return demoRows;
+        }
+
+        const mergedByEmail = new Map<string, any>();
+        demoRows.forEach((row) => mergedByEmail.set(normalizeEmail(row.email), row));
+        dbRows.forEach((row) => mergedByEmail.set(normalizeEmail(row.email), row));
+
+        return Array.from(mergedByEmail.values());
+    } catch {
+        return demoRows;
+    }
+}
+
+function getAdminRoles(users: any[] = getDemoAdminUsers()) {
+    const adminUsersCount = users.filter((item) => item.role_code === 'super_admin' || item.role_code === 'organization_admin').length;
+    const memberUsersCount = users.filter((item) => item.role_code === 'member').length;
+
     return [
         {
             id: 1,
@@ -646,7 +693,7 @@ function getAdminRoles() {
             name: 'Super Admin',
             code: 'super_admin',
             is_system: true,
-            users_count: 1,
+            users_count: users.filter((item) => item.role_code === 'super_admin').length,
             permissions_count: permissionCodes.length,
             permissions_preview: permissionCodes.slice(0, 4),
         },
@@ -656,7 +703,7 @@ function getAdminRoles() {
             name: 'Organization Owner',
             code: 'owner',
             is_system: true,
-            users_count: 1,
+            users_count: 0,
             permissions_count: permissionCodes.length,
             permissions_preview: permissionCodes.slice(0, 4),
         },
@@ -664,11 +711,21 @@ function getAdminRoles() {
             id: 3,
             organization_name: 'SV Arena Quận 7',
             name: 'Booking Operator',
-            code: 'booking_operator',
+            code: 'organization_admin',
             is_system: false,
-            users_count: 1,
-            permissions_count: 4,
-            permissions_preview: ['OVERVIEW_VIEW', 'ORGANIZATION_VIEW', 'BOOKING_VIEW', 'BOOKING_MANAGE'],
+            users_count: adminUsersCount,
+            permissions_count: permissionCodes.length,
+            permissions_preview: permissionCodes.slice(0, 4),
+        },
+        {
+            id: 4,
+            organization_name: 'SV Arena Quận 7',
+            name: 'Member',
+            code: 'member',
+            is_system: false,
+            users_count: memberUsersCount,
+            permissions_count: 0,
+            permissions_preview: [],
         },
     ];
 }
@@ -788,10 +845,12 @@ async function getPublicHomePayload() {
     };
 }
 
-function getAdminOverview() {
+async function getAdminOverview() {
     const organizations = getAdminOrganizations();
     const venues = getAdminVenues();
     const bookings = getAdminBookings();
+    const users = await getAdminUsers();
+    const roles = getAdminRoles(users);
 
     return {
         scope: {
@@ -803,8 +862,8 @@ function getAdminOverview() {
             bookings_count: bookings.length,
             pending_bookings_count: bookings.filter((booking) => booking.status === 'pending').length,
             confirmed_bookings_count: bookings.filter((booking) => booking.status === 'confirmed').length,
-            users_count: getAdminUsers().length,
-            roles_count: getAdminRoles().length,
+            users_count: users.length,
+            roles_count: roles.length,
             matches_count: demoMatches.length,
             monthly_revenue: bookings.reduce((total, booking) => total + Number(booking.total_amount || 0), 0),
             currency: 'VND',
@@ -936,12 +995,12 @@ async function handleGet(request: NextRequest, path: string[]) {
             return fail('missing_token', 401, 'MISSING_TOKEN');
         }
 
-        if (second === 'overview') return ok(getAdminOverview());
+        if (second === 'overview') return ok(await getAdminOverview());
         if (second === 'organizations') return ok({ organizations: getAdminOrganizations() });
         if (second === 'venues') return ok({ venues: getAdminVenues() });
         if (second === 'bookings') return ok({ bookings: getAdminBookings() });
-        if (second === 'users') return ok({ users: getAdminUsers() });
-        if (second === 'roles') return ok({ roles: getAdminRoles() });
+        if (second === 'users') return ok({ users: await getAdminUsers() });
+        if (second === 'roles') return ok({ roles: getAdminRoles(await getAdminUsers()) });
         if (second === 'posts') return ok(await getAdminPosts());
         if (second === 'post-categories') return ok({ categories: await getAdminPostCategoriesFromStore() });
         if (second === 'store-items') return ok({ store_items: await getAdminStoreItems() });
@@ -1316,6 +1375,31 @@ async function handlePost(request: NextRequest, path: string[]) {
             return ok(created, 'success');
         }
 
+        if (second === 'users') {
+            const parsed = createUserSchema.safeParse(body);
+
+            if (!parsed.success) {
+                return fail(parsed.error.issues[0]?.message || 'Dữ liệu user không hợp lệ.', 422, 'VALIDATION_ERROR');
+            }
+
+            await connectToDatabase();
+
+            const existing = await User.findOne({ username: parsed.data.username }).lean();
+            if (existing) {
+                return fail('name_existed', 409, 'USERNAME_EXISTS');
+            }
+
+            const created = await User.create({
+                username: parsed.data.username,
+                fullName: parsed.data.fullName || '',
+                phone: parsed.data.phone || '',
+                role: parsed.data.role,
+                passwordHash: hashSync(parsed.data.password, 10),
+            });
+
+            return ok(mapDbUserToAdminRow(created.toObject()), 'success');
+        }
+
         if (second === 'post-categories') {
             const name = String(body.name || '').trim();
             if (!name) {
@@ -1430,6 +1514,40 @@ async function handlePatch(request: NextRequest, path: string[]) {
     }
 
     const body = await request.json().catch(() => ({}));
+
+    if (second === 'users' && third) {
+        if (!/^[a-f0-9]{24}$/i.test(String(third))) {
+            return fail('record_not_found', 404);
+        }
+
+        const parsed = updateUserSchema.safeParse(body);
+        if (!parsed.success) {
+            return fail(parsed.error.issues[0]?.message || 'Dữ liệu user không hợp lệ.', 422, 'VALIDATION_ERROR');
+        }
+
+        await connectToDatabase();
+
+        const current = await User.findById(String(third));
+        if (!current) {
+            return fail('record_not_found', 404);
+        }
+
+        if (parsed.data.username && parsed.data.username !== current.username) {
+            const existed = await User.findOne({ username: parsed.data.username }).lean();
+            if (existed) {
+                return fail('name_existed', 409, 'USERNAME_EXISTS');
+            }
+            current.username = parsed.data.username;
+        }
+
+        if (parsed.data.fullName !== undefined) current.fullName = parsed.data.fullName;
+        if (parsed.data.phone !== undefined) current.phone = parsed.data.phone;
+        if (parsed.data.role !== undefined) current.role = parsed.data.role;
+        if (parsed.data.password) current.passwordHash = hashSync(parsed.data.password, 10);
+
+        await current.save();
+        return ok(mapDbUserToAdminRow(current.toObject()), 'success');
+    }
 
     if (second === 'posts' && third) {
         const currentPosts = await getAdminPostsFromStore();
